@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0e1a">
+<title>Simulator Cupa Mondială 2026 (neoficial)</title>
+<meta name="description" content="Simulator fictiv și neoficial al Cupei Mondiale 2026: 48 de echipe, 104 meciuri, rezultate generate aleatoriu. Nu sunt rezultate reale, nu sunt pronosticuri. Neafiliat FIFA.">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simulator Cupa Mondială 2026 (neoficial, neafiliat FIFA)">
+<meta property="og:description" content="Simulare fictivă, offline, fără telemetrie. Rezultatele sunt inventate de un model simplu și nu reflectă turneul real.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<style>
+:root{--bg:#0a0e1a;--bg-card:#131826;--bg-card-2:#1a2030;--text:#e8eaed;--text-dim:#a0a8b8;--accent:#ffd700;--accent-2:#ff3057;--green:#2ed573;--blue:#3742fa;--purple:#a55eea;--yellow-card:#f5c518;--red-card:#e63946;--border:#252b3d;--ro-color:#ffd66e;--forced:#ff7eb6;--death:#9b1b30}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;min-height:100vh;background-image:radial-gradient(circle at 10% 0%,rgba(255,48,87,.06),transparent 50%),radial-gradient(circle at 90% 100%,rgba(255,215,0,.06),transparent 50%)}
+header.main{text-align:center;padding:2rem 1rem 1.4rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header.main::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff3057,#ffd700,#2ed573,#3742fa,#a55eea)}
+header.main h1{font-size:clamp(1.6rem,4.5vw,2.6rem);font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,#ffd700,#ff3057);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header.main .sub{color:var(--text-dim);font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;margin-top:.4rem}
+header.main .meta{color:var(--text-dim);font-size:.75rem;margin-top:.4rem;font-style:italic}
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:center;padding:.8rem 1rem;background:var(--bg-card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:101}
+.controls button,.controls select,.controls input{background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.5rem .9rem;border-radius:7px;font-size:.84rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.controls button:hover,.controls select:hover{border-color:var(--accent)}
+.controls #btn-run{background:linear-gradient(135deg,var(--green),#26b259);color:#000;border-color:var(--green);font-weight:800}
+.controls #btn-run:hover{filter:brightness(1.1)}
+.controls #btn-run:active{transform:scale(.97)}
+.controls .small{background:transparent;color:var(--text-dim);font-weight:500;font-size:.76rem;padding:.4rem .7rem}
+.controls .small:hover{color:var(--accent);border-color:var(--accent)}
+.controls .danger{color:var(--accent-2)}
+.controls .danger:hover{border-color:var(--accent-2);color:var(--accent-2)}
+.controls .info{font-size:.76rem;color:var(--text-dim)}
+.controls .info b{color:var(--accent)}
+nav.tabs{background:rgba(10,14,26,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:100;overflow-x:auto;white-space:nowrap;padding:.5rem;display:flex;gap:.3rem}
+nav.tabs button{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:.42rem .8rem;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0}
+nav.tabs button:hover{color:var(--text);border-color:var(--accent)}
+nav.tabs button.active{background:var(--accent);color:#000;border-color:var(--accent)}
+main{max-width:1300px;margin:0 auto;padding:1.5rem 1rem}
+.phase{display:none}
+.phase.active{display:block;animation:fI .25s}
+@keyframes fI{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.phase-header{text-align:center;margin-bottom:1.6rem}
+.phase-header h2{font-size:clamp(1.3rem,3.8vw,2rem);margin-bottom:.4rem}
+.phase-header p{color:var(--text-dim);font-size:.9rem}
+.sim-banner{background:linear-gradient(135deg,rgba(46,213,115,.1),rgba(46,213,115,.03));border:1px solid var(--green);border-radius:10px;padding:.7rem 1rem;margin-bottom:1.4rem;font-size:.82rem;text-align:center}
+.sim-banner.forced{background:linear-gradient(135deg,rgba(255,126,182,.1),rgba(255,126,182,.03));border-color:var(--forced)}
+.sim-banner b{color:var(--accent)}
+.sim-banner.forced b{color:var(--forced)}
+.sim-banner .label{color:var(--accent);font-weight:700;font-style:italic}
+.groups-grid{display:grid;gap:1rem;grid-template-columns:1fr}
+@media (min-width:1100px){.groups-grid{grid-template-columns:1fr 1fr}}
+article.group{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+article.group.death{border-color:var(--death);box-shadow:0 0 0 1px var(--death) inset,0 0 20px rgba(155,27,48,.18)}
+.group-header{padding:.8rem 1rem;background:linear-gradient(135deg,var(--bg-card-2),transparent);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.group-header h3{font-size:1.05rem;font-weight:800;color:var(--accent)}
+.death-badge{font-size:.7rem;font-weight:800;color:#fff;background:var(--death);padding:.18rem .5rem;border-radius:99px;letter-spacing:.05em;text-transform:uppercase}
+.group-content{padding:.7rem 1rem 1rem}
+.group-content h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin:.8rem 0 .5rem}
+.group-content h4:first-child{margin-top:.2rem}
+.match{background:var(--bg-card-2);border-radius:9px;padding:.75rem;margin-bottom:.7rem;border-left:3px solid var(--blue)}
+.ko-pathway .match{border-left-color:var(--accent-2)}
+.match.forced-team{border-left-color:var(--forced)}
+.match-header{display:flex;justify-content:space-between;align-items:center;font-size:.68rem;color:var(--text-dim);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+.match-header .note{color:var(--accent);font-weight:700}
+.time-row{background:rgba(255,215,110,.07);border:1px solid rgba(255,215,110,.18);border-radius:5px;padding:.32rem .5rem;font-size:.74rem;margin-bottom:.5rem;text-align:center;font-variant-numeric:tabular-nums}
+.time-row .et-time{color:var(--text-dim)}
+.time-row .ro-time{color:var(--ro-color);font-weight:700;font-size:.84rem}
+.time-row .ro-date{color:#ff7a90;font-size:.7rem;font-style:italic;margin-left:.2rem}
+.prob-bar{height:18px;border-radius:4px;overflow:hidden;display:flex;margin:.4rem 0;font-size:.66rem;font-weight:700;background:var(--bg)}
+.prob-bar div{display:flex;align-items:center;padding:0 .35rem;color:#fff}
+.prob-bar .ph{background:linear-gradient(90deg,#3742fa,#5862ff)}
+.prob-bar .pd{background:#444;justify-content:center}
+.prob-bar .pa{background:linear-gradient(90deg,#ff3057,#ff5070);justify-content:flex-end}
+.match-score{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.5rem;font-weight:700;margin-bottom:.3rem}
+.team-name{font-size:.92rem}
+.team-name:first-child{text-align:right}
+.team-name.win{color:var(--accent)}
+.team-name.lose{color:var(--text-dim)}
+.score{font-size:1.1rem;font-weight:900;background:var(--bg);padding:.22rem .55rem;border-radius:5px;border:1px solid var(--border);font-variant-numeric:tabular-nums}
+.score .dash{margin:0 .15rem;color:var(--text-dim)}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-top:.6rem;margin-bottom:.3rem;font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;background:var(--bg);border-radius:7px;padding:.5rem;border:1px solid var(--border)}
+.two-col .col-left{border-right:1px dashed var(--border);padding-right:.5rem;text-align:right}
+.two-col .col-right{padding-left:.5rem;text-align:left}
+.col-team{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);font-weight:700;margin-bottom:.25rem}
+.goals,.cards{list-style:none}
+.goals li,.cards li{font-size:.74rem;padding:.1rem 0;line-height:1.3}
+.goals .player{color:var(--text);font-weight:500}
+.goals .min{color:var(--accent-2);font-weight:700;font-variant-numeric:tabular-nums}
+.goals .gtype{display:inline-block;background:rgba(255,215,0,.15);color:var(--accent);font-size:.68rem;font-weight:800;padding:0 .25rem;border-radius:3px;margin-left:.18rem;vertical-align:middle}
+.goals .gtype.og{background:rgba(255,48,87,.18);color:var(--accent-2)}
+.empty{color:var(--text-dim);font-style:italic;opacity:.55}
+.cards .yellow .player{color:var(--yellow-card)}
+.cards .red .player{color:var(--red-card);font-weight:600}
+.cards .min{color:var(--text-dim);font-variant-numeric:tabular-nums}
+.susp-note{background:rgba(155,27,48,.1);border:1px dashed var(--death);border-radius:5px;padding:.3rem .5rem;margin-top:.4rem;font-size:.7rem;color:var(--text-dim)}
+.susp-note b{color:#ff7a85}
+.stats-block{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:.6rem}
+.poss-bar{display:flex;height:22px;border-radius:4px;overflow:hidden;margin-bottom:.5rem;font-size:.68rem;font-weight:700}
+.poss-bar div{display:flex;align-items:center;padding:0 .4rem;color:#fff}
+.poss-bar .h{background:linear-gradient(90deg,#3742fa,#5862ff)}
+.poss-bar .a{background:linear-gradient(90deg,#ff3057,#ff5070);justify-content:flex-end}
+.stat-grid{display:flex;flex-direction:column;gap:.15rem}
+.stat-row{display:grid;grid-template-columns:1fr auto 1fr;gap:.5rem;align-items:center;padding:.2rem .25rem;border-radius:3px}
+.stat-row:nth-child(odd){background:rgba(255,255,255,.02)}
+.stat-h,.stat-a{font-variant-numeric:tabular-nums;font-weight:700;font-size:.78rem}
+.stat-h{text-align:right;color:#6c7eff}
+.stat-a{text-align:left;color:#ff7088}
+.stat-label{text-align:center;color:var(--text-dim);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;min-width:5rem}
+.standings{width:100%;border-collapse:collapse;font-size:.78rem;background:var(--bg-card-2);border-radius:7px;overflow:hidden}
+.standings th{background:var(--bg);color:var(--text-dim);font-weight:700;text-transform:uppercase;font-size:.64rem;letter-spacing:.05em;padding:.42rem .3rem;text-align:center}
+.standings th:nth-child(2){text-align:left}
+.standings td{padding:.4rem .3rem;text-align:center;border-top:1px solid var(--border);font-variant-numeric:tabular-nums}
+.standings td.team{text-align:left;font-weight:600}
+.standings td.pts{font-weight:700;color:var(--accent)}
+.standings tr.q1{border-left:3px solid var(--green)}
+.standings tr.q2{border-left:3px solid var(--blue)}
+.standings tr.q3{border-left:3px solid var(--purple)}
+.standings tr.out{opacity:.55;border-left:3px solid var(--accent-2)}
+.legend{margin-top:.6rem;font-size:.66rem;color:var(--text-dim);display:flex;flex-wrap:wrap;gap:.6rem}
+.legend .leg{font-size:.85rem}
+.leg.q1{color:var(--green)}.leg.q2{color:#7c86ff}.leg.q3{color:var(--purple)}.leg.out{color:var(--accent-2)}
+.ko-pathway{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1.2rem}
+.ko-pathway h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.8rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+.champion-banner{text-align:center;padding:2.5rem 1.3rem;background:linear-gradient(135deg,#1a1f2e,#131826);border-radius:16px;border:2px solid var(--accent);margin-bottom:1.5rem;position:relative;overflow:hidden}
+.champion-banner.forced{border-color:var(--forced)}
+.champion-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,215,0,.16),transparent 70%);pointer-events:none}
+.champion-banner.forced::before{background:radial-gradient(circle at 50% 0%,rgba(255,126,182,.16),transparent 70%)}
+.champion-label{color:var(--accent);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em}
+.champion-banner.forced .champion-label{color:var(--forced)}
+.champion-name{font-size:clamp(2.2rem,7vw,3.8rem);font-weight:900;margin:.3rem 0;background:linear-gradient(135deg,#ffd700,#ffa500);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.champion-banner.forced .champion-name{background:linear-gradient(135deg,#ff7eb6,#ff3057);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.champion-sub{color:var(--text-dim);font-size:.92rem}
+.podium{display:grid;gap:.6rem;grid-template-columns:1fr 1fr;margin-bottom:1.5rem}
+@media (min-width:700px){.podium{grid-template-columns:repeat(4,1fr)}}
+.podium-pos{background:var(--bg-card);border:1px solid var(--border);padding:1rem;border-radius:10px;text-align:center}
+.podium-pos .medal{font-size:1.8rem;display:block;margin-bottom:.3rem}
+.podium-pos strong{font-size:1rem;display:block}
+.podium-pos span{font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em}
+.pos-1{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,215,0,.06),var(--bg-card))}
+.top-scorers-table{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem}
+.top-scorers-table h4{color:var(--accent);font-size:.9rem;margin-bottom:.6rem}
+/* Bracket SVG */
+.bracket-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin:1.5rem 0;overflow-x:auto}
+.bracket-wrap h3{color:var(--accent);font-size:.92rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem}
+.bracket-svg{width:100%;height:auto;min-width:900px;max-width:1200px}
+.bracket-svg .node-box{fill:var(--bg-card-2);stroke:var(--border);stroke-width:1}
+.bracket-svg .node-box.win{stroke:var(--accent);stroke-width:1.5}
+.bracket-svg .node-box.forced{stroke:var(--forced);stroke-width:1.5}
+.bracket-svg .node-text{fill:var(--text);font-size:11px;font-family:'Helvetica Neue',sans-serif;font-weight:600}
+.bracket-svg .node-text.win{fill:var(--accent);font-weight:800}
+.bracket-svg .node-text.lose{fill:var(--text-dim);font-weight:400}
+.bracket-svg .node-score{fill:var(--accent);font-size:11px;font-weight:800;text-anchor:end}
+.bracket-svg .node-score.lose{fill:var(--text-dim);font-weight:600}
+.bracket-svg .phase-label{fill:var(--text-dim);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.bracket-svg .connector{fill:none;stroke:var(--border);stroke-width:1}
+.bracket-svg .connector.forced{stroke:var(--forced);stroke-width:1.5}
+.bracket-svg .champion-trophy{fill:var(--accent);font-size:14px;font-weight:900;text-anchor:middle}
+/* History */
+.history-list{display:flex;flex-direction:column;gap:.6rem}
+.history-item{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;transition:border-color .15s}
+.history-item:hover{border-color:var(--accent)}
+.history-item.current{border-color:var(--green);background:linear-gradient(135deg,rgba(46,213,115,.05),var(--bg-card))}
+.history-item.forced{border-left:3px solid var(--forced)}
+.hist-id{font-family:'SF Mono',Menlo,monospace;font-size:.7rem;color:var(--text-dim);min-width:5rem}
+.hist-time{font-size:.74rem;color:var(--text-dim);min-width:9rem}
+.hist-label{color:var(--accent);font-size:.78rem;font-style:italic;font-weight:600;min-width:6rem}
+.hist-champ{font-weight:700;color:var(--accent);flex:1;min-width:7rem}
+.hist-champ.forced{color:var(--forced)}
+.hist-finals{font-size:.74rem;color:var(--text-dim);flex:1;min-width:11rem}
+.hist-actions{display:flex;gap:.4rem;flex-wrap:wrap}
+.hist-actions button{background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.3rem .6rem;border-radius:5px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:inherit}
+.hist-actions button:hover{border-color:var(--accent)}
+.hist-actions button.del{color:#ff6b86}
+.hist-actions button.del:hover{border-color:var(--accent-2);background:rgba(255,48,87,.1)}
+.hist-actions button.cmp{color:#8e98ff}
+.hist-actions button.cmp.selected{background:var(--blue);color:#fff;border-color:var(--blue)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;margin-bottom:1rem;font-size:.78rem}
+.filter-bar select,.filter-bar input{background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.35rem .55rem;border-radius:6px;font-size:.78rem;font-family:inherit}
+.filter-bar input{min-width:140px}
+.filter-bar label{color:var(--text-dim);font-size:.74rem}
+/* Aggregate */
+.agg-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1.5rem}
+@media (min-width:700px){.agg-grid{grid-template-columns:1fr 1fr}}
+.agg-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.agg-card.forced-card{border-color:var(--forced)}
+.agg-card.full{grid-column:1/-1}
+.agg-card h4{color:var(--accent);font-size:.92rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.agg-card.forced-card h4{color:var(--forced)}
+.agg-stat{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px dashed rgba(255,255,255,.05);font-size:.86rem}
+.agg-stat:last-child{border-bottom:none}
+.agg-stat .label{color:var(--text-dim)}
+.agg-stat .value{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.champ-list{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.champ-list li{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;font-size:.85rem;padding:.35rem 0;border-bottom:1px dashed rgba(255,255,255,.05)}
+.champ-list li:last-child{border-bottom:none}
+.champ-list .rank{color:var(--text-dim);font-weight:700;min-width:1.5rem}
+.champ-list .name{font-weight:600}
+.champ-list .count{font-weight:700;color:var(--accent);min-width:2.5rem;text-align:right;font-variant-numeric:tabular-nums}
+.champ-list .pct{color:var(--text-dim);font-size:.75rem;font-variant-numeric:tabular-nums;min-width:3rem;text-align:right}
+.bar-track{height:6px;background:var(--bg-card-2);border-radius:3px;overflow:hidden;margin-top:.2rem}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:3px}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-dim)}
+.empty-state h3{color:var(--text);margin-bottom:.5rem}
+/* Compare */
+.compare-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;margin-bottom:1.2rem;font-size:.85rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+.compare-bar button{background:#c4163c;color:#fff;border:none;padding:.4rem .8rem;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer}
+.compare-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media (min-width:800px){.compare-grid{grid-template-columns:1fr 1fr}}
+.cmp-col{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.cmp-col.forced{border-color:var(--forced)}
+.cmp-col h4{color:var(--accent);font-size:.86rem;margin-bottom:.7rem}
+.cmp-col.forced h4{color:var(--forced)}
+.cmp-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px dashed rgba(255,255,255,.05);font-size:.84rem}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row .lbl{color:var(--text-dim)}
+.cmp-row .val{font-weight:600}
+/* Per-team */
+.team-select{display:flex;gap:.6rem;align-items:center;margin-bottom:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;flex-wrap:wrap}
+.team-select select{background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.45rem .7rem;border-radius:6px;font-size:.85rem;font-family:inherit;min-width:200px}
+.team-stats{display:grid;grid-template-columns:1fr;gap:1rem}
+@media (min-width:700px){.team-stats{grid-template-columns:1fr 1fr}}
+.progress-track{height:10px;background:var(--bg-card-2);border-radius:5px;overflow:hidden;flex:1;margin:0 .5rem}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:5px;transition:width .3s}
+.progress-row{display:flex;align-items:center;gap:.4rem;padding:.3rem 0;font-size:.84rem}
+.progress-row .lbl{min-width:6rem;color:var(--text-dim)}
+.progress-row .val{font-weight:700;color:var(--accent);min-width:3rem;text-align:right;font-variant-numeric:tabular-nums;font-size:.78rem}
+/* H2H */
+.h2h-table{width:100%;border-collapse:collapse;font-size:.74rem;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.h2h-table th{background:var(--bg-card-2);padding:.4rem .35rem;text-align:left;color:var(--text-dim);font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em}
+.h2h-table td{padding:.4rem .35rem;border-top:1px solid var(--border);font-variant-numeric:tabular-nums}
+.h2h-table td.team{font-weight:600}
+.h2h-table .w{color:var(--green);font-weight:700}
+.h2h-table .d{color:var(--text-dim)}
+.h2h-table .l{color:#ff6b86}
+/* Batch */
+.batch-controls{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1.2rem;text-align:center}
+.batch-controls h4{color:var(--accent);font-size:.95rem;margin-bottom:.7rem}
+.batch-controls .row{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
+.batch-controls button{background:var(--green);color:#000;border:none;padding:.55rem 1rem;border-radius:7px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit}
+.batch-controls button:hover{filter:brightness(1.1)}
+.batch-controls button:disabled{opacity:.5;cursor:not-allowed;filter:none}
+.batch-progress{height:18px;background:var(--bg-card-2);border-radius:9px;overflow:hidden;margin:.8rem 0;display:none}
+.batch-progress.active{display:block}
+.batch-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent),var(--green));width:0;transition:width .3s;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:#000}
+footer{text-align:center;padding:2rem 1rem 1.2rem;color:var(--text-dim);font-size:.74rem;border-top:1px solid var(--border);margin-top:2rem}
+.empty-msg{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:2rem;text-align:center;color:var(--text-dim)}
+.note-line{font-size:.72rem;color:var(--text-dim);font-style:italic;margin-top:.4rem;text-align:center}
+@media (max-width:520px){
+.stat-label{min-width:4rem;font-size:.58rem}
+.stat-h,.stat-a{font-size:.72rem}
+.team-name{font-size:.8rem}
+.score{font-size:1rem;padding:.16rem .45rem}
+.time-row{font-size:.7rem}
+.controls{padding:.5rem;gap:.35rem}
+.controls button,.controls select{padding:.4rem .65rem;font-size:.74rem}
+.controls #btn-run{padding:.5rem .9rem}
+.bracket-svg{min-width:600px}
+}
+/* === V7 ADDITIONS === */
+/* Modal overlay */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-bg.active{display:flex;animation:fI .2s}
+.modal-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;max-width:680px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
+.modal-panel h3{color:var(--accent);font-size:1.15rem;margin-bottom:1rem;padding-right:2rem}
+.modal-panel h4{color:var(--text);font-size:.92rem;margin:1rem 0 .5rem}
+.modal-close{position:absolute;top:.7rem;right:.9rem;background:transparent;border:none;color:var(--text-dim);font-size:1.5rem;cursor:pointer;line-height:1;padding:.2rem .5rem;border-radius:5px}
+.modal-close:hover{background:var(--bg-card-2);color:var(--accent-2)}
+.modal-panel kbd{background:var(--bg-card-2);border:1px solid var(--border);border-radius:4px;padding:.1rem .4rem;font-family:'SF Mono',Menlo,monospace;font-size:.78rem;color:var(--accent)}
+.modal-panel p{font-size:.86rem;color:var(--text-dim);margin-bottom:.5rem;line-height:1.5}
+.kbd-grid{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;font-size:.84rem;margin:.5rem 0}
+.kbd-grid .k{text-align:right}
+.kbd-grid .d{color:var(--text-dim)}
+/* Toast */
+.toast-container{position:fixed;bottom:1rem;right:1rem;z-index:300;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.toast{background:var(--bg-card);border:1px solid var(--accent);border-radius:8px;padding:.7rem 1rem;font-size:.84rem;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:340px;animation:tIn .3s,tOut .3s 2.7s forwards}
+.toast.err{border-color:var(--accent-2)}
+.toast.ok{border-color:var(--green)}
+@keyframes tIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes tOut{to{transform:translateX(20px);opacity:0}}
+/* Strength editor */
+.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;max-height:50vh;overflow-y:auto;padding-right:.4rem;margin:.6rem 0}
+@media (max-width:600px){.editor-grid{grid-template-columns:1fr}}
+.editor-row{display:grid;grid-template-columns:1fr auto auto;gap:.5rem;align-items:center;padding:.3rem .5rem;background:var(--bg-card-2);border-radius:5px;font-size:.78rem}
+.editor-row .ename{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.editor-row input[type=range]{width:90px;accent-color:var(--accent)}
+.editor-row .eval{color:var(--accent);font-weight:700;min-width:1.6rem;text-align:right;font-variant-numeric:tabular-nums}
+.editor-presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.6rem}
+.editor-presets button{background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.35rem .7rem;border-radius:6px;font-size:.76rem;cursor:pointer;font-family:inherit;font-weight:600}
+.editor-presets button:hover{border-color:var(--accent);color:var(--accent)}
+.editor-presets button.danger{color:var(--accent-2)}
+.editor-actions{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap}
+.editor-actions button{flex:1;min-width:120px;background:var(--green);color:#000;border:none;padding:.55rem 1rem;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.84rem}
+.editor-actions button.secondary{background:var(--bg-card-2);color:var(--text);border:1px solid var(--border);font-weight:600}
+/* Achievements */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem}
+.ach-item{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.8rem .9rem;display:flex;gap:.7rem;align-items:flex-start;opacity:.4;transition:all .15s}
+.ach-item.unlocked{opacity:1;border-color:var(--accent);background:linear-gradient(135deg,rgba(255,215,0,.04),var(--bg-card))}
+.ach-icon{font-size:1.8rem;line-height:1;flex-shrink:0}
+.ach-meta{flex:1}
+.ach-title{font-weight:700;font-size:.86rem;margin-bottom:.15rem}
+.ach-item.unlocked .ach-title{color:var(--accent)}
+.ach-desc{font-size:.72rem;color:var(--text-dim);line-height:1.4}
+.ach-progress{font-size:.7rem;color:var(--text-dim);margin-top:.3rem;font-style:italic}
+.ach-item.unlocked .ach-progress{color:var(--green)}
+.ach-summary{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1rem;text-align:center}
+.ach-summary .pct{font-size:1.5rem;font-weight:900;color:var(--accent);margin:.2rem 0}
+.ach-summary .bar-track{height:8px;margin:.5rem auto;max-width:300px}
+/* Narrative */
+.narrative{background:linear-gradient(135deg,rgba(255,215,0,.04),var(--bg-card));border:1px solid var(--accent);border-radius:12px;padding:1.2rem 1.5rem;margin:1.5rem 0;line-height:1.7;font-size:.92rem}
+.narrative h3{color:var(--accent);margin-bottom:.6rem;font-size:1rem;letter-spacing:.05em;text-transform:uppercase}
+.narrative p{margin-bottom:.6rem;color:var(--text)}
+.narrative em{color:var(--accent);font-style:normal;font-weight:600}
+.narrative .moment{padding:.5rem .7rem;border-left:3px solid var(--accent-2);background:rgba(255,48,87,.04);margin:.5rem 0;border-radius:0 6px 6px 0;font-size:.85rem}
+/* Compact mode */
+body.compact .stats-block,body.compact .section-label,body.compact .cards li:not(:first-child):not(:nth-child(2)),body.compact .goals li:not(:first-child):not(:nth-child(2)):not(:nth-child(3)){display:none}
+body.compact .two-col{padding:.3rem}
+body.compact .match{padding:.5rem}
+body.compact .stat-grid{display:none}
+body.compact .susp-note{font-size:.65rem;padding:.2rem .4rem}
+/* Stadium stats */
+.stadium-table{width:100%;border-collapse:collapse;font-size:.78rem;background:var(--bg-card-2);border-radius:7px;overflow:hidden}
+.stadium-table th{background:var(--bg);color:var(--text-dim);padding:.45rem .35rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.stadium-table td{padding:.4rem .35rem;border-top:1px solid var(--border);font-variant-numeric:tabular-nums}
+.stadium-table td.venue{font-weight:600}
+/* Seed display */
+.seed-info{font-family:'SF Mono',Menlo,monospace;font-size:.72rem;color:var(--text-dim);background:var(--bg);padding:.15rem .4rem;border-radius:4px;border:1px solid var(--border)}
+.seed-input{font-family:'SF Mono',Menlo,monospace;font-size:.74rem;width:140px;background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.35rem .5rem;border-radius:6px}
+/* PWA install button */
+.install-btn{display:none;background:var(--purple)!important;color:#fff!important;border-color:var(--purple)!important}
+.install-btn.show{display:inline-block}
+/* Print */
+@media print{
+body{background:#fff;color:#000}
+header.main,.controls,nav.tabs,footer,.modal-bg,.toast-container{display:none!important}
+.phase{display:block!important;page-break-after:always}
+.phase-header h2{color:#000}
+article.group,.ko-pathway,.match,.champion-banner{background:#fff;border:1px solid #000;page-break-inside:avoid}
+.team-name.win,.score,.standings td.pts,.champion-name,.champion-label{color:#000!important;-webkit-text-fill-color:#000!important;background:none!important}
+.stats-block,.cards,.susp-note{display:none}
+.match{padding:.4rem;margin-bottom:.4rem}
+.bracket-svg{break-inside:avoid;max-width:100%}
+.narrative{border:1px solid #000;background:#fff}
+}
+
+/* === v7.1: etichetare „simulare fictivă”, accesibilitate === */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.fiction-bar{background:rgba(255,48,87,.09);border-bottom:2px solid var(--accent-2);padding:.65rem 1rem;font-size:.86rem;line-height:1.5;text-align:center;color:var(--text)}
+.fiction-bar strong{color:#ff8da1}
+.fiction-bar details{margin-top:.4rem;text-align:left;max-width:900px;margin-left:auto;margin-right:auto;font-size:.8rem;color:var(--text-dim)}
+.fiction-bar summary{cursor:pointer;color:var(--accent);font-weight:600;text-align:center}
+.fiction-bar ul{margin:.4rem 0 0 1.2rem}
+.fiction-bar li{margin-bottom:.25rem}
+.sim-tag{display:inline-block;margin-top:.5rem;padding:.15rem .6rem;border:1px dashed var(--accent-2);border-radius:99px;font-size:.72rem;color:#ff8da1;letter-spacing:.04em;text-transform:uppercase}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.standings tr.out{opacity:.75}
+.empty{opacity:.8}
+.ach-item{opacity:.85}
+.prob-bar .pa{background:linear-gradient(90deg,#c4163c,#e0345a)}
+.controls label{cursor:default}
+.legacy-note{background:rgba(245,197,24,.08);border:1px solid var(--yellow-card);border-radius:8px;padding:.5rem .8rem;margin-bottom:1rem;font-size:.78rem;text-align:center}
+.agg-card{min-width:0;overflow-x:auto}
+@media (max-width:520px){.stadium-table th,.stadium-table td{padding:.35rem .2rem;font-size:.7rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.fiction-bar{display:block!important;background:#fff;color:#000;border:1px solid #000}.fiction-bar details{display:none}.fiction-bar strong{color:#000}.sim-tag{color:#000;border-color:#000}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:1rem;text-align:center;background:#1a2030;color:#e8eaed">Acest simulator are nevoie de JavaScript. Activează JavaScript în browser pentru a-l folosi.</p></noscript>
+
+<header class="main">
+<h1>SIMULATOR CUPA MONDIALĂ 2026</h1>
+<p class="sub">Simulare fictivă · neoficială · neafiliată FIFA</p>
+<p class="meta">Format: Canada · Mexic · SUA · 104 meciuri · 48 echipe · rezultatele sunt inventate, nu sunt cele reale</p>
+</header>
+<div class="fiction-bar" role="note">
+<strong>⚠️ Simulare fictivă și neoficială.</strong> Toate rezultatele, golurile, marcatorii, cartonașele, suspendările și statisticile sunt generate aleatoriu de un model simplu (puteri subiective 1–5, distribuție Poisson, seed). <strong>Nu</strong> sunt rezultatele reale ale Cupei Mondiale 2026 (disputată 11 iunie – 19 iulie 2026) și <strong>nu</strong> sunt pronosticuri. Numele de jucători sunt doar etichete: tot ce li se atribuie aici (goluri, cartonașe, suspendări) este inventat, iar loturile nu sunt cele oficiale. Proiect personal, neafiliat FIFA.
+<details><summary>Ce simulează și ce nu</summary>
+<ul>
+<li>Format și grupe: 12 grupe de 4; primele două și cele mai bune 8 locuri 3 merg în 1/16 (32 de echipe). Grupele corespund tragerii la sorți reale; programul (date, stadioane, ore în ET) provine din calendare publice și poate conține erori.</li>
+<li>Departajare în grupă: puncte, apoi meciuri directe (puncte, golaveraj, goluri; reaplicate între echipele rămase la egalitate), apoi golaveraj și goluri generale, fair-play (din cartonașele simulate); la egalitate totală se trage la sorți cu seed-ul simulării (nu se folosește clasamentul FIFA). Locurile 3 se ordonează după puncte, golaveraj, goluri, fair-play, sorți.</li>
+<li>Locurile 3 în tablou: se folosește tabelul cu 495 de combinații (Anexa C) al regulamentului, transcris din surse publice și validat automat (completitudine și grupele eligibile pentru fiecare meci), dar nu verificat rând cu rând pe documentul oficial. Simulările create cu versiuni anterioare ale aplicației (marcate în ecranul „Finale”) foloseau un tablou aproximat.</li>
+<li>Puterile echipelor (1–5) sunt valori subiective, nu ratinguri oficiale; nu există accidentări, formă sau loturi reale. Penalty-urile, loviturile libere, autogolurile și prelungirile au procente fixe. Valorile din „Batch” sunt frecvențe ale acestui model, nu probabilități reale.</li>
+<li>Calibrare: media de goluri a modelului este ≈3,7 pe meci, peste cele ≈2,7 din turneele mondiale reale; scorurile mari sunt un efect al modelului, nu o estimare realistă.</li>
+<li>Cartonașe: 2 galbene = 1 meci suspendare, roșu = 1 meci; galbenele se șterg după grupe și după sferturi.</li>
+<li>Aleatoriu: PRNG mulberry32 cu seed pe 32 de biți (reproductibil, nu criptografic). Replay-ul reproduce rezultatul doar dacă motorul nu s-a schimbat.</li>
+</ul></details>
+</div>
+
+<div class="controls">
+<button id="btn-run" title="Tastă: R" aria-keyshortcuts="r">🎲 Rulează</button>
+<label style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--text-dim)">Forțează:
+<select id="select-force"></select>
+</label>
+<button id="btn-editor" class="small" title="Tastă: E">🎚️ Strengths</button>
+<button id="btn-compact" class="small" title="Tastă: C">📐 Compact</button>
+<button id="btn-help" class="small" title="Ajutor (tastă: ?)" aria-label="Ajutor și scurtături">❓</button>
+<button id="btn-export" class="small">⬇️ Export</button>
+<button id="btn-import" class="small">⬆️ Import</button>
+<input type="file" id="file-import" accept=".json,application/json" style="display:none" aria-label="Fișier JSON de importat">
+<button id="btn-clear" class="small danger" title="Șterge tot istoricul" aria-label="Șterge tot istoricul">🗑️</button>
+<span class="info" id="hist-info" role="status">0</span>
+</div>
+
+<nav class="tabs" aria-label="Faze și secțiuni">
+<button data-phase="groups" class="active">Grupe</button>
+<button data-phase="thirds">Loc 3</button>
+<button data-phase="r32">R32</button>
+<button data-phase="r16">Optimi</button>
+<button data-phase="qf">Sferturi</button>
+<button data-phase="sf">Semi.</button>
+<button data-phase="finale">Finale</button>
+<button data-phase="history" title="Tastă: H">📊 Istoric (<span id="hist-n">0</span>)</button>
+<button data-phase="aggregate" title="Tastă: S">🏆 Statistici</button>
+<button data-phase="perteam">👤 Per echipă</button>
+<button data-phase="compare">⚖️ Compară</button>
+<button data-phase="batch" title="Tastă: B">🔬 Batch</button>
+<button data-phase="achievements" title="Tastă: A">🏅 Realizări</button>
+</nav>
+
+<main>
+<section class="phase active" data-phase="groups"></section>
+<section class="phase" data-phase="thirds"></section>
+<section class="phase" data-phase="r32"></section>
+<section class="phase" data-phase="r16"></section>
+<section class="phase" data-phase="qf"></section>
+<section class="phase" data-phase="sf"></section>
+<section class="phase" data-phase="finale"></section>
+<section class="phase" data-phase="history"></section>
+<section class="phase" data-phase="aggregate"></section>
+<section class="phase" data-phase="perteam"></section>
+<section class="phase" data-phase="compare"></section>
+<section class="phase" data-phase="batch"></section>
+<section class="phase" data-phase="achievements"></section>
+</main>
+
+<!-- Modals -->
+<div class="modal-bg" id="modal-help" role="dialog" aria-modal="true" aria-labelledby="help-title">
+<div class="modal-panel">
+<button class="modal-close" data-close="modal-help" aria-label="Închide">×</button>
+<h3 id="help-title">❓ Ghid de utilizare & scurtături</h3>
+<p><label><input type="checkbox" id="kbd-toggle" checked> Scurtături de tastatură active (se pot dezactiva)</label></p>
+<h4>Scurtături tastatură</h4>
+<div class="kbd-grid">
+<div class="k"><kbd>R</kbd></div><div class="d">Rulează o nouă simulare</div>
+<div class="k"><kbd>E</kbd></div><div class="d">Editor strengths echipe</div>
+<div class="k"><kbd>C</kbd></div><div class="d">Comută modul compact</div>
+<div class="k"><kbd>H</kbd></div><div class="d">Tab Istoric</div>
+<div class="k"><kbd>S</kbd></div><div class="d">Tab Statistici agregate</div>
+<div class="k"><kbd>B</kbd></div><div class="d">Tab Batch</div>
+<div class="k"><kbd>A</kbd></div><div class="d">Tab Realizări</div>
+<div class="k"><kbd>P</kbd></div><div class="d">Imprimă (print)</div>
+<div class="k"><kbd>←</kbd> <kbd>→</kbd></div><div class="d">Navigare între taburi</div>
+<div class="k"><kbd>?</kbd></div><div class="d">Acest ghid</div>
+<div class="k"><kbd>Esc</kbd></div><div class="d">Închide modală</div>
+</div>
+<h4>Funcționalități cheie</h4>
+<p>🎲 <em>Rulează</em> generează o nouă simulare cu un seed RNG unic. Rezultatele se salvează în istoric (max 50).</p>
+<p>⚡ <em>Forțare</em> garantează că echipa selectată câștigă turneul simulat (primește un bonus de putere și rezultatele i se aranjează) — doar pentru scenarii „ce-ar fi dacă”, fără valoare statistică.</p>
+<p>🔁 <em>Replay</em> (din istoric) rulează din nou cu același seed și aceleași puteri; rezultatul e identic dacă simularea a fost creată cu această versiune a motorului.</p>
+<p>🎚️ <em>Editor strengths</em> modifică nivelul oricărei echipe (1-5). Preset-uri: Europa favorită, America Sud favorită, Haos.</p>
+<p>📐 <em>Mod compact</em> ascunde statisticile detaliate pentru navigare rapidă.</p>
+<p>🔗 <em>Share</em> generează un URL ce conține întreaga simulare comprimată (fără server). Linkul primit este validat strict înainte de import.</p>
+<p>🔬 <em>Batch</em> rulează 50–1000 simulări ale modelului și arată frecvențele rezultatelor; nu sunt probabilități reale ale turneului.</p>
+<p>🏅 <em>Realizări</em> deblochezi pe măsură ce explorezi simulatorul.</p>
+<p>🖨️ <em>Print</em> (P) — format print-friendly, ideal pentru rapoarte tipărite.</p>
+<h4>Despre</h4>
+<p>v7.1 · fișier HTML unic · fără cereri de rețea (CSP le blochează) · zero telemetrie · date salvate doar în browser (localStorage). Proiect personal în spiritul mișcării TROM trade-free; neafiliat FIFA.</p>
+</div>
+</div>
+
+<div class="modal-bg" id="modal-editor" role="dialog" aria-modal="true" aria-label="Editor puteri echipe"><div class="modal-panel"></div></div>
+
+<div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
+
+<footer>
+<p><b>Simulator Cupa Mondială 2026 v7.1</b> · simulare fictivă, neoficială · fișier unic · fără rețea · zero telemetrie</p>
+<p>Nu reprezintă rezultate reale și nu constituie pronosticuri. Proiect personal, neafiliat FIFA; denumirile competiției, echipelor, stadioanelor și numele jucătorilor aparțin proprietarilor lor și sunt folosite doar descriptiv.</p>
+</footer>
+
+<script>
+const D = {"CODES":{"Mexic":"MEX","Coreea de Sud":"KOR","Africa de Sud":"RSA","Cehia":"CZE","Canada":"CAN","Elveția":"SUI","Qatar":"QAT","Bosnia-Herțegovina":"BIH","Brazilia":"BRA","Maroc":"MAR","Scoția":"SCO","Haiti":"HAI","SUA":"USA","Paraguay":"PAR","Australia":"AUS","Türkiye":"TUR","Germania":"GER","Ecuador":"ECU","Coasta de Fildeș":"CIV","Curaçao":"CUW","Olanda":"NED","Japonia":"JPN","Tunisia":"TUN","Suedia":"SWE","Belgia":"BEL","Iran":"IRN","Egipt":"EGY","Noua Zeelandă":"NZL","Spania":"ESP","Uruguay":"URU","Arabia Saudită":"KSA","Capul Verde":"CPV","Franța":"FRA","Senegal":"SEN","Norvegia":"NOR","Irak":"IRQ","Argentina":"ARG","Austria":"AUT","Algeria":"ALG","Iordania":"JOR","Portugalia":"POR","Columbia":"COL","Uzbekistan":"UZB","RD Congo":"COD","Anglia":"ENG","Croația":"CRO","Panama":"PAN","Ghana":"GHA"},"TS":{"Spania":4,"Argentina":4,"Franța":4,"Anglia":4,"Brazilia":4,"Germania":4,"Portugalia":4,"Olanda":4,"Belgia":4,"Croația":3,"Uruguay":3,"Mexic":3,"SUA":3,"Maroc":3,"Japonia":3,"Senegal":3,"Norvegia":3,"Coreea de Sud":3,"Elveția":3,"Cehia":2,"Türkiye":2,"Suedia":2,"Ecuador":2,"Coasta de Fildeș":2,"Egipt":2,"Iran":2,"RD Congo":2,"Columbia":2,"Austria":2,"Algeria":2,"Canada":2,"Tunisia":1,"Capul Verde":1,"Bosnia-Herțegovina":1,"Scoția":1,"Australia":1,"Paraguay":1,"Ghana":1,"Panama":1,"Arabia Saudită":1,"Africa de Sud":1,"Curaçao":1,"Iordania":1,"Uzbekistan":1,"Haiti":1,"Qatar":1,"Noua Zeelandă":1,"Irak":1},"GROUPS_T":{"A":["Mexic","Coreea de Sud","Cehia","Africa de Sud"],"B":["Canada","Elveția","Bosnia-Herțegovina","Qatar"],"C":["Brazilia","Maroc","Scoția","Haiti"],"D":["SUA","Paraguay","Australia","Türkiye"],"E":["Germania","Coasta de Fildeș","Ecuador","Curaçao"],"F":["Olanda","Japonia","Suedia","Tunisia"],"G":["Belgia","Egipt","Iran","Noua Zeelandă"],"H":["Spania","Uruguay","Arabia Saudită","Capul Verde"],"I":["Franța","Senegal","Norvegia","Irak"],"J":["Argentina","Austria","Algeria","Iordania"],"K":["Portugalia","Columbia","Uzbekistan","RD Congo"],"L":["Anglia","Croația","Panama","Ghana"]},"ATT":{"Brazilia":[["Vinícius Jr",10],["Endrick",8],["Raphinha",7],["Neymar",7],["M. Cunha",5],["Casemiro",3],["Marquinhos",2],["Bremer",2]],"Argentina":[["Messi",10],["L. Martínez",9],["J. Álvarez",8],["Mac Allister",6],["Di María",5],["De Paul",4],["Otamendi",2]],"Franța":[["Mbappé",10],["Griezmann",7],["Tchouaméni",4],["Camavinga",4],["Barcola",6],["Coman",5],["Saliba",2]],"Anglia":[["Kane",10],["Bellingham",8],["Saka",7],["A. Gordon",6],["M. Rogers",5],["Eze",5],["Stones",2]],"Spania":[["Yamal",10],["Pedri",8],["Morata",7],["D. Olmo",6],["N. Williams",6],["Gavi",4],["Fabián",3],["Le Normand",2]],"Germania":[["Wirtz",9],["Musiala",9],["Havertz",8],["Füllkrug",6],["Sané",5],["Kimmich",3],["Rüdiger",2]],"Portugalia":[["C. Ronaldo",9],["B. Fernandes",8],["R. Leão",7],["Vitinha",5],["G. Ramos",6],["R. Neves",3],["R. Dias",2]],"Olanda":[["Gakpo",8],["Depay",7],["Reijnders",6],["F. de Jong",5],["Gravenberch",5],["Van Dijk",3],["Aké",2]],"Belgia":[["Lukaku",9],["De Bruyne",9],["Doku",7],["Tielemans",5],["Trossard",6],["Carrasco",4]],"Croația":[["Modrić",7],["Kramarić",8],["Kovačić",6],["Gvardiol",5],["Pašalić",4],["Petković",5]],"Uruguay":[["Núñez",9],["Valverde",7],["M. Araújo",5],["Bentancur",4],["R. Araújo",3],["Pellistri",5]],"Mexic":[["R. Jiménez",7],["Lozano",8],["S. Giménez",7],["E. Álvarez",5],["Pineda",4],["Antuna",5],["G. Mora",4]],"SUA":[["Pulisic",9],["Balogun",7],["Reyna",6],["McKennie",5],["Musah",4],["Wright",5]],"Maroc":[["En-Nesyri",8],["Ziyech",7],["Hakimi",6],["B. Díaz",7],["Ounahi",4],["Boufal",5]],"Japonia":[["Kubo",8],["Kamada",7],["Maeda",6],["Ueda",5],["Endo",3],["Itakura",2]],"Senegal":[["Mané",8],["I. Sarr",7],["B. Sarr",6],["Diatta",5],["P. Sarr",5],["Koulibaly",2]],"Norvegia":[["Haaland",10],["Sørloth",7],["Berge",4],["Berg",3],["Aursnes",4]],"Coreea de Sud":[["Son",10],["Lee Kang-in",7],["Hwang Hee-chan",6],["Cho Gue-sung",5],["Kim Min-jae",2]],"Elveția":[["Embolo",7],["Ndoye",6],["Xhaka",5],["Akanji",3],["Vargas",6],["Manzambi",4]],"Cehia":[["Schick",8],["Hložek",6],["Souček",5],["Krejčí",3],["Provod",5]],"Türkiye":[["Çalhanoğlu",8],["Yıldız",8],["A. Güler",7],["Aktürkoğlu",5],["Akgün",4],["Kökçü",4]],"Suedia":[["Isak",9],["Gyökeres",8],["Forsberg",5],["Karlström",2],["Lindelöf",2]],"Ecuador":[["Caicedo",7],["Valencia",6],["Páez",5],["Plata",5],["Hincapié",2],["F. Torres",4]],"Coasta de Fildeș":[["Adingra",7],["Haller",8],["Singo",4],["Kessié",5],["Pépé",5]],"Egipt":[["Salah",10],["M. Mohamed",6],["Trezeguet",6],["Elneny",3],["Marmoush",6]],"Iran":[["Taremi",8],["Azmoun",7],["Jahanbakhsh",5],["Hajsafi",3],["Gholizadeh",4]],"RD Congo":[["Bakambu",6],["Wissa",7],["Mbemba",3],["Mbuku",5],["Masuaku",3]],"Columbia":[["L. Díaz",8],["James R.",7],["Borja",5],["Cuadrado",4],["Córdoba",6]],"Austria":[["Arnautović",7],["Alaba",5],["Laimer",5],["Sabitzer",5],["Adamu",4],["Grillitsch",3]],"Algeria":[["Mahrez",8],["Slimani",6],["Bensebaini",4],["Bennacer",4],["Bounedjah",5]],"Canada":[["J. David",8],["Buchanan",6],["Larin",6],["A. Davies",5],["Hoilett",4]],"Scoția":[["McGinn",6],["McTominay",7],["Ferguson",5],["Christie",4],["Adams",5]],"Tunisia":[["Khazri",6],["Skhiri",4],["Talbi",3],["Sliti",5],["Jebali",4]],"Capul Verde":[["Mendes",6],["R. Lopes",5],["Andrade",5],["Jamiro",4]],"Bosnia-Herțegovina":[["Džeko",7],["Demirović",6],["Pjanić",5],["Tahirović",4],["Hadžiahmetović",3]],"Australia":[["Duke",6],["Mabil",5],["McGree",4],["Bos",4],["Behich",3]],"Paraguay":[["Almirón",7],["Sanabria",6],["Sosa",4],["G. Gómez",3],["Cubas",3]],"Ghana":[["Kudus",7],["I. Williams",6],["Partey",4],["Mensah",2],["J. Ayew",5]],"Panama":[["Carrasquilla",6],["Y. Bárcenas",5],["Quintero",4],["A. Godoy",3]],"Arabia Saudită":[["Al-Dawsari",7],["Al-Buraikan",5],["Kanno",4],["Al-Najei",3]],"Africa de Sud":[["Mokoena",5],["L. Foster",5],["Zwane",6],["Hlanti",3],["Mvala",3]],"Curaçao":[["Bacuna",5],["Janga",4],["Bakker",3],["Pinas",4]],"Iordania":[["Al-Taamari",6],["Al-Naimat",5],["S. Al-Ajalin",4],["Y. Al-Arab",3]],"Uzbekistan":[["Shomurodov",6],["Yakhshiboev",5],["Sariev",4],["Alijonov",3]],"Qatar":[["Almoez Ali",6],["Afif",5],["Hatem",4],["Khoukhi",2]],"Haiti":[["Pierrot",5],["Délice",4],["Lafrance",3],["Boldor",3]],"Irak":[["Hussein",4],["M. Ali",4],["Younis",3],["Resan",3]],"Noua Zeelandă":[["C. Wood",7],["Stamenić",4],["Cacace",3],["Singh",3]]},"CARDS":{"Mexic":["E. Álvarez","J. Vásquez","J. Sánchez","C. Rodríguez","L. Romo"],"Coreea de Sud":["Kim Min-jae","Lee Jae-sung","Hwang In-beom","Park Yong-woo","Jung Woo-young"],"Africa de Sud":["Mokoena","Hlanti","Mvala","Sithole","Mbatha"],"Cehia":["Souček","Krejčí","Coufal","Provod","Jurásek"],"Canada":["S. Eustáquio","Hutchinson","Vitória","Cornelius","Kone"],"Elveția":["Akanji","Schär","Freuler","Rieder","Manzambi"],"Qatar":["Al-Rawi","Khoukhi","Hatem","Madibo","Al-Hashimi"],"Bosnia-Herțegovina":["Šunjić","Pjanić","Kolašinac","Hadžiahmetović","Tahirović"],"Brazilia":["Casemiro","Marquinhos","Bremer","Fabinho","Paquetá"],"Maroc":["Saïss","Aguerd","Amrabat","Ounahi","Boufal"],"Scoția":["McGinn","Ferguson","Tierney","Cooper","Hanley"],"Haiti":["Lafrance","Saint-Juste","Boldor","Délice","Bordes"],"SUA":["T. Adams","T. Ream","A. Robinson","S. Dest","Y. Musah"],"Paraguay":["J. Alonso","G. Gómez","M. Villasanti","A. Cubas","D. Velázquez"],"Australia":["A. Behich","H. Souttar","C. Burgess","R. McGree","J. Bos"],"Türkiye":["M. Demiral","Ç. Söyüncü","S. Özcan","İ. Yüksek","O. Kökçü"],"Germania":["Kimmich","Rüdiger","Pavlović","Andrich","Mittelstädt"],"Ecuador":["Caicedo","Hincapié","Pacho","Méndez","Plata"],"Coasta de Fildeș":["Kessié","Singo","Kossounou","Diakité","Aurier"],"Curaçao":["Janga","Bakker","Sintnicolaas","Joel","Pinas"],"Olanda":["F. de Jong","Van Dijk","Aké","Reijnders","Gravenberch"],"Japonia":["Endo","Itakura","Tomiyasu","Morita","Tanaka"],"Tunisia":["Skhiri","Talbi","Maâloul","Bronn","Sassi"],"Suedia":["Lindelöf","Olsson","Karlström","Cajuste","Ekdal"],"Belgia":["Tielemans","Faes","Theate","Onana","Mangala"],"Iran":["Ezatolahi","Hajsafi","Pouraliganji","Hosseini","Cheshmi"],"Egipt":["Hegazi","Hamed","Elneny","Ashour","Hany"],"Noua Zeelandă":["Boxall","Reid","Stamenić","Cacace","Singh"],"Spania":["Rodri","Le Normand","Carvajal","Fabián","Gavi"],"Uruguay":["R. Araújo","Bentancur","J. Giménez","Ugarte","Olivera"],"Arabia Saudită":["Al-Bulayhi","Al-Tambakti","Al-Najei","Kanno","Al-Faraj"],"Capul Verde":["R. Lopes","L. Costa","Jamiro","S. Moreira","G. Rodrigues"],"Franța":["Tchouaméni","Upamecano","Saliba","Koundé","Camavinga"],"Senegal":["Koulibaly","P. Gueye","I. Gueye","P. Sarr","L. Camara"],"Norvegia":["K. Ajer","L. Østigård","S. Berge","P. Berg","F. Aursnes"],"Irak":["B. Resan","S. Natiq","M. Younis","M. Ali","A. Hussein"],"Argentina":["Otamendi","C. Romero","De Paul","Mac Allister","Paredes"],"Austria":["Sabitzer","Seiwald","Wöber","Lienhart","Mwene"],"Algeria":["Bensebaini","Mandi","Bennacer","Zerrouki","Atal"],"Iordania":["Y. Al-Arab","M. Al-Mardi","I. Haddad","A. Bani-Yaseen","S. Al-Ajalin"],"Portugalia":["R. Dias","Pepe","R. Neves","Palhinha","Vitinha"],"Columbia":["Lerma","Cuadrado","Mina","Sánchez","Mojica"],"Uzbekistan":["Sariev","Mozgovoy","Alijonov","Shukurov","Yakhshiboev"],"RD Congo":["Mbemba","Mukoko","Mbuku","Kalulu","Mbuyi"],"Anglia":["D. Rice","J. Stones","R. James","E. Anderson","M. Guéhi"],"Croația":["Brozović","Sucic","Pongračić","Stanišić","Šutalo"],"Panama":["Carrasquilla","E. Bárcenas","A. Godoy","J. Gutiérrez","Y. Bárcenas"],"Ghana":["Mensah","Aidoo","Lamptey","Partey","Amartey"]},"GROUP_SCHED":{"A":[["11 iun","15:00","Mexic","Africa de Sud","Estadio Azteca"],["11 iun","22:00","Coreea de Sud","Cehia","Estadio Akron"],["18 iun","12:00","Cehia","Africa de Sud","Mercedes-Benz (Atlanta)"],["18 iun","21:00","Mexic","Coreea de Sud","Estadio Akron"],["24 iun","21:00","Cehia","Mexic","Estadio Azteca"],["24 iun","21:00","Africa de Sud","Coreea de Sud","Estadio BBVA"]],"B":[["12 iun","15:00","Canada","Bosnia-Herțegovina","BMO Field"],["13 iun","15:00","Qatar","Elveția","Levi's Stadium"],["18 iun","15:00","Elveția","Bosnia-Herțegovina","SoFi Stadium"],["18 iun","18:00","Canada","Qatar","BC Place"],["24 iun","15:00","Elveția","Canada","BC Place"],["24 iun","15:00","Bosnia-Herțegovina","Qatar","Lumen Field"]],"C":[["13 iun","18:00","Brazilia","Maroc","MetLife Stadium"],["13 iun","21:00","Haiti","Scoția","Gillette Stadium"],["19 iun","18:00","Scoția","Maroc","Gillette Stadium"],["19 iun","20:30","Brazilia","Haiti","Lincoln Financial"],["24 iun","18:00","Maroc","Haiti","Mercedes-Benz (Atlanta)"],["24 iun","18:00","Scoția","Brazilia","Hard Rock Stadium"]],"D":[["12 iun","21:00","SUA","Paraguay","SoFi Stadium"],["14 iun","00:00","Australia","Türkiye","BC Place"],["19 iun","15:00","SUA","Australia","Lumen Field"],["19 iun","23:00","Türkiye","Paraguay","Levi's Stadium"],["25 iun","22:00","Türkiye","SUA","SoFi Stadium"],["25 iun","22:00","Paraguay","Australia","Levi's Stadium"]],"E":[["14 iun","13:00","Germania","Curaçao","NRG Stadium"],["14 iun","19:00","Coasta de Fildeș","Ecuador","Lincoln Financial"],["20 iun","16:00","Germania","Coasta de Fildeș","BMO Field"],["20 iun","20:00","Ecuador","Curaçao","Arrowhead Stadium"],["25 iun","16:00","Ecuador","Germania","MetLife Stadium"],["25 iun","16:00","Curaçao","Coasta de Fildeș","Lincoln Financial"]],"F":[["14 iun","16:00","Olanda","Japonia","AT&T Stadium"],["14 iun","22:00","Suedia","Tunisia","Estadio BBVA"],["20 iun","13:00","Olanda","Suedia","NRG Stadium"],["21 iun","00:00","Tunisia","Japonia","Estadio BBVA"],["25 iun","19:00","Japonia","Suedia","AT&T Stadium"],["25 iun","19:00","Tunisia","Olanda","Arrowhead Stadium"]],"G":[["15 iun","15:00","Belgia","Egipt","Lumen Field"],["15 iun","21:00","Iran","Noua Zeelandă","SoFi Stadium"],["21 iun","15:00","Belgia","Iran","SoFi Stadium"],["21 iun","21:00","Noua Zeelandă","Egipt","BC Place"],["26 iun","23:00","Egipt","Iran","Lumen Field"],["26 iun","23:00","Noua Zeelandă","Belgia","BC Place"]],"H":[["15 iun","12:00","Spania","Capul Verde","Mercedes-Benz (Atlanta)"],["15 iun","18:00","Arabia Saudită","Uruguay","Hard Rock Stadium"],["21 iun","12:00","Spania","Arabia Saudită","Mercedes-Benz (Atlanta)"],["21 iun","18:00","Uruguay","Capul Verde","Hard Rock Stadium"],["26 iun","20:00","Uruguay","Spania","Estadio Akron"],["26 iun","20:00","Capul Verde","Arabia Saudită","NRG Stadium"]],"I":[["16 iun","15:00","Franța","Senegal","MetLife Stadium"],["16 iun","18:00","Irak","Norvegia","Gillette Stadium"],["22 iun","17:00","Franța","Irak","Lincoln Financial"],["22 iun","20:00","Norvegia","Senegal","MetLife Stadium"],["26 iun","15:00","Senegal","Irak","BMO Field"],["26 iun","15:00","Norvegia","Franța","Gillette Stadium"]],"J":[["16 iun","21:00","Argentina","Algeria","Arrowhead Stadium"],["17 iun","00:00","Austria","Iordania","Levi's Stadium"],["22 iun","13:00","Argentina","Austria","AT&T Stadium"],["22 iun","23:00","Iordania","Algeria","Levi's Stadium"],["27 iun","22:00","Algeria","Austria","Arrowhead Stadium"],["27 iun","22:00","Iordania","Argentina","AT&T Stadium"]],"K":[["17 iun","13:00","Portugalia","RD Congo","NRG Stadium"],["17 iun","22:00","Uzbekistan","Columbia","Estadio Azteca"],["23 iun","13:00","Portugalia","Uzbekistan","NRG Stadium"],["23 iun","22:00","Columbia","RD Congo","Estadio Akron"],["27 iun","19:30","Columbia","Portugalia","Hard Rock Stadium"],["27 iun","19:30","RD Congo","Uzbekistan","Mercedes-Benz (Atlanta)"]],"L":[["17 iun","16:00","Anglia","Croația","AT&T Stadium"],["17 iun","19:00","Ghana","Panama","BMO Field"],["23 iun","16:00","Anglia","Ghana","Gillette Stadium"],["23 iun","19:00","Panama","Croația","BMO Field"],["27 iun","17:00","Croația","Ghana","Lincoln Financial"],["27 iun","17:00","Panama","Anglia","MetLife Stadium"]]},"KO":{"73":["28 iun","15:00","SoFi Stadium"],"74":["29 iun","16:30","Gillette Stadium"],"75":["29 iun","21:00","Estadio BBVA"],"76":["29 iun","13:00","NRG Stadium"],"77":["30 iun","17:00","MetLife Stadium"],"78":["30 iun","13:00","AT&T Stadium"],"79":["30 iun","21:00","Estadio Azteca"],"80":["1 iul","12:00","Mercedes-Benz (Atlanta)"],"81":["1 iul","20:00","Levi's Stadium"],"82":["1 iul","16:00","Lumen Field"],"83":["2 iul","19:00","BMO Field"],"84":["2 iul","15:00","SoFi Stadium"],"85":["2 iul","23:00","BC Place"],"86":["3 iul","18:00","Hard Rock Stadium"],"87":["3 iul","21:30","Arrowhead Stadium"],"88":["3 iul","14:00","AT&T Stadium"],"89":["4 iul","17:00","Lincoln Financial"],"90":["4 iul","13:00","NRG Stadium"],"91":["5 iul","16:00","MetLife Stadium"],"92":["5 iul","20:00","Estadio Azteca"],"93":["6 iul","15:00","AT&T Stadium"],"94":["6 iul","20:00","Lumen Field"],"95":["7 iul","12:00","Mercedes-Benz (Atlanta)"],"96":["7 iul","16:00","BC Place"],"97":["9 iul","16:00","Gillette Stadium"],"98":["10 iul","15:00","SoFi Stadium"],"99":["11 iul","17:00","Hard Rock Stadium"],"100":["11 iul","21:00","Arrowhead Stadium"],"101":["14 iul","15:00","AT&T Stadium"],"102":["15 iul","15:00","Mercedes-Benz (Atlanta)"],"103":["18 iul","17:00","Hard Rock Stadium"],"104":["19 iul","15:00","MetLife Stadium"]},"ANNEXC":"ABCDEFGH:HGBCAFDE ABCDEFGI:CGBDAFEI ABCDEFGJ:CGBDAFEJ ABCDEFGK:CGBDAFEK ABCDEFGL:CGBDAFLE ABCDEFHI:HEBCAFDI ABCDEFHJ:HJBCAFDE ABCDEFHK:HEBCAFDK ABCDEFHL:HFBCADLE ABCDEFIJ:CJBDAFEI ABCDEFIK:CEBDAFIK ABCDEFIL:CEBDAFLI ABCDEFJK:CJBDAFEK ABCDEFJL:CJBDAFLE ABCDEFKL:CEBDAFLK ABCDEGHI:HGBCADEI ABCDEGHJ:HGBCADEJ ABCDEGHK:HGBCADEK ABCDEGHL:HGBCADLE ABCDEGIJ:EGBCADIJ ABCDEGIK:EGBCADIK ABCDEGIL:EGBCADLI ABCDEGJK:EGBCADJK ABCDEGJL:EGBCADLJ ABCDEGKL:EGBCADLK ABCDEHIJ:HJBCADEI ABCDEHIK:HEBCADIK ABCDEHIL:HEBCADLI ABCDEHJK:HJBCADEK ABCDEHJL:HJBCADLE ABCDEHKL:HEBCADLK ABCDEIJK:EJBCADIK ABCDEIJL:EJBCADLI ABCDEIKL:EIBCADLK ABCDEJKL:EJBCADLK ABCDFGHI:HGBCAFDI ABCDFGHJ:HGBCAFDJ ABCDFGHK:HGBCAFDK ABCDFGHL:CGBDAFLH ABCDFGIJ:CGBDAFIJ ABCDFGIK:CGBDAFIK ABCDFGIL:CGBDAFLI ABCDFGJK:CGBDAFJK ABCDFGJL:CGBDAFLJ ABCDFGKL:CGBDAFLK ABCDFHIJ:HJBCAFDI ABCDFHIK:HFBCADIK ABCDFHIL:HFBCADLI ABCDFHJK:HJBCAFDK ABCDFHJL:CJBDAFLH ABCDFHKL:HFBCADLK ABCDFIJK:CJBDAFIK ABCDFIJL:CJBDAFLI ABCDFIKL:CIBDAFLK ABCDFJKL:CJBDAFLK ABCDGHIJ:HGBCADIJ ABCDGHIK:HGBCADIK ABCDGHIL:HGBCADLI ABCDGHJK:HGBCADJK ABCDGHJL:HGBCADLJ ABCDGHKL:HGBCADLK ABCDGIJK:CJBDAGIK ABCDGIJL:CJBDAGLI ABCDGIKL:IGBCADLK ABCDGJKL:CJBDAGLK ABCDHIJK:HJBCADIK ABCDHIJL:HJBCADLI ABCDHIKL:HIBCADLK ABCDHJKL:HJBCADLK ABCDIJKL:IJBCADLK ABCEFGHI:HGBCAFEI ABCEFGHJ:HGBCAFEJ ABCEFGHK:HGBCAFEK ABCEFGHL:HGBCAFLE ABCEFGIJ:EGBCAFIJ ABCEFGIK:EGBCAFIK ABCEFGIL:EGBCAFLI ABCEFGJK:EGBCAFJK ABCEFGJL:EGBCAFLJ ABCEFGKL:EGBCAFLK ABCEFHIJ:HJBCAFEI ABCEFHIK:HEBCAFIK ABCEFHIL:HEBCAFLI ABCEFHJK:HJBCAFEK ABCEFHJL:HJBCAFLE ABCEFHKL:HEBCAFLK ABCEFIJK:EJBCAFIK ABCEFIJL:EJBCAFLI ABCEFIKL:EIBCAFLK ABCEFJKL:EJBCAFLK ABCEGHIJ:HJBCAGEI ABCEGHIK:EGBCAHIK ABCEGHIL:EGBCAHLI ABCEGHJK:HJBCAGEK ABCEGHJL:HJBCAGLE ABCEGHKL:EGBCAHLK ABCEGIJK:EJBCAGIK ABCEGIJL:EJBCAGLI ABCEGIKL:EGBAICLK ABCEGJKL:EJBCAGLK ABCEHIJK:EJBCAHIK ABCEHIJL:EJBCAHLI ABCEHIKL:EIBCAHLK ABCEHJKL:EJBCAHLK ABCEIJKL:EJBAICLK ABCFGHIJ:HGBCAFIJ ABCFGHIK:HGBCAFIK ABCFGHIL:HGBCAFLI ABCFGHJK:HGBCAFJK ABCFGHJL:HGBCAFLJ ABCFGHKL:HGBCAFLK ABCFGIJK:CJBFAGIK ABCFGIJL:CJBFAGLI ABCFGIKL:IGBCAFLK ABCFGJKL:CJBFAGLK ABCFHIJK:HJBCAFIK ABCFHIJL:HJBCAFLI ABCFHIKL:HIBCAFLK ABCFHJKL:HJBCAFLK ABCFIJKL:IJBCAFLK ABCGHIJK:HJBCAGIK ABCGHIJL:HJBCAGLI ABCGHIKL:IGBCAHLK ABCGHJKL:HJBCAGLK ABCGIJKL:IJBCAGLK ABCHIJKL:IJBCAHLK ABDEFGHI:HGBDAFEI ABDEFGHJ:HGBDAFEJ ABDEFGHK:HGBDAFEK ABDEFGHL:HGBDAFLE ABDEFGIJ:EGBDAFIJ ABDEFGIK:EGBDAFIK ABDEFGIL:EGBDAFLI ABDEFGJK:EGBDAFJK ABDEFGJL:EGBDAFLJ ABDEFGKL:EGBDAFLK ABDEFHIJ:HJBDAFEI ABDEFHIK:HEBDAFIK ABDEFHIL:HEBDAFLI ABDEFHJK:HJBDAFEK ABDEFHJL:HJBDAFLE ABDEFHKL:HEBDAFLK ABDEFIJK:EJBDAFIK ABDEFIJL:EJBDAFLI ABDEFIKL:EIBDAFLK ABDEFJKL:EJBDAFLK ABDEGHIJ:HJBDAGEI ABDEGHIK:EGBDAHIK ABDEGHIL:EGBDAHLI ABDEGHJK:HJBDAGEK ABDEGHJL:HJBDAGLE ABDEGHKL:EGBDAHLK ABDEGIJK:EJBDAGIK ABDEGIJL:EJBDAGLI ABDEGIKL:EGBAIDLK ABDEGJKL:EJBDAGLK ABDEHIJK:EJBDAHIK ABDEHIJL:EJBDAHLI ABDEHIKL:EIBDAHLK ABDEHJKL:EJBDAHLK ABDEIJKL:EJBAIDLK ABDFGHIJ:HGBDAFIJ ABDFGHIK:HGBDAFIK ABDFGHIL:HGBDAFLI ABDFGHJK:HGBDAFJK ABDFGHJL:HGBDAFLJ ABDFGHKL:HGBDAFLK ABDFGIJK:FJBDAGIK ABDFGIJL:FJBDAGLI ABDFGIKL:IGBDAFLK ABDFGJKL:FJBDAGLK ABDFHIJK:HJBDAFIK ABDFHIJL:HJBDAFLI ABDFHIKL:HIBDAFLK ABDFHJKL:HJBDAFLK ABDFIJKL:IJBDAFLK ABDGHIJK:HJBDAGIK ABDGHIJL:HJBDAGLI ABDGHIKL:IGBDAHLK ABDGHJKL:HJBDAGLK ABDGIJKL:IJBDAGLK ABDHIJKL:IJBDAHLK ABEFGHIJ:HJBFAGEI ABEFGHIK:EGBFAHIK ABEFGHIL:EGBFAHLI ABEFGHJK:HJBFAGEK ABEFGHJL:HJBFAGLE ABEFGHKL:EGBFAHLK ABEFGIJK:EJBFAGIK ABEFGIJL:EJBFAGLI ABEFGIKL:EGBAIFLK ABEFGJKL:EJBFAGLK ABEFHIJK:EJBFAHIK ABEFHIJL:EJBFAHLI ABEFHIKL:EIBFAHLK ABEFHJKL:EJBFAHLK ABEFIJKL:EJBAIFLK ABEGHIJK:EJBAHGIK ABEGHIJL:EJBAHGLI ABEGHIKL:EGBAIHLK ABEGHJKL:EJBAHGLK ABEGIJKL:EJBAIGLK ABEHIJKL:EJBAIHLK ABFGHIJK:HJBFAGIK ABFGHIJL:HJBFAGLI ABFGHIKL:HGBAIFLK ABFGHJKL:HJBFAGLK ABFGIJKL:IJBFAGLK ABFHIJKL:HJBAIFLK ABGHIJKL:HJBAIGLK ACDEFGHI:HGECAFDI ACDEFGHJ:HGJCAFDE ACDEFGHK:HGECAFDK ACDEFGHL:HGFCADLE ACDEFGIJ:CGJDAFEI ACDEFGIK:CGEDAFIK ACDEFGIL:CGEDAFLI ACDEFGJK:CGJDAFEK ACDEFGJL:CGJDAFLE ACDEFGKL:CGEDAFLK ACDEFHIJ:HJECAFDI ACDEFHIK:HEFCADIK ACDEFHIL:HEFCADLI ACDEFHJK:HJECAFDK ACDEFHJL:HJFCADLE ACDEFHKL:HEFCADLK ACDEFIJK:CJEDAFIK ACDEFIJL:CJEDAFLI ACDEFIKL:CEIDAFLK ACDEFJKL:CJEDAFLK ACDEGHIJ:HGJCADEI ACDEGHIK:HGECADIK ACDEGHIL:HGECADLI ACDEGHJK:HGJCADEK ACDEGHJL:HGJCADLE ACDEGHKL:HGECADLK ACDEGIJK:EGJCADIK ACDEGIJL:EGJCADLI ACDEGIKL:EGICADLK ACDEGJKL:EGJCADLK ACDEHIJK:HJECADIK ACDEHIJL:HJECADLI ACDEHIKL:HEICADLK ACDEHJKL:HJECADLK ACDEIJKL:EJICADLK ACDFGHIJ:HGJCAFDI ACDFGHIK:HGFCADIK ACDFGHIL:HGFCADLI ACDFGHJK:HGJCAFDK ACDFGHJL:CGJDAFLH ACDFGHKL:HGFCADLK ACDFGIJK:CGJDAFIK ACDFGIJL:CGJDAFLI ACDFGIKL:CGIDAFLK ACDFGJKL:CGJDAFLK ACDFHIJK:HJFCADIK ACDFHIJL:HJFCADLI ACDFHIKL:HFICADLK ACDFHJKL:HJFCADLK ACDFIJKL:CJIDAFLK ACDGHIJK:HGJCADIK ACDGHIJL:HGJCADLI ACDGHIKL:HGICADLK ACDGHJKL:HGJCADLK ACDGIJKL:IGJCADLK ACDHIJKL:HJICADLK ACEFGHIJ:HGJCAFEI ACEFGHIK:HGECAFIK ACEFGHIL:HGECAFLI ACEFGHJK:HGJCAFEK ACEFGHJL:HGJCAFLE ACEFGHKL:HGECAFLK ACEFGIJK:EGJCAFIK ACEFGIJL:EGJCAFLI ACEFGIKL:EGICAFLK ACEFGJKL:EGJCAFLK ACEFHIJK:HJECAFIK ACEFHIJL:HJECAFLI ACEFHIKL:HEICAFLK ACEFHJKL:HJECAFLK ACEFIJKL:EJICAFLK ACEGHIJK:EGJCAHIK ACEGHIJL:EGJCAHLI ACEGHIKL:EGICAHLK ACEGHJKL:EGJCAHLK ACEGIJKL:EJICAGLK ACEHIJKL:EJICAHLK ACFGHIJK:HGJCAFIK ACFGHIJL:HGJCAFLI ACFGHIKL:HGICAFLK ACFGHJKL:HGJCAFLK ACFGIJKL:IGJCAFLK ACFHIJKL:HJICAFLK ACGHIJKL:HJICAGLK ADEFGHIJ:HGJDAFEI ADEFGHIK:HGEDAFIK ADEFGHIL:HGEDAFLI ADEFGHJK:HGJDAFEK ADEFGHJL:HGJDAFLE ADEFGHKL:HGEDAFLK ADEFGIJK:EGJDAFIK ADEFGIJL:EGJDAFLI ADEFGIKL:EGIDAFLK ADEFGJKL:EGJDAFLK ADEFHIJK:HJEDAFIK ADEFHIJL:HJEDAFLI ADEFHIKL:HEIDAFLK ADEFHJKL:HJEDAFLK ADEFIJKL:EJIDAFLK ADEGHIJK:EGJDAHIK ADEGHIJL:EGJDAHLI ADEGHIKL:EGIDAHLK ADEGHJKL:EGJDAHLK ADEGIJKL:EJIDAGLK ADEHIJKL:EJIDAHLK ADFGHIJK:HGJDAFIK ADFGHIJL:HGJDAFLI ADFGHIKL:HGIDAFLK ADFGHJKL:HGJDAFLK ADFGIJKL:IGJDAFLK ADFHIJKL:HJIDAFLK ADGHIJKL:HJIDAGLK AEFGHIJK:EGJFAHIK AEFGHIJL:EGJFAHLI AEFGHIKL:EGIFAHLK AEFGHJKL:EGJFAHLK AEFGIJKL:EJIFAGLK AEFHIJKL:EJIFAHLK AEGHIJKL:EJIAHGLK AFGHIJKL:HJIFAGLK BCDEFGHI:CGBDHFEI BCDEFGHJ:HGBCJFDE BCDEFGHK:CGBDHFEK BCDEFGHL:CGBDHFLE BCDEFGIJ:CGBDJFEI BCDEFGIK:CGBDEFIK BCDEFGIL:CGBDEFLI BCDEFGJK:CGBDJFEK BCDEFGJL:CGBDJFLE BCDEFGKL:CGBDEFLK BCDEFHIJ:CJBDHFEI BCDEFHIK:CEBDHFIK BCDEFHIL:CEBDHFLI BCDEFHJK:CJBDHFEK BCDEFHJL:CJBDHFLE BCDEFHKL:CEBDHFLK BCDEFIJK:CJBDEFIK BCDEFIJL:CJBDEFLI BCDEFIKL:CEBDIFLK BCDEFJKL:CJBDEFLK BCDEGHIJ:HGBCJDEI BCDEGHIK:EGBCHDIK BCDEGHIL:EGBCHDLI BCDEGHJK:HGBCJDEK BCDEGHJL:HGBCJDLE BCDEGHKL:EGBCHDLK BCDEGIJK:EGBCJDIK BCDEGIJL:EGBCJDLI BCDEGIKL:EGBCIDLK BCDEGJKL:EGBCJDLK BCDEHIJK:EJBCHDIK BCDEHIJL:EJBCHDLI BCDEHIKL:EIBCHDLK BCDEHJKL:EJBCHDLK BCDEIJKL:EJBCIDLK BCDFGHIJ:HGBCJFDI BCDFGHIK:CGBDHFIK BCDFGHIL:CGBDHFLI BCDFGHJK:HGBCJFDK BCDFGHJL:CGBDHFLJ BCDFGHKL:CGBDHFLK BCDFGIJK:CGBDJFIK BCDFGIJL:CGBDJFLI BCDFGIKL:CGBDIFLK BCDFGJKL:CGBDJFLK BCDFHIJK:CJBDHFIK BCDFHIJL:CJBDHFLI BCDFHIKL:CIBDHFLK BCDFHJKL:CJBDHFLK BCDFIJKL:CJBDIFLK BCDGHIJK:HGBCJDIK BCDGHIJL:HGBCJDLI BCDGHIKL:HGBCIDLK BCDGHJKL:HGBCJDLK BCDGIJKL:IGBCJDLK BCDHIJKL:HJBCIDLK BCEFGHIJ:HGBCJFEI BCEFGHIK:EGBCHFIK BCEFGHIL:EGBCHFLI BCEFGHJK:HGBCJFEK BCEFGHJL:HGBCJFLE BCEFGHKL:EGBCHFLK BCEFGIJK:EGBCJFIK BCEFGIJL:EGBCJFLI BCEFGIKL:EGBCIFLK BCEFGJKL:EGBCJFLK BCEFHIJK:EJBCHFIK BCEFHIJL:EJBCHFLI BCEFHIKL:EIBCHFLK BCEFHJKL:EJBCHFLK BCEFIJKL:EJBCIFLK BCEGHIJK:EJBCHGIK BCEGHIJL:EJBCHGLI BCEGHIKL:EGBCIHLK BCEGHJKL:EJBCHGLK BCEGIJKL:EJBCIGLK BCEHIJKL:EJBCIHLK BCFGHIJK:HGBCJFIK BCFGHIJL:HGBCJFLI BCFGHIKL:HGBCIFLK BCFGHJKL:HGBCJFLK BCFGIJKL:IGBCJFLK BCFHIJKL:HJBCIFLK BCGHIJKL:HJBCIGLK BDEFGHIJ:HGBDJFEI BDEFGHIK:EGBDHFIK BDEFGHIL:EGBDHFLI BDEFGHJK:HGBDJFEK BDEFGHJL:HGBDJFLE BDEFGHKL:EGBDHFLK BDEFGIJK:EGBDJFIK BDEFGIJL:EGBDJFLI BDEFGIKL:EGBDIFLK BDEFGJKL:EGBDJFLK BDEFHIJK:EJBDHFIK BDEFHIJL:EJBDHFLI BDEFHIKL:EIBDHFLK BDEFHJKL:EJBDHFLK BDEFIJKL:EJBDIFLK BDEGHIJK:EJBDHGIK BDEGHIJL:EJBDHGLI BDEGHIKL:EGBDIHLK BDEGHJKL:EJBDHGLK BDEGIJKL:EJBDIGLK BDEHIJKL:EJBDIHLK BDFGHIJK:HGBDJFIK BDFGHIJL:HGBDJFLI BDFGHIKL:HGBDIFLK BDFGHJKL:HGBDJFLK BDFGIJKL:IGBDJFLK BDFHIJKL:HJBDIFLK BDGHIJKL:HJBDIGLK BEFGHIJK:EJBFHGIK BEFGHIJL:EJBFHGLI BEFGHIKL:EGBFIHLK BEFGHJKL:EJBFHGLK BEFGIJKL:EJBFIGLK BEFHIJKL:EJBFIHLK BEGHIJKL:EJIBHGLK BFGHIJKL:HJBFIGLK CDEFGHIJ:CGJDHFEI CDEFGHIK:CGEDHFIK CDEFGHIL:CGEDHFLI CDEFGHJK:CGJDHFEK CDEFGHJL:CGJDHFLE CDEFGHKL:CGEDHFLK CDEFGIJK:CGEDJFIK CDEFGIJL:CGEDJFLI CDEFGIKL:CGEDIFLK CDEFGJKL:CGEDJFLK CDEFHIJK:CJEDHFIK CDEFHIJL:CJEDHFLI CDEFHIKL:CEIDHFLK CDEFHJKL:CJEDHFLK CDEFIJKL:CJEDIFLK CDEGHIJK:EGJCHDIK CDEGHIJL:EGJCHDLI CDEGHIKL:EGICHDLK CDEGHJKL:EGJCHDLK CDEGIJKL:EGICJDLK CDEHIJKL:EJICHDLK CDFGHIJK:CGJDHFIK CDFGHIJL:CGJDHFLI CDFGHIKL:CGIDHFLK CDFGHJKL:CGJDHFLK CDFGIJKL:CGIDJFLK CDFHIJKL:CJIDHFLK CDGHIJKL:HGICJDLK CEFGHIJK:EGJCHFIK CEFGHIJL:EGJCHFLI CEFGHIKL:EGICHFLK CEFGHJKL:EGJCHFLK CEFGIJKL:EGICJFLK CEFHIJKL:EJICHFLK CEGHIJKL:EJICHGLK CFGHIJKL:HGICJFLK DEFGHIJK:EGJDHFIK DEFGHIJL:EGJDHFLI DEFGHIKL:EGIDHFLK DEFGHJKL:EGJDHFLK DEFGIJKL:EGIDJFLK DEFHIJKL:EJIDHFLK DEGHIJKL:EJIDHGLK DFGHIJKL:HGIDJFLK EFGHIJKL:EJIFHGLK"};
+const CODES=D.CODES, TS=D.TS, GROUPS_T=D.GROUPS_T, ATT=D.ATT, CARDS=D.CARDS;
+const GS=D.GROUP_SCHED;
+const TEAMS = Object.keys(TS).sort();
+const HOST_TEAMS = ['SUA','Mexic','Canada'];
+
+// === ENGINE ===
+const KO=D.KO, ANNEXC={};
+D.ANNEXC.split(' ').forEach(t=>{const p=t.split(':');ANNEXC[p[0]]=p[1];});
+const SLOT3=['1A','1B','1D','1E','1G','1I','1K','1L'];            // câștigători de grupă care întâlnesc un loc 3 (ordinea coloanelor din Anexa C)
+const BR32=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];      // ordinea 1/16 în tablou (perechi consecutive -> același meci de optimi)
+const BR16=[89,90,93,94,91,92,95,96];                              // optimi, în ordinea tabloului
+const BQF=[97,98,99,100], BSF=[101,102];
+const TEAMSET=new Set(Object.keys(TS)), CODESET=new Set(Object.values(CODES));
+const GROUP_KEYS='ABCDEFGHIJKL'.split('');
+
+// Mulberry32: PRNG determinist, seed pe 32 de biți (suficient pentru simulare, NU criptografic)
+function mulberry32(seed){
+  let s=seed>>>0;
+  return function(){
+    s|=0; s=s+0x6D2B79F5|0;
+    let t=Math.imul(s^s>>>15,1|s);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return ((t^t>>>14)>>>0)/4294967296;
+  };
+}
+let rnd=Math.random;      // în timpul unei simulări devine PRNG-ul cu seed (fără a modifica Math.random global)
+let SIM_TS=null;          // puterile folosite de simularea în curs
+function randSeed(){
+  try{ if(window.crypto&&crypto.getRandomValues){ return crypto.getRandomValues(new Uint32Array(1))[0]; } }catch(e){}
+  return Math.floor(Math.random()*0x100000000);
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+// === STOCARE SIGURĂ (localStorage poate lipsi: Safari privat, cookies blocate, cotă depășită) ===
+const MEM={};
+function lsTry(k,v){ try{ localStorage.setItem(k,v); delete MEM[k]; return true; }catch(e){ return false; } }
+function lsGet(k){ if(Object.prototype.hasOwnProperty.call(MEM,k)) return MEM[k]; try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ if(lsTry(k,v)) return true; MEM[k]=v; return false; }
+function lsDel(k){ delete MEM[k]; try{ localStorage.removeItem(k); }catch(e){} }
+function lsOK(){ try{ localStorage.setItem('wc2026_probe','1'); localStorage.removeItem('wc2026_probe'); return true; }catch(e){ return false; } }
+
+// Puteri personalizate (editor) — validate la citire
+const STR_KEY='wc2026_v7_strengths';
+const PRESET_KEY='wc2026_v7_presets';
+function cleanTS(o){
+  if(!o||typeof o!=='object'||Array.isArray(o)) return null;
+  const r={};
+  Object.keys(TS).forEach(t=>{ const v=Number(o[t]); r[t]=Number.isFinite(v)?Math.min(5,Math.max(1,v)):TS[t]; });
+  return r;
+}
+function loadCustomTS(){ try{ const raw=lsGet(STR_KEY); return raw?cleanTS(JSON.parse(raw)):null; }catch(e){ return null; } }
+function saveCustomTS(ts){ lsSet(STR_KEY,JSON.stringify(ts)); }
+function clearCustomTS(){ lsDel(STR_KEY); }
+function loadPresets(){
+  try{
+    const p=JSON.parse(lsGet(PRESET_KEY)||'{}'); const out={};
+    if(p&&typeof p==='object'&&!Array.isArray(p)) Object.keys(p).slice(0,50).forEach(n=>{ if(n==='__proto__'||n==='constructor'||n==='prototype') return; const c=cleanTS(p[n]); if(c) out[n.slice(0,40)]=c; });
+    return out;
+  }catch(e){ return {}; }
+}
+function savePresets(p){ lsSet(PRESET_KEY,JSON.stringify(p)); }
+function activeTS(){ return SIM_TS||loadCustomTS()||TS; }
+
+// Toast notification system
+function toast(msg,type){
+  const c=document.getElementById('toast-container');
+  if(!c) return;
+  const t=document.createElement('div');
+  t.className='toast'+(type?' '+type:'');
+  t.textContent=msg;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+function poisson(L){if(L<=0)return 0;const e=Math.exp(-L);let k=0,p=1;do{k++;p*=rnd();}while(p>e);return k-1;}
+function pickW(arr){const t=arr.reduce((s,[_,w])=>s+w,0);let r=rnd()*t;for(const[n,w]of arr){r-=w;if(r<=0)return n;}return arr[arr.length-1][0];}
+// minut: prelungiri 91–120 (et=true) sau timp regulamentar 1–90 + prelungiri 90+n
+function genMin(et){if(et)return 91+Math.floor(rnd()*30);const m=1+Math.floor(rnd()*92);return m>90?'90+'+(m-90):m;}
+function minKey(m){return typeof m==='string'?90+parseInt(m.slice(3),10)/100:m;}
+
+// Tip gol: penalty 9%, lovitură liberă 5%, autogol 3%, altfel joc deschis
+function pickGType(){const r=rnd();if(r<.09)return 'P';if(r<.14)return 'LL';if(r<.17)return 'Ag';return '';}
+
+function pickScorer(team,oppTeam,et,ban,oppBan){
+  const t=pickGType();
+  let player;
+  if(t==='Ag'){
+    let def=CARDS[oppTeam]||['—'];
+    if(oppBan&&oppBan.size){ const f=def.filter(p=>!oppBan.has(p)); if(f.length) def=f; }
+    player=def[Math.floor(rnd()*def.length)];
+  } else {
+    let att=ATT[team]||[['—',1]];
+    if(ban&&ban.size){ const f=att.filter(([n])=>!ban.has(n)); if(f.length) att=f; }   // un jucător suspendat nu marchează
+    player=pickW(att);
+  }
+  return {min:genMin(et), player, team:CODES[team], type:t};
+}
+
+function genCards(idx,h,a,hBan,aBan){
+  const hp=shuffle((CARDS[h]||[]).filter(p=>!hBan.has(p)));
+  const ap=shuffle((CARDS[a]||[]).filter(p=>!aBan.has(p)));
+  const pool=[1,2,2,3,3,3,4,4,5];
+  const hc_n=pool[Math.floor(rnd()*9)];
+  const ac_n=pool[Math.floor(rnd()*9)];
+  const hc=[],ac=[];
+  for(let i=0;i<Math.min(hc_n,hp.length);i++) hc.push([hp[i],15+Math.floor(rnd()*74),'Y']);
+  for(let i=0;i<Math.min(ac_n,ap.length);i++) ac.push([ap[i],15+Math.floor(rnd()*74),'Y']);
+  if(rnd()<.07&&hp.length) hc.push([hp[Math.floor(rnd()*hp.length)],55+Math.floor(rnd()*36),'R']);
+  if(rnd()<.06&&ap.length) ac.push([ap[Math.floor(rnd()*ap.length)],55+Math.floor(rnd()*36),'R']);
+  hc.sort((x,y)=>x[1]-y[1]); ac.sort((x,y)=>x[1]-y[1]);
+  return [hc,ac];
+}
+
+function genStats(h,a,hg,ag,sh,sa){
+  const diff=sh-sa;
+  const poss=Math.max(34,Math.min(66,Math.round(50+diff*4+(rnd()*14-7))));
+  const hsh=Math.floor(rnd()*7)+7+sh+(hg>ag?2:0);
+  const ash=Math.floor(rnd()*7)+7+sa+(ag>hg?2:0);
+  const hshI=Math.round(hsh), ashI=Math.round(ash);
+  const hon=Math.max(hg,Math.min(hshI,hg+2+Math.floor(rnd()*4)));
+  const aon=Math.max(ag,Math.min(ashI,ag+2+Math.floor(rnd()*4)));
+  return {poss:[poss,100-poss],shots:[Math.max(hshI,hon),Math.max(ashI,aon)],on_target:[hon,aon],
+    corners:[2+Math.floor(rnd()*8),2+Math.floor(rnd()*8)],
+    fouls:[7+Math.floor(rnd()*11),7+Math.floor(rnd()*11)],
+    offsides:[Math.floor(rnd()*6),Math.floor(rnd()*6)],
+    saves:[Math.max(0,aon-ag),Math.max(0,hon-hg)],
+    pass_acc:[Math.round(Math.max(70,Math.min(93,78+Math.floor(rnd()*14)-(sa-sh)))),
+              Math.round(Math.max(70,Math.min(93,78+Math.floor(rnd()*14)-(sh-sa))))]};
+}
+
+// Suspendări din cartonașe (regulament: 2 galbene = 1 meci; roșu = 1 meci; galbenele se șterg după grupe și după sferturi)
+function processCards(state,team,cards){
+  state.ylw[team]=state.ylw[team]||{};
+  state.bans[team]=new Set(); // suspendările sunt executate în meciul curent; se calculează cele noi
+  cards.forEach(([p,min,type])=>{
+    if(type==='Y'){
+      state.ylw[team][p]=(state.ylw[team][p]||0)+1;
+      if(state.ylw[team][p]>=2){
+        state.bans[team].add(p);
+        state.ylw[team][p]=0;
+      }
+    } else if(type==='R'){
+      state.bans[team].add(p);
+    }
+  });
+}
+
+// Intensitățile Poisson (aceleași pentru simulare și pentru probabilitățile afișate)
+function lambdasFor(bh,ba,fatigue){
+  const diff=bh-ba;
+  return [Math.min(4.2,(0.85+0.32*bh+Math.max(0,diff*0.32))*fatigue), Math.min(4.2,(0.85+0.32*ba+Math.max(0,-diff*0.32))*fatigue)];
+}
+
+function simMatch(home,away,knockout,forced,date,et,venue,matchIdx,state,phase){
+  const _TS=activeTS();
+  let sh=_TS[home]||2, sa=_TS[away]||2;
+  let bh=sh, ba=sa;
+  if(forced===home) bh+=2.5;
+  if(forced===away) ba+=2.5;
+  // Avantaj gazdă în grupe
+  if(!knockout){
+    if(HOST_TEAMS.includes(home)) bh+=0.3;
+    if(HOST_TEAMS.includes(away)) ba+=0.3;
+  }
+  // Oboseală în semifinale/finale (-7% intensitate goluri)
+  const fatigue=(phase==='sf'||phase==='final'||phase==='third')?0.93:1.0;
+  const lam=lambdasFor(bh,ba,fatigue);
+  let hg=poisson(lam[0]), ag=poisson(lam[1]);
+  let note='', pens=null, etH=0, etA=0;
+
+  if(knockout){
+    if(forced===home && hg<=ag){ hg=ag+1+Math.floor(rnd()*2); }
+    if(forced===away && ag<=hg){ ag=hg+1+Math.floor(rnd()*2); }
+    if(hg===ag){
+      if(rnd()<.45){
+        const gh=forced===home?true:(forced===away?false:rnd()<.5);
+        if(gh){ hg++; etH++; } else { ag++; etA++; }
+        if(rnd()<.2){ if(rnd()<.5){ hg++; etH++; } else { ag++; etA++; } }
+        note='pr.';
+      }
+    }
+    if(forced===home && hg<ag){ [hg,ag]=[ag,hg]; }
+    if(forced===away && ag<hg){ [hg,ag]=[ag,hg]; }
+    etH=Math.min(etH,hg); etA=Math.min(etA,ag);
+    if(hg===ag){
+      let ph=4+Math.floor(rnd()*2), pa=4+Math.floor(rnd()*2);
+      if(ph===pa){ if(rnd()<.5) ph=5; else pa=5; if(ph===pa) pa=4; }
+      if(forced===home && ph<pa){ [ph,pa]=[pa,ph]; }
+      if(forced===away && pa<ph){ [ph,pa]=[pa,ph]; }
+      pens=[ph,pa];
+      note='pen. '+ph+'-'+pa;
+    }
+  }
+
+  // Suspendări în vigoare pentru acest meci
+  const hBan=(state&&state.bans[home])||new Set();
+  const aBan=(state&&state.bans[away])||new Set();
+
+  // Marcatori (golurile din prelungiri primesc minute 91–120)
+  const scorers=[];
+  for(let i=0;i<hg;i++) scorers.push(pickScorer(home,away,i>=hg-etH,hBan,aBan));
+  for(let i=0;i<ag;i++) scorers.push(pickScorer(away,home,i>=ag-etA,aBan,hBan));
+  scorers.sort((x,y)=>minKey(x.min)-minKey(y.min));
+
+  // Cartonașe
+  const [hc,ac]=genCards(matchIdx,home,away,hBan,aBan);
+  const susp={h:[...hBan],a:[...aBan]};
+  if(state){
+    processCards(state,home,hc);
+    processCards(state,away,ac);
+  }
+
+  const stats=genStats(home,away,hg,ag,bh,ba);
+  let winner=null, loser=null;
+  if(hg>ag){ winner=home; loser=away; }
+  else if(ag>hg){ winner=away; loser=home; }
+  else if(pens){
+    if(pens[0]>pens[1]){ winner=home; loser=away; }
+    else { winner=away; loser=home; }
+  }
+
+  return {date,et,venue,home,away,hg,ag,scorers,cards:{h:hc,a:ac},stats,note,pens,winner,loser,susp};
+}
+
+// === CLASAMENTE: departajare conform regulamentului publicat (puncte -> meciuri directe -> general -> fair-play -> tragere la sorți) ===
+function fairPlayOf(team,matches){
+  let p=0;
+  matches.forEach(m=>{ const side=m.home===team?m.cards.h:(m.away===team?m.cards.a:null); if(side) side.forEach(c=>{ p-=(c[2]==='R'?4:1); }); });
+  return p;
+}
+function buildRows(teams,matches){
+  const st={};
+  teams.forEach(t=>st[t]={team:t,P:0,W:0,D:0,L:0,GF:0,GA:0,Pts:0,FP:0});
+  matches.forEach(m=>{
+    const h=st[m.home], a=st[m.away];
+    h.P++; a.P++; h.GF+=m.hg; h.GA+=m.ag; a.GF+=m.ag; a.GA+=m.hg;
+    if(m.hg>m.ag){ h.W++; h.Pts+=3; a.L++; }
+    else if(m.hg<m.ag){ a.W++; a.Pts+=3; h.L++; }
+    else { h.D++; h.Pts+=1; a.D++; a.Pts+=1; }
+  });
+  teams.forEach(t=>{ st[t].FP=fairPlayOf(t,matches); });
+  return teams.map(t=>st[t]);
+}
+function splitBy(arr,cmp){
+  const s=arr.slice().sort(cmp), groups=[];
+  s.forEach(r=>{ const g=groups[groups.length-1]; if(g&&cmp(g[0],r)===0) g.push(r); else groups.push([r]); });
+  return groups;
+}
+const cmpPts=(x,y)=>y.Pts-x.Pts;
+const cmpOverall=(x,y)=>(y.GF-y.GA)-(x.GF-x.GA)||y.GF-x.GF||y.FP-x.FP;
+function lots(groups){ return groups.flatMap(g=>g.length>1?shuffle(g.slice()):g); }
+function resolveTie(rows,matches){
+  if(rows.length<2) return rows;
+  const names=new Set(rows.map(r=>r.team)), h={};
+  rows.forEach(r=>{ h[r.team]={pts:0,gd:0,gf:0}; });
+  matches.forEach(m=>{
+    if(!names.has(m.home)||!names.has(m.away)) return;
+    const a=h[m.home], b=h[m.away];
+    a.gf+=m.hg; b.gf+=m.ag; a.gd+=m.hg-m.ag; b.gd+=m.ag-m.hg;
+    if(m.hg>m.ag) a.pts+=3; else if(m.hg<m.ag) b.pts+=3; else { a.pts++; b.pts++; }
+  });
+  const cmpH=(x,y)=>h[y.team].pts-h[x.team].pts||h[y.team].gd-h[x.team].gd||h[y.team].gf-h[x.team].gf;
+  const groups=splitBy(rows,cmpH);
+  if(groups.length>1) return groups.flatMap(g=>resolveTie(g,matches));   // meciurile directe se reaplică doar între echipele rămase la egalitate
+  return lots(splitBy(rows,cmpOverall));                                  // general (golaveraj, goluri, fair-play), apoi tragere la sorți cu seed
+}
+function computeStandings(teams,matches){
+  return splitBy(buildRows(teams,matches),cmpPts).flatMap(g=>resolveTie(g,matches));
+}
+function rankThirds(thirds){
+  return lots(splitBy(thirds,(x,y)=>y.Pts-x.Pts||cmpOverall(x,y)));
+}
+
+function findGroupOfDeath(){
+  const _TS=activeTS();
+  let max=-1, gk=null;
+  for(const k in GROUPS_T){
+    const s=GROUPS_T[k].reduce((s,t)=>s+(_TS[t]||2),0);
+    if(s>max){ max=s; gk=k; }
+  }
+  return gk;
+}
+
+// strOverride: undefined = puterile curente din editor; null = puterile implicite; obiect = puteri date (replay)
+function simulateTournament(forced,label,seed,strOverride){
+  const useSeed = (seed===undefined||seed===null)?randSeed():(seed>>>0);
+  const prevR=rnd, prevTS=SIM_TS;
+  let ts=null;
+  if(strOverride===undefined) ts=loadCustomTS(); else if(strOverride) ts=cleanTS(strOverride);
+  rnd=mulberry32(useSeed);
+  SIM_TS=ts||TS;
+  let sim;
+  try {
+    sim=_doSimulateTournament(forced,label);
+    sim.seed=useSeed;
+    sim.str=ts?Object.assign({},ts):null;
+  } finally {
+    rnd=prevR; SIM_TS=prevTS;
+  }
+  return sim;
+}
+
+function _doSimulateTournament(forced,label){
+  const sim={id:'s'+Date.now()+Math.floor(Math.random()*1000),ts:Date.now(),forced,label:label||'',version:7,fmt:2,groups:{},thirdRanking:[],r32:[],r16:[],qf:[],sf:[],third:null,final:null,champion:null,deathGroup:findGroupOfDeath()};
+  let mIdx=0;
+  const state={ylw:{},bans:{}};
+
+  for(const k of GROUP_KEYS){
+    let attempts=0, result=null;
+    while(attempts<30){
+      const snapYlw=JSON.parse(JSON.stringify(state.ylw));
+      const snapBans={};
+      for(const t in state.bans) snapBans[t]=new Set(state.bans[t]);
+
+      const matches=[];
+      for(const[date,et,h,a,venue]of GS[k]){
+        matches.push(simMatch(h,a,false,forced,date,et,venue,++mIdx,state,'group'));
+      }
+      const standings=computeStandings(GROUPS_T[k],matches);
+      result={matches,standings};
+      if(!forced||!GROUPS_T[k].includes(forced)) break;
+      const top2=standings.slice(0,2).map(s=>s.team);
+      if(top2.includes(forced)) break;
+      state.ylw=snapYlw;
+      state.bans={};
+      for(const t in snapBans) state.bans[t]=new Set(snapBans[t]);
+      attempts++;
+    }
+    sim.groups[k]=result;
+  }
+  state.ylw={};   // galbenele se șterg după faza grupelor (suspendările deja căpătate rămân)
+
+  const thirds=[];
+  for(const k in sim.groups){
+    const t=sim.groups[k].standings[2];
+    thirds.push({...t,group:k});
+  }
+  sim.thirdRanking=rankThirds(thirds);
+  const W={}, R={};
+  for(const k in sim.groups){ W[k]=sim.groups[k].standings[0].team; R[k]=sim.groups[k].standings[1].team; }
+
+  // Alocarea celor 8 locuri 3 conform Anexei C (tabel cu 495 combinații)
+  const advGroups=sim.thirdRanking.slice(0,8).map(t=>t.group).sort().join('');
+  const asg=ANNEXC[advGroups];
+  if(!asg) throw new Error('Combinație de locuri 3 necunoscută: '+advGroups);
+  const T3={};
+  SLOT3.forEach((s,i)=>{ T3[s]=sim.groups[asg[i]].standings[2].team; });
+
+  const pair={73:[R.A,R.B],74:[W.E,T3['1E']],75:[W.F,R.C],76:[W.C,R.F],77:[W.I,T3['1I']],78:[R.E,R.I],79:[W.A,T3['1A']],80:[W.L,T3['1L']],
+    81:[W.D,T3['1D']],82:[W.G,T3['1G']],83:[R.K,R.L],84:[W.H,R.J],85:[W.B,T3['1B']],86:[W.J,R.H],87:[W.K,T3['1K']],88:[R.D,R.G]};
+  const ko=(no,a,b,ph)=>{ const s=KO[no]; const m=simMatch(a,b,true,ph==='third'?null:forced,s[0],s[1],s[2],++mIdx,state,ph); m.no=no; return m; };
+
+  BR32.forEach(no=>{ sim.r32.push(ko(no,pair[no][0],pair[no][1],'r32')); });
+  const r32W=sim.r32.map(m=>m.winner);
+  for(let i=0;i<8;i++) sim.r16.push(ko(BR16[i],r32W[2*i],r32W[2*i+1],'r16'));
+  const r16W=sim.r16.map(m=>m.winner);
+  for(let i=0;i<4;i++) sim.qf.push(ko(BQF[i],r16W[2*i],r16W[2*i+1],'qf'));
+  state.ylw={};   // galbenele se șterg și după sferturi
+
+  const qfW=sim.qf.map(m=>m.winner);
+  for(let i=0;i<2;i++) sim.sf.push(ko(BSF[i],qfW[2*i],qfW[2*i+1],'sf'));
+  const sfL=sim.sf.map(m=>m.loser);
+  sim.third=ko(103,sfL[0],sfL[1],'third');
+  const sfW=sim.sf.map(m=>m.winner);
+  sim.final=ko(104,sfW[0],sfW[1],'final');
+  sim.champion=sim.final.winner;
+  sim.topScorers=computeTopScorers(sim);
+  return sim;
+}
+
+function computeTopScorers(sim){
+  const counts={};
+  const all=[...Object.values(sim.groups).flatMap(g=>g.matches),...sim.r32,...sim.r16,...sim.qf,...sim.sf,sim.third,sim.final];
+  all.forEach(m=>{ if(!m||!m.scorers) return;
+    m.scorers.forEach(s=>{ if(s.type==='Ag') return; // autogolul nu se contabilizează la golgheter
+      const k=s.player+'|'+s.team;
+      counts[k]=(counts[k]||0)+1;
+    });
+  });
+  return Object.entries(counts).map(([k,c])=>{const i=k.lastIndexOf('|');return{player:k.slice(0,i),team:k.slice(i+1),goals:c};}).filter(x=>x.player!=='—').sort((x,y)=>y.goals-x.goals||x.player.localeCompare(y.player)).slice(0,15);
+}
+
+// Probabilități ale modelului pentru 90 de minute (aceleași intensități Poisson ca în simulare); „egal” = prelungiri/penalty în faza eliminatorie
+function winProb(home,away,forced,fatigued,tsOverride){
+  const _TS=tsOverride||activeTS();
+  let sh=_TS[home]||2, sa=_TS[away]||2;
+  if(forced===home) sh+=2.5;
+  if(forced===away) sa+=2.5;
+  const lam=lambdasFor(sh,sa,fatigued?0.93:1.0), N=14;
+  const pmf=L=>{const p=[Math.exp(-L)];for(let k=1;k<=N;k++)p.push(p[k-1]*L/k);return p;};
+  const ph=pmf(lam[0]), pa=pmf(lam[1]);
+  let w=0,d=0,l=0;
+  for(let i=0;i<=N;i++)for(let j=0;j<=N;j++){const p=ph[i]*pa[j];if(i>j)w+=p;else if(i===j)d+=p;else l+=p;}
+  const t=w+d+l;
+  const r=[w,d,l].map(x=>Math.round(x/t*100));
+  const diff=100-(r[0]+r[1]+r[2]);
+  if(diff){ let mi=0; r.forEach((x,i)=>{if(x>r[mi])mi=i;}); r[mi]+=diff; }
+  return r;
+}
+
+
+// === NARRATIVE GENERATOR ===
+function generateNarrative(sim){
+  const _TS=renderTS||activeTS();
+  const champ=sim.champion, runnerUp=sim.final.loser, third=sim.third.winner;
+  const isF=!!sim.forced;
+  const cStr=_TS[champ]||2, ruStr=_TS[runnerUp]||2;
+  let intro='';
+  if(isF){
+    intro=`<p>Această ediție <em>fictivă</em> a Cupei Mondiale 2026 a fost o <em>simulare forțată</em> — câștigătoarea a fost predeterminată să fie <em>${esc(champ)}</em>. Nimic din cele de mai jos nu s-a întâmplat în realitate.</p>`;
+  } else {
+    const tier=cStr>=4?'una dintre marile favorite':(cStr>=3?'o echipă consistent tare':(cStr>=2?'o surpriză moderată':'o senzație complet neașteptată'));
+    intro=`<p>În această simulare fictivă, <em>${esc(champ)}</em> a câștigat turneul, fiind ${tier} în model (nivel ${cStr}/5). Nu este un rezultat real.</p>`;
+  }
+  
+  // Final analysis
+  const f=sim.final;
+  let finalText='';
+  if(f.pens) finalText=`<p>Finala s-a decis la <em>loviturile de departajare</em> (${f.pens[0]}-${f.pens[1]}) după ${f.hg}-${f.ag} în 120 de minute, ${esc(f.home)} vs ${esc(f.away)}.</p>`;
+  else if(f.note==='pr.') finalText=`<p>Finala s-a tranșat în <em>prelungiri</em>, ${esc(f.home)} ${f.hg}-${f.ag} ${esc(f.away)}.</p>`;
+  else {
+    const goalsTot=f.hg+f.ag;
+    const desc=goalsTot===0?'o partidă blocată tactic, fără goluri':goalsTot===1?'o finală strânsă, decisă printr-un singur gol':goalsTot>=5?'un spectacol cu '+goalsTot+' goluri':'o finală echilibrată ('+goalsTot+' goluri)';
+    finalText=`<p>Finala — ${desc}: ${esc(f.home)} ${f.hg}-${f.ag} ${esc(f.away)}.</p>`;
+  }
+  
+  // Top scorer
+  let scorerText='';
+  if(sim.topScorers&&sim.topScorers.length){
+    const top=sim.topScorers[0];
+    scorerText=`<p>Golgheterul simulat este <em>${esc(top.player)}</em> (${esc(top.team)}) cu <em>${top.goals} goluri</em>${sim.topScorers.length>1&&sim.topScorers[1].goals===top.goals?` (la egalitate cu ${esc(sim.topScorers[1].player)})`:''}.</p>`;
+  }
+  
+  // Surprises and moments
+  const moments=[];
+  // Upset detection: weak team in deep KO
+  const inSF=sim.sf.flatMap(m=>[m.home,m.away]);
+  inSF.forEach(t=>{const s=_TS[t]||2; if(s<=2&&t!==sim.forced) moments.push(`<div class="moment">🌪️ <em>${esc(t)}</em> (nivel ${s}/5) a ajuns până în <em>semifinale</em> — o surpriză majoră.</div>`);});
+  // Group of Death
+  const dg=sim.deathGroup;
+  if(dg&&sim.groups[dg]){
+    const dgStandings=sim.groups[dg].standings;
+    const dgOut=dgStandings.slice(2,4).map(s=>esc(s.team)).join(' și ');
+    moments.push(`<div class="moment">💀 Grupa <em>${esc(dg)}</em> — Grupa Morții. ${dgOut} au fost eliminate în faza grupelor.</div>`);
+  }
+  // Highest scoring match
+  const allM=[...Object.values(sim.groups).flatMap(g=>g.matches),...sim.r32,...sim.r16,...sim.qf,...sim.sf,sim.third,sim.final];
+  const maxGoals=allM.reduce((m,x)=>x&&(x.hg+x.ag)>m.tot?{m:x,tot:x.hg+x.ag}:m,{m:null,tot:0});
+  if(maxGoals.tot>=6) moments.push(`<div class="moment">⚡ Cea mai prolifică partidă: <em>${esc(maxGoals.m.home)} ${maxGoals.m.hg}-${maxGoals.m.ag} ${esc(maxGoals.m.away)}</em> (${maxGoals.tot} goluri).</div>`);
+  // 0-0 finals/SFs
+  const zeros=[sim.final,...sim.sf].filter(m=>m&&m.hg+m.ag===0).length;
+  if(zeros>0) moments.push(`<div class="moment">🛡️ ${zeros} meci(uri) decisive cu 0-0 după 90 — apărarea peste atac.</div>`);
+  // Champion goals total
+  let cGoals=0,cMatches=0;
+  allM.forEach(m=>{ if(!m)return; if(m.home===champ){cGoals+=m.hg;cMatches++;}else if(m.away===champ){cGoals+=m.ag;cMatches++;}});
+  
+  const conclusion=`<p>În drumul spre titlu, <em>${esc(champ)}</em> a marcat <em>${cGoals} goluri în ${cMatches} meciuri</em> (medie ${cMatches?(cGoals/cMatches).toFixed(2):'0.00'}/joc). ${esc(runnerUp)} a pierdut finala, iar locul 3 a revenit echipei <em>${esc(third)}</em> (învingătoare în finala mică, în fața lui ${esc(sim.third.loser)}).</p>`;
+  
+  return `<div class="narrative"><h3>📜 Cronica turneului simulat (fictivă)</h3>${intro}${finalText}${scorerText}${moments.join('')}${conclusion}</div>`;
+}
+
+// === STADIUM STATISTICS ===
+function computeStadiumStats(sims){
+  const v={};
+  sims.forEach(s=>{
+    const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];
+    all.forEach(m=>{ if(!m||!m.venue) return;
+      v[m.venue]=v[m.venue]||{n:0,goals:0,cards:0,reds:0};
+      v[m.venue].n++;
+      v[m.venue].goals+=m.hg+m.ag;
+      v[m.venue].cards+=(m.cards.h.length+m.cards.a.length);
+      v[m.venue].reds+=(m.cards.h.filter(c=>c[2]==='R').length+m.cards.a.filter(c=>c[2]==='R').length);
+    });
+  });
+  return Object.entries(v).map(([n,d])=>({venue:n,...d,avg:d.goals/d.n})).sort((a,b)=>b.avg-a.avg);
+}
+
+// === ACHIEVEMENTS ===
+function computeAchievements(history){
+  const ach=[
+    {id:'first_sim',icon:'🎲',title:'Prima Simulare',desc:'Rulează prima simulare a turneului.',check:h=>h.length>=1,progress:h=>`${h.length}/1`},
+    {id:'ten_sims',icon:'🔟',title:'Decar',desc:'Rulează 10 simulări (orice tip).',check:h=>h.length>=10,progress:h=>`${h.length}/10`},
+    {id:'fifty_sims',icon:'💯',title:'Centurion',desc:'Atinge limita de 50 simulări în istoric.',check:h=>h.length>=50,progress:h=>`${h.length}/50`},
+    {id:'forced_win',icon:'⚡',title:'Vrăjitor',desc:'Forțează o echipă să câștige.',check:h=>h.some(s=>s.forced),progress:h=>`${h.filter(s=>s.forced).length}/1`},
+    {id:'forced_5_teams',icon:'🪄',title:'Magician',desc:'Forțează 5 echipe distincte să câștige.',check:h=>new Set(h.filter(s=>s.forced).map(s=>s.forced)).size>=5,progress:h=>`${new Set(h.filter(s=>s.forced).map(s=>s.forced)).size}/5`},
+    {id:'brazil_wins',icon:'🇧🇷',title:'Hexa?',desc:'Vezi Brazilia campioană într-o simulare aleatorie (fictivă).',check:h=>h.some(s=>!s.forced&&s.champion==='Brazilia'),progress:h=>h.some(s=>!s.forced&&s.champion==='Brazilia')?'1/1':'0/1'},
+    {id:'underdog',icon:'🌪️',title:'Mâna Sorții',desc:'Vezi o echipă tier 1-2 ajungând în SF (natural).',check:h=>{const _TS=activeTS();return h.some(s=>!s.forced&&s.sf.some(m=>{const a=_TS[m.home]||2,b=_TS[m.away]||2;return a<=2||b<=2;}));},progress:h=>'—'},
+    {id:'penalty_final',icon:'🥅',title:'La Loviturile de Departajare',desc:'O finală decisă la penalty-uri.',check:h=>h.some(s=>s.final.pens),progress:h=>`${h.filter(s=>s.final.pens).length}`},
+    {id:'extra_time',icon:'⏱️',title:'Prelungitor',desc:'O finală decisă în prelungiri (fără pen).',check:h=>h.some(s=>s.final.note==='pr.'&&!s.final.pens),progress:h=>'—'},
+    {id:'goal_fest',icon:'🎯',title:'Festival de Goluri',desc:'Un meci cu 8+ goluri.',check:h=>h.some(s=>{const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];return all.some(m=>m&&(m.hg+m.ag)>=8);}),progress:h=>'—'},
+    {id:'shutout',icon:'🛡️',title:'Zid Defensiv',desc:'O finală 0-0 după 90 de minute.',check:h=>h.some(s=>s.final.hg===0&&s.final.ag===0),progress:h=>'—'},
+    {id:'hattrick',icon:'🎩',title:'Hat-trick',desc:'Un jucător marchează 3+ goluri într-un meci.',check:h=>h.some(s=>{const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];return all.some(m=>{if(!m)return false;const c={};m.scorers.forEach(sc=>{if(sc.type!=='Ag'){const k=sc.player+'|'+sc.team;c[k]=(c[k]||0)+1;}});return Object.values(c).some(n=>n>=3);});}),progress:h=>'—'},
+    {id:'top_scorer_10',icon:'⚽',title:'Bombardier',desc:'Un golgheter cu 10+ goluri în turneu.',check:h=>h.some(s=>s.topScorers[0]&&s.topScorers[0].goals>=10),progress:h=>{const max=h.reduce((m,s)=>Math.max(m,s.topScorers[0]?.goals||0),0);return `Best: ${max}g`;}},
+    {id:'all_phases',icon:'🏟️',title:'Explorator',desc:'Vizitează toate cele 13 taburi.',check:h=>visitedTabs.size>=13,progress:h=>`${visitedTabs.size}/13`},
+    {id:'labeled',icon:'✍️',title:'Cronicar',desc:'Adaugă etichete la 5 simulări.',check:h=>h.filter(s=>s.label).length>=5,progress:h=>`${h.filter(s=>s.label).length}/5`},
+    {id:'batch_run',icon:'🔬',title:'Statistician',desc:'Rulează un batch de 100+ simulări.',check:h=>lsGet('wc2026_v7_batch_done')==='1',progress:h=>lsGet('wc2026_v7_batch_done')==='1'?'✅':'0/1'},
+    {id:'editor_used',icon:'🎚️',title:'Inginer',desc:'Modifică strengths-urile cel puțin o dată.',check:h=>lsGet(STR_KEY)!==null,progress:h=>'—'},
+    {id:'shared',icon:'🔗',title:'Partajator',desc:'Generează un link de share.',check:h=>lsGet('wc2026_v7_shared')==='1',progress:h=>'—'},
+    {id:'all_continents',icon:'🌍',title:'Cosmopolit',desc:'Vezi campioane de pe 3 continente diferite.',check:h=>{const cont={'Argentina':'SA','Brazilia':'SA','Uruguay':'SA','Ecuador':'SA','Columbia':'SA','Paraguay':'SA','Anglia':'EU','Spania':'EU','Franța':'EU','Germania':'EU','Italia':'EU','Olanda':'EU','Portugalia':'EU','Belgia':'EU','Croația':'EU','Elveția':'EU','Cehia':'EU','Suedia':'EU','Norvegia':'EU','Austria':'EU','Scoția':'EU','Türkiye':'EU','SUA':'NA','Mexic':'NA','Canada':'NA','Panama':'NA','Haiti':'NA','Curaçao':'NA','Capul Verde':'AF','Senegal':'AF','Maroc':'AF','Tunisia':'AF','Algeria':'AF','Egipt':'AF','Coasta de Fildeș':'AF','Ghana':'AF','Africa de Sud':'AF','RD Congo':'AF','Japonia':'AS','Coreea de Sud':'AS','Iran':'AS','Australia':'AS','Iordania':'AS','Irak':'AS','Uzbekistan':'AS','Arabia Saudită':'AS','Qatar':'AS','Noua Zeelandă':'OC'};const c=new Set();h.filter(s=>!s.forced).forEach(s=>{if(cont[s.champion])c.add(cont[s.champion]);});return c.size>=3;},progress:h=>'—'},
+    {id:'replay',icon:'🔁',title:'Déjà Vu',desc:'Folosește funcția de replay (același seed).',check:h=>lsGet('wc2026_v7_replayed')==='1',progress:h=>'—'}
+  ];
+  return ach.map(a=>({...a,unlocked:a.check(history)}));
+}
+
+const visitedTabs = new Set();
+try { const sv = JSON.parse(lsGet('wc2026_v7_visited')||'[]'); if(Array.isArray(sv)) sv.slice(0,20).forEach(t=>{ if(typeof t==='string'&&/^[a-z0-9]{2,12}$/.test(t)) visitedTabs.add(t); }); } catch(e){}
+
+// === MODAL HELPERS (cu gestionarea focusului) ===
+let _lastFocus=null;
+function showModal(id){
+  const m=document.getElementById(id); if(!m) return;
+  _lastFocus=document.activeElement;
+  m.classList.add('active');
+  const f=m.querySelector('button,input,select,[href]'); if(f) f.focus();
+}
+function hideModal(id){
+  const m=document.getElementById(id);
+  if(m){ m.classList.remove('active'); if(_lastFocus&&_lastFocus.focus&&document.contains(_lastFocus)){ try{_lastFocus.focus();}catch(e){} } _lastFocus=null; }
+}
+function hideAllModals(){document.querySelectorAll('.modal-bg.active').forEach(m=>hideModal(m.id));}
+
+// === STATS ===
+function computeTeamStats(team,sims){
+  const r={team,sims:0,groupQ:0,r16:0,qf:0,sf:0,final:0,champion:0,gs:0,ga:0,matches:0,wins:0,draws:0,losses:0};
+  sims.forEach(s=>{
+    r.sims++;
+    const inR32=s.r32.some(m=>m.home===team||m.away===team);
+    const inR16=s.r16.some(m=>m.home===team||m.away===team);
+    const inQF=s.qf.some(m=>m.home===team||m.away===team);
+    const inSF=s.sf.some(m=>m.home===team||m.away===team);
+    const inFinal=s.final&&(s.final.home===team||s.final.away===team);
+    if(inR32) r.groupQ++; if(inR16) r.r16++; if(inQF) r.qf++; if(inSF) r.sf++;
+    if(inFinal) r.final++; if(s.champion===team) r.champion++;
+    const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];
+    all.forEach(m=>{
+      if(!m) return;
+      if(m.home===team){ r.gs+=m.hg; r.ga+=m.ag; r.matches++; if(m.winner===team) r.wins++; else if(!m.winner) r.draws++; else r.losses++; }
+      else if(m.away===team){ r.gs+=m.ag; r.ga+=m.hg; r.matches++; if(m.winner===team) r.wins++; else if(!m.winner) r.draws++; else r.losses++; }
+    });
+  });
+  return r;
+}
+
+function computeH2H(team,sims){
+  const h2h={};
+  sims.forEach(s=>{
+    const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];
+    all.forEach(m=>{
+      if(!m||(m.home!==team&&m.away!==team)) return;
+      const opp=m.home===team?m.away:m.home;
+      const myG=m.home===team?m.hg:m.ag;
+      const oppG=m.home===team?m.ag:m.hg;
+      h2h[opp]=h2h[opp]||{n:0,w:0,d:0,l:0,gf:0,ga:0};
+      h2h[opp].n++; h2h[opp].gf+=myG; h2h[opp].ga+=oppG;
+      if(m.winner===team) h2h[opp].w++;
+      else if(!m.winner) h2h[opp].d++;
+      else h2h[opp].l++;
+    });
+  });
+  return h2h;
+}
+
+// === TIME ===
+function et2ro(et){let[h,m]=et.split(':').map(Number);h+=7;const nd=h>=24;if(nd)h-=24;return [h.toString().padStart(2,'0')+':'+m.toString().padStart(2,'0'),nd];}
+function nextDate(d){const mt=d.match(/^(\d+) (iun|iul)$/);if(!mt)return d;const n=parseInt(mt[1]),mo=mt[2];if(mo==='iun')return n===30?'1 iul':(n+1)+' iun';return (n+1)+' iul';}
+
+// === VALIDARE STRICTĂ (import fișier, link partajat, istoric din localStorage) ===
+// Datele din surse externe NU sunt de încredere: simularea se reconstruiește din câmpuri permise, cu tipuri și intervale verificate.
+const MAX_JSON_CHARS=12*1024*1024;      // fișier de import
+const MAX_HASH_CHARS=200000;            // link partajat (parte comprimată)
+const MAX_INFLATED=3*1024*1024;         // limită după decompresie (protecție „zip bomb”)
+const HIST_MAX=50;
+
+function vInt(v,a,b){return (typeof v==='number'&&Number.isInteger(v)&&v>=a&&v<=b)?v:null;}
+function vStr(s,max){
+  if(typeof s!=='string') return null;
+  s=s.replace(/[\u0000-\u001f\u007f|]/g,'').trim();
+  return s.length?s.slice(0,max):null;
+}
+function vMin(v){
+  if(typeof v==='number') return vInt(v,0,130);
+  if(typeof v==='string'&&/^90\+\d{1,2}$/.test(v)) return v;
+  return null;
+}
+function vPair(v,a,b){
+  if(!Array.isArray(v)||v.length!==2) return null;
+  const f=x=>(typeof x==='number'&&Number.isFinite(x))?Math.round(x):null;
+  const x=f(v[0]), y=f(v[1]);
+  if(x===null||y===null||x<a||x>b||y<a||y>b) return null;
+  return [x,y];
+}
+
+function sanitizeMatch(m,opt){
+  if(!m||typeof m!=='object') return null;
+  if(typeof m.home!=='string'||typeof m.away!=='string') return null;
+  if(!TEAMSET.has(m.home)||!TEAMSET.has(m.away)||m.home===m.away) return null;
+  if(opt.teams&&(!opt.teams.includes(m.home)||!opt.teams.includes(m.away))) return null;
+  const hg=vInt(m.hg,0,25), ag=vInt(m.ag,0,25);
+  if(hg===null||ag===null) return null;
+  const o={home:m.home,away:m.away,hg,ag};
+  o.date=(typeof m.date==='string'&&/^\d{1,2} (iun|iul)$/.test(m.date))?m.date:'';
+  o.et=(typeof m.et==='string'&&/^\d{1,2}:\d{2}$/.test(m.et))?m.et:'00:00';
+  o.venue=vStr(m.venue,60)||'—';
+  const no=vInt(m.no,1,104); if(no!==null) o.no=no;
+  // prelungiri / penalty
+  let pens=null;
+  if(m.pens!==null&&m.pens!==undefined){ pens=vPair(m.pens,0,30); if(!pens) return null; }
+  o.pens=pens;
+  const note=(typeof m.note==='string')?m.note:'';
+  if(note===''||note==='pr.') o.note=note;
+  else if(pens&&note==='pen. '+pens[0]+'-'+pens[1]) o.note=note;
+  else return null;
+  if(hg===ag&&opt.ko&&!pens) return null;
+  if(pens&&hg!==ag) return null;
+  // marcatori
+  o.scorers=[];
+  const sc=Array.isArray(m.scorers)?m.scorers.slice(0,30):[];
+  for(const s of sc){
+    if(!s||typeof s!=='object') return null;
+    const mn=vMin(s.min), pl=vStr(s.player,40);
+    if(mn===null||pl===null||typeof s.team!=='string'||!CODESET.has(s.team)) return null;
+    const ty=(s.type===''||s.type==='P'||s.type==='LL'||s.type==='Ag')?s.type:null;
+    if(ty===null) return null;
+    o.scorers.push({min:mn,player:pl,team:s.team,type:ty});
+  }
+  // cartonașe
+  o.cards={h:[],a:[]};
+  const cd=(m.cards&&typeof m.cards==='object')?m.cards:{};
+  for(const side of ['h','a']){
+    const arr=Array.isArray(cd[side])?cd[side].slice(0,14):[];
+    for(const c of arr){
+      if(!Array.isArray(c)||c.length<3) return null;
+      const pl=vStr(c[0],40), mn=vInt(c[1],0,130), ty=(c[2]==='Y'||c[2]==='R')?c[2]:null;
+      if(pl===null||mn===null||ty===null) return null;
+      o.cards[side].push([pl,mn,ty]);
+    }
+  }
+  // statistici
+  o.stats={}; const st=(m.stats&&typeof m.stats==='object')?m.stats:{};
+  for(const k of ['poss','shots','on_target','corners','fouls','offsides','saves','pass_acc']){
+    o.stats[k]=vPair(st[k],0,300)||(k==='poss'?[50,50]:[0,0]);
+  }
+  // suspendări
+  o.susp={h:[],a:[]};
+  const su=(m.susp&&typeof m.susp==='object')?m.susp:{};
+  for(const side of ['h','a']){
+    (Array.isArray(su[side])?su[side].slice(0,8):[]).forEach(p=>{ const v=vStr(p,40); if(v) o.susp[side].push(v); });
+  }
+  // câștigător/învins se recalculează din scor (nu se acceptă din date externe)
+  if(hg>ag){ o.winner=o.home; o.loser=o.away; }
+  else if(ag>hg){ o.winner=o.away; o.loser=o.home; }
+  else if(pens){ if(pens[0]>pens[1]){ o.winner=o.home; o.loser=o.away; } else if(pens[1]>pens[0]){ o.winner=o.away; o.loser=o.home; } else return null; }
+  else { o.winner=null; o.loser=null; }
+  return o;
+}
+
+function sanitizeSim(raw){
+  try{
+    if(!raw||typeof raw!=='object'||Array.isArray(raw)) return null;
+    const sim={};
+    sim.id=(typeof raw.id==='string'&&/^[A-Za-z0-9_-]{1,40}$/.test(raw.id))?raw.id:('s'+Date.now()+Math.floor(Math.random()*1000));
+    sim.ts=(typeof raw.ts==='number'&&Number.isFinite(raw.ts)&&raw.ts>0&&raw.ts<4e12)?Math.floor(raw.ts):Date.now();
+    sim.forced=(typeof raw.forced==='string'&&TEAMSET.has(raw.forced))?raw.forced:null;
+    sim.label=vStr(raw.label,80)||'';
+    sim.version=7;
+    sim.fmt=raw.fmt===2?2:0;      // 2 = tablou oficial (Anexa C); 0 = versiuni anterioare (aproximat)
+    const sd=vInt(raw.seed,0,4294967295); if(sd!==null) sim.seed=sd;
+    sim.str=raw.str?cleanTS(raw.str):null;
+    // grupe
+    if(!raw.groups||typeof raw.groups!=='object') return null;
+    sim.groups={};
+    for(const k of GROUP_KEYS){
+      const g=raw.groups[k]; if(!g||!Array.isArray(g.matches)||g.matches.length!==6) return null;
+      const ms=[]; for(const m of g.matches){ const c=sanitizeMatch(m,{teams:GROUPS_T[k],ko:false}); if(!c) return null; ms.push(c); }
+      const rows=buildRows(GROUPS_T[k],ms);
+      // ordinea clasamentului se păstrează din fișier doar dacă e o permutare validă a echipelor grupei
+      let order=null;
+      if(Array.isArray(g.standings)&&g.standings.length===4){
+        const names=g.standings.map(r=>r&&r.team);
+        if(names.every(n=>typeof n==='string')&&new Set(names).size===4&&names.every(n=>GROUPS_T[k].includes(n))) order=names;
+      }
+      sim.groups[k]={matches:ms,standings:order?order.map(n=>rows.find(r=>r.team===n)):computeStandings(GROUPS_T[k],ms)};
+    }
+    // locurile 3
+    const byG={}; GROUP_KEYS.forEach(k=>{ byG[k]=Object.assign({},sim.groups[k].standings[2],{group:k}); });
+    let tOrder=null;
+    if(Array.isArray(raw.thirdRanking)&&raw.thirdRanking.length===12){
+      const gs=raw.thirdRanking.map(t=>t&&t.group);
+      if(gs.every(x=>typeof x==='string'&&byG[x])&&new Set(gs).size===12) tOrder=gs;
+    }
+    sim.thirdRanking=tOrder?tOrder.map(x=>byG[x]):rankThirds(GROUP_KEYS.map(k=>byG[k]));
+    // faza eliminatorie
+    const koList=(arr,n)=>{ if(!Array.isArray(arr)||arr.length!==n) return null; const out=[]; for(const m of arr){ const c=sanitizeMatch(m,{ko:true}); if(!c||!c.winner) return null; out.push(c); } return out; };
+    sim.r32=koList(raw.r32,16); sim.r16=koList(raw.r16,8); sim.qf=koList(raw.qf,4); sim.sf=koList(raw.sf,2);
+    if(!sim.r32||!sim.r16||!sim.qf||!sim.sf) return null;
+    sim.third=sanitizeMatch(raw.third,{ko:true}); sim.final=sanitizeMatch(raw.final,{ko:true});
+    if(!sim.third||!sim.final||!sim.third.winner||!sim.final.winner) return null;
+    sim.champion=sim.final.winner;
+    sim.deathGroup=(typeof raw.deathGroup==='string'&&GROUP_KEYS.includes(raw.deathGroup))?raw.deathGroup:GROUP_KEYS[0];
+    sim.topScorers=computeTopScorers(sim);
+    return sim;
+  }catch(e){ return null; }
+}
+
+// === ISTORIC (cache + validare la citire; scriere cu tratarea depășirii cotei) ===
+const HIST_KEY='wc2026_v5_history';
+let _hist=null;
+function loadHistory(){
+  if(_hist) return _hist;
+  let arr=[];
+  try{ const p=JSON.parse(lsGet(HIST_KEY)||'[]'); if(Array.isArray(p)) arr=p.slice(0,100); }catch(e){}
+  const out=[]; arr.forEach(s=>{ const c=sanitizeSim(s); if(c) out.push(c); });
+  _hist=out.slice(0,HIST_MAX);
+  return _hist;
+}
+// Salvează lista; dacă nu încape în cota localStorage, elimină cele mai vechi simulări. Returnează lista efectiv păstrată.
+function persistHistory(list){
+  const l=list.slice(0,HIST_MAX), parts=l.map(s=>JSON.stringify(s));
+  let n=parts.length;
+  while(n>0){
+    if(lsTry(HIST_KEY,'['+parts.slice(0,n).join(',')+']')){
+      if(n<l.length) toast('Spațiu local insuficient: s-au păstrat ultimele '+n+' simulări.','err');
+      _hist=l.slice(0,n); return _hist;
+    }
+    if(!lsOK()) break;
+    n--;
+  }
+  if(l.length===0){ lsDel(HIST_KEY); _hist=[]; return _hist; }
+  MEM[HIST_KEY]='['+parts.join(',')+']';
+  toast('Stocarea locală nu este disponibilă: istoricul rămâne doar în această sesiune.','err');
+  _hist=l; return _hist;
+}
+function saveSim(sim){ return persistHistory([sim].concat(loadHistory()));}
+function updateSim(id,updates){
+  const h=loadHistory().map(s=>s.id===id?Object.assign({},s,updates):s);
+  persistHistory(h);
+}
+function deleteSim(id){ persistHistory(loadHistory().filter(s=>s.id!==id)); }
+function clearHistory(){ lsDel(HIST_KEY); _hist=[]; }
+window.addEventListener('storage',e=>{ if(e.key===HIST_KEY){ _hist=null; } });
+
+// === URL SHARING (CompressionStream, cu limite) ===
+async function compressString(s){
+  if(!('CompressionStream' in window)) return null;
+  try{
+    const cs=new CompressionStream('deflate');
+    const w=cs.writable.getWriter();
+    w.write(new TextEncoder().encode(s)); w.close();
+    const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());
+    let bin=''; for(let i=0;i<buf.length;i+=8192) bin+=String.fromCharCode.apply(null,buf.subarray(i,i+8192));
+    return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+  }catch(e){return null;}
+}
+async function decompressString(b64){
+  if(!('DecompressionStream' in window)) return null;
+  try{
+    if(b64.length>MAX_HASH_CHARS||!/^[A-Za-z0-9_-]+$/.test(b64)) return null;
+    b64=b64.replace(/-/g,'+').replace(/_/g,'/');
+    while(b64.length%4) b64+='=';
+    const bin=atob(b64), bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+    const ds=new DecompressionStream('deflate');
+    const w=ds.writable.getWriter();
+    w.write(bytes).catch(()=>{}); w.close().catch(()=>{});
+    const rd=ds.readable.getReader(), chunks=[]; let total=0;
+    for(;;){
+      const r=await rd.read();
+      if(r.done) break;
+      total+=r.value.length;
+      if(total>MAX_INFLATED){ try{ await rd.cancel(); }catch(e){} return null; }   // zip bomb
+      chunks.push(r.value);
+    }
+    const all=new Uint8Array(total); let off=0; chunks.forEach(c=>{ all.set(c,off); off+=c.length; });
+    return new TextDecoder('utf-8',{fatal:true}).decode(all);
+  }catch(e){return null;}
+}
+
+// === RENDER ===
+const ESCMAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+function esc(s){return String(s).replace(/[&<>"']/g,c=>ESCMAP[c]);}
+let renderTS=null;   // puterile simulării afișate (pentru probabilități și cronică)
+function fmtTs(ts){const d=new Date(ts);return d.toLocaleDateString('ro-RO',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'});}
+
+function rMatch(m,forced,showProb){
+  const[ro,nd]=m.et==='24:00'?['07:00',true]:et2ro(m.et);
+  const rod=nd?nextDate(m.date):m.date;
+  const timeStr=`<span class="et-time">${esc(m.et)} ET</span> → <span class="ro-time">🇷🇴 ${ro}</span>${nd?` <span class="ro-date">(${esc(rod)})</span>`:''}`;
+  const hcls=m.hg>m.ag?'win':(m.hg<m.ag?'lose':'draw');
+  const acls=m.ag>m.hg?'win':(m.ag<m.hg?'lose':'draw');
+  const isF=forced&&(m.home===forced||m.away===forced);
+  const hC=CODES[m.home], aC=CODES[m.away];
+  
+  // Goal type badge
+  const fmtScorer=s=>{
+    let badge='';
+    if(s.type==='P') badge=' <span class="gtype" title="Penalty">P</span>';
+    else if(s.type==='LL') badge=' <span class="gtype" title="Lovitură liberă">LL</span>';
+    else if(s.type==='Ag') badge=' <span class="gtype og" title="Autogol">A</span>';
+    return `<li><span class="player">${esc(s.player)}</span>${badge} <span class="min">${esc(s.min)}'</span></li>`;
+  };
+  const hSc=m.scorers.filter(s=>s.team===hC).map(fmtScorer).join('')||'<li class="empty">—</li>';
+  const aSc=m.scorers.filter(s=>s.team===aC).map(fmtScorer).join('')||'<li class="empty">—</li>';
+
+  const cardFmt=([p,mn,c])=>`<li class="${c==='Y'?'yellow':'red'}"><span class="ci">${c==='Y'?'🟨':'🟥'}</span> <span class="player">${esc(p)}</span> <span class="min">${mn}'</span></li>`;
+  const hCd=m.cards.h.map(cardFmt).join('')||'<li class="empty">—</li>';
+  const aCd=m.cards.a.map(cardFmt).join('')||'<li class="empty">—</li>';
+
+  // Suspendări vizibile
+  const susH=(m.susp&&m.susp.h&&m.susp.h.length)?`<div class="susp-note">⚠️ <b>${esc(m.home)}</b> — suspendat: ${m.susp.h.map(esc).join(', ')}</div>`:'';
+  const susA=(m.susp&&m.susp.a&&m.susp.a.length)?`<div class="susp-note">⚠️ <b>${esc(m.away)}</b> — suspendat: ${m.susp.a.map(esc).join(', ')}</div>`:'';
+
+  // Win probability (only KO)
+  let probHTML='';
+  if(showProb){
+    const [pH,pD,pA]=winProb(m.home,m.away,forced,m.no>=101,renderTS);
+    probHTML=`<div class="prob-bar" role="img" aria-label="Probabilități ale modelului la 90 de minute: ${esc(m.home)} ${pH}%, egal ${pD}%, ${esc(m.away)} ${pA}%" title="Model simplu, nu pronostic: victorie ${esc(m.home)} / egal după 90' (în eliminatorii: prelungiri sau penalty) / victorie ${esc(m.away)}"><div class="ph" style="width:${pH}%">${pH>10?pH+'%':''}</div><div class="pd" style="width:${pD}%">${pD>10?pD+'%':''}</div><div class="pa" style="width:${pA}%">${pA>10?pA+'%':''}</div></div>`;
+  }
+
+  const s=m.stats;
+  const statRow=(l,h,a,suf='')=>`<div class="stat-row"><span class="stat-h">${h}${suf}</span><span class="stat-label">${l}</span><span class="stat-a">${a}${suf}</span></div>`;
+
+  return `<div class="match${isF?' forced-team':''}">
+<div class="match-header"><span>${m.no?'M'+m.no+' · ':''}${esc(m.date)} · ${esc(m.venue)}</span>${m.note?`<span class="note">${esc(m.note)}</span>`:''}</div>
+<div class="time-row">${timeStr}</div>
+${probHTML}
+<div class="match-score"><span class="team-name ${hcls}">${esc(m.home)}</span><span class="score">${m.hg}<span class="dash">–</span>${m.ag}</span><span class="team-name ${acls}">${esc(m.away)}</span></div>
+${susH}${susA}
+<div class="section-label">⚽ Marcatori</div>
+<div class="two-col"><div class="col-left"><div class="col-team">${esc(m.home)}</div><ul class="goals">${hSc}</ul></div><div class="col-right"><div class="col-team">${esc(m.away)}</div><ul class="goals">${aSc}</ul></div></div>
+<div class="section-label">🟨 Cartonașe</div>
+<div class="two-col"><div class="col-left"><ul class="cards">${hCd}</ul></div><div class="col-right"><ul class="cards">${aCd}</ul></div></div>
+<div class="section-label">📊 Statistici</div>
+<div class="stats-block">
+<div class="poss-bar"><div class="h" style="width:${s.poss[0]}%">${s.poss[0]}%</div><div class="a" style="width:${s.poss[1]}%">${s.poss[1]}%</div></div>
+<div class="stat-grid">${statRow('Șuturi',s.shots[0],s.shots[1])}${statRow('Pe poartă',s.on_target[0],s.on_target[1])}${statRow('Cornere',s.corners[0],s.corners[1])}${statRow('Faulturi',s.fouls[0],s.fouls[1])}${statRow('Offside',s.offsides[0],s.offsides[1])}${statRow('Parade',s.saves[0],s.saves[1])}${statRow('Pase %',s.pass_acc[0],s.pass_acc[1],'%')}</div>
+</div></div>`;
+}
+
+function rStandings(st,forced){
+  return `<table class="standings"><thead><tr><th>#</th><th>Echipă</th><th>M</th><th>V</th><th>E</th><th>Î</th><th>GS</th><th>GP</th><th>GD</th><th>Pct</th></tr></thead><tbody>${st.map((r,i)=>{const cls=i===0?'q1':i===1?'q2':i===2?'q3':'out';const gd=r.GF-r.GA;const gds=gd>0?'+'+gd:String(gd);const fc=forced===r.team?' style="background:rgba(255,126,182,.08)"':'';return `<tr class="${cls}"${fc}><td>${i+1}</td><td class="team">${esc(r.team)}</td><td>${r.P}</td><td>${r.W}</td><td>${r.D}</td><td>${r.L}</td><td>${r.GF}</td><td>${r.GA}</td><td>${gds}</td><td class="pts">${r.Pts}</td></tr>`;}).join('')}</tbody></table>`;
+}
+
+function rGroup(k,g,forced,death){
+  const matches=g.matches.map(m=>rMatch(m,forced,false)).join('');
+  const dBadge=death===k?'<span class="death-badge">💀 Grupa morții</span>':'';
+  return `<article class="group${death===k?' death':''}"><div class="group-header"><h3>Grupa ${k}</h3>${dBadge}</div>
+<div class="group-content"><h4>Meciuri</h4>${matches}<h4>Clasament</h4>${rStandings(g.standings,forced)}
+<div class="legend"><span class="leg q1">●</span> 1 <span class="leg q2">●</span> 2 <span class="leg q3">●</span> 3 <span class="leg out">●</span> 4</div>
+</div></article>`;
+}
+
+function rThirds(thirds){
+  return `<table class="standings"><thead><tr><th>#</th><th>Echipă (Grupa)</th><th>Pct</th><th>GD</th><th>GS</th><th>Status</th></tr></thead><tbody>${thirds.map((t,i)=>{const cls=i<8?'q1':'out';const gd=t.GF-t.GA;const gds=gd>0?'+'+gd:String(gd);return `<tr class="${cls}"><td>${i+1}</td><td class="team">${esc(t.team)} (${esc(t.group)})</td><td>${t.Pts}</td><td>${gds}</td><td>${t.GF}</td><td>${i<8?'Avansează':'Eliminată'}</td></tr>`;}).join('')}</tbody></table>`;
+}
+
+function rKO(matches,forced,pA,pB){
+  const half=Math.floor(matches.length/2);
+  const a=matches.slice(0,half), b=matches.slice(half);
+  return `<div class="ko-pathway"><h4>${pA}</h4>${a.map(m=>rMatch(m,forced,true)).join('')}</div><div class="ko-pathway"><h4>${pB}</h4>${b.map(m=>rMatch(m,forced,true)).join('')}</div>`;
+}
+
+// === BRACKET SVG ===
+function rBracketSVG(sim){
+  // 8 R16 → 4 QF → 2 SF → 1 Final + Locul 3
+  // Layout: stânga 4 R16, centru 2 QF, dreapta 1 SF (sus); jos identic + final centru
+  // Format compact: 4 fazele orizontal
+  const W=1180, H=720;
+  const bw=160, bh=44; // node box width/height
+  const cols=[60,300,540,780,990]; // x positions for R16, QF, SF, FINAL, podium
+  const f=sim.forced;
+  // Top pathway (R16 1-4 → QF 1-2 → SF 1)
+  // Bottom pathway (R16 5-8 → QF 3-4 → SF 2)
+  // Final in center
+  
+  // Y positions for R16 (8 boxes total: 4 top + 4 bottom)
+  const topY=[40,140,240,340];
+  const botY=[400,500,600,680];
+  
+  const drawNode=(m,x,y,forced)=>{
+    const isF=forced&&(m.home===forced||m.away===forced);
+    const winH=m.winner===m.home;
+    const winA=m.winner===m.away;
+    const cls=isF?'forced':(m.winner?'win':'');
+    const note=m.note?` ${m.note}`:'';
+    return `<g transform="translate(${x},${y})">
+<rect class="node-box ${cls}" width="${bw}" height="${bh}" rx="4"/>
+<text class="node-text ${winH?'win':'lose'}" x="6" y="16">${esc(m.home.length>14?m.home.substr(0,13)+'…':m.home)}</text>
+<text class="node-score ${winH?'':'lose'}" x="${bw-6}" y="16">${m.hg}</text>
+<text class="node-text ${winA?'win':'lose'}" x="6" y="34">${esc(m.away.length>14?m.away.substr(0,13)+'…':m.away)}</text>
+<text class="node-score ${winA?'':'lose'}" x="${bw-6}" y="34">${m.ag}</text>
+${m.note?`<text fill="#a0a8b8" font-size="8" x="${bw/2}" y="42" text-anchor="middle">${esc(m.note)}</text>`:''}
+</g>`;
+  };
+  
+  let svg=`<svg class="bracket-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  
+  // Phase labels
+  ['OPTIMI','SFERTURI','SEMIFINALE','FINALA'].forEach((lbl,i)=>{
+    svg+=`<text class="phase-label" x="${cols[i]+bw/2}" y="20" text-anchor="middle">${lbl}</text>`;
+  });
+  
+  // Top R16 (4 matches)
+  sim.r16.slice(0,4).forEach((m,i)=>{ svg+=drawNode(m,cols[0],topY[i],f); });
+  // Bottom R16 (4 matches)
+  sim.r16.slice(4,8).forEach((m,i)=>{ svg+=drawNode(m,cols[0],botY[i],f); });
+  
+  // Top QF (2)
+  const qfTopY=[90,290], qfBotY=[450,640];
+  sim.qf.slice(0,2).forEach((m,i)=>{ svg+=drawNode(m,cols[1],qfTopY[i],f); });
+  sim.qf.slice(2,4).forEach((m,i)=>{ svg+=drawNode(m,cols[1],qfBotY[i],f); });
+  
+  // SF
+  const sfTopY=190, sfBotY=545;
+  svg+=drawNode(sim.sf[0],cols[2],sfTopY,f);
+  svg+=drawNode(sim.sf[1],cols[2],sfBotY,f);
+  
+  // Final
+  const finalY=(sfTopY+sfBotY)/2;
+  svg+=drawNode(sim.final,cols[3],finalY,f);
+  
+  // Champion trophy + name
+  svg+=`<text class="champion-trophy" x="${cols[3]+bw/2}" y="${finalY-12}">🏆 ${esc(sim.champion)} (sim.)</text>`;
+  
+  // Connectors (simple L-shaped)
+  const conn=(x1,y1,x2,y2,isF)=>{
+    const mx=(x1+x2)/2;
+    return `<path class="connector${isF?' forced':''}" d="M${x1},${y1} L${mx},${y1} L${mx},${y2} L${x2},${y2}"/>`;
+  };
+  // R16 → QF connectors
+  // Simpler: just connect midpoints
+  const midY = (a,b)=>(a+b)/2+bh/2;
+  // R16(0) → QF(0)
+  svg+=conn(cols[0]+bw,topY[0]+bh/2, cols[1],qfTopY[0]+bh/2, false);
+  svg+=conn(cols[0]+bw,topY[1]+bh/2, cols[1],qfTopY[0]+bh/2, false);
+  svg+=conn(cols[0]+bw,topY[2]+bh/2, cols[1],qfTopY[1]+bh/2, false);
+  svg+=conn(cols[0]+bw,topY[3]+bh/2, cols[1],qfTopY[1]+bh/2, false);
+  svg+=conn(cols[0]+bw,botY[0]+bh/2, cols[1],qfBotY[0]+bh/2, false);
+  svg+=conn(cols[0]+bw,botY[1]+bh/2, cols[1],qfBotY[0]+bh/2, false);
+  svg+=conn(cols[0]+bw,botY[2]+bh/2, cols[1],qfBotY[1]+bh/2, false);
+  svg+=conn(cols[0]+bw,botY[3]+bh/2, cols[1],qfBotY[1]+bh/2, false);
+  // QF → SF
+  svg+=conn(cols[1]+bw,qfTopY[0]+bh/2, cols[2],sfTopY+bh/2, false);
+  svg+=conn(cols[1]+bw,qfTopY[1]+bh/2, cols[2],sfTopY+bh/2, false);
+  svg+=conn(cols[1]+bw,qfBotY[0]+bh/2, cols[2],sfBotY+bh/2, false);
+  svg+=conn(cols[1]+bw,qfBotY[1]+bh/2, cols[2],sfBotY+bh/2, false);
+  // SF → Final
+  svg+=conn(cols[2]+bw,sfTopY+bh/2, cols[3],finalY+bh/2, false);
+  svg+=conn(cols[2]+bw,sfBotY+bh/2, cols[3],finalY+bh/2, false);
+  
+  svg+='</svg>';
+  return `<div class="bracket-wrap"><h3>🏆 Diagrama tabloului (simulat) — Optimi → Finala</h3>${svg}<p class="note-line">Echipele câștigătoare sunt evidențiate. Echipa forțată e marcată cu roz.</p></div>`;
+}
+
+function rFinale(sim){
+  const f=sim.final, t=sim.third;
+  const isF=!!sim.forced;
+  const ts=sim.topScorers;
+  const topGB=ts[0]||{player:'—',goals:0};
+  const tsRows=ts.slice(0,12).map((t,i)=>`<tr><td>${i+1}</td><td>${esc(t.player)}</td><td>${esc(t.team)}</td><td class="pts">${t.goals}</td></tr>`).join('');
+  
+  return `<div class="champion-banner${isF?' forced':''}">
+<p class="champion-label">CÂȘTIGĂTOAREA SIMULĂRII${isF?' · FORȚAT':''}</p>
+<h2 class="champion-name">${esc(sim.champion.toUpperCase())}</h2>
+<p class="champion-sub">${esc(f.home)} ${f.hg}-${f.ag} ${esc(f.away)} ${f.note?'· '+esc(f.note):''}</p>
+<span class="sim-tag">Simulare fictivă — nu este rezultatul real</span>
+</div>
+${generateNarrative(sim)}
+<div class="podium">
+<div class="podium-pos"><span class="medal">🥈</span><strong>${esc(f.loser)}</strong><span>Locul 2</span></div>
+<div class="podium-pos pos-1"><span class="medal">🏆</span><strong>${esc(sim.champion)}</strong><span>Campioană</span></div>
+<div class="podium-pos"><span class="medal">🥉</span><strong>${esc(t.winner)}</strong><span>Locul 3</span></div>
+<div class="podium-pos"><span class="medal" aria-hidden="true">4</span><strong>${esc(t.loser)}</strong><span>Locul 4</span></div>
+</div>
+${rBracketSVG(sim)}
+<h3 style="margin:1.5rem 0 .6rem;color:var(--accent);font-size:.95rem;text-transform:uppercase;letter-spacing:.08em">Finala Mică · Locul 3</h3>
+${rMatch(t,sim.forced,true)}
+<h3 style="margin:1.5rem 0 .6rem;color:var(--accent);font-size:.95rem;text-transform:uppercase;letter-spacing:.08em">FINALA — MetLife Stadium</h3>
+${rMatch(f,sim.forced,true)}
+<div class="top-scorers-table" style="margin-top:1.5rem">
+<h4>🥇 Top marcatori (fictivi, generați aleatoriu)</h4>
+<p style="font-size:.85rem;color:var(--text-dim);margin-bottom:.6rem">Lider: <b style="color:var(--accent)">${esc(topGB.player)}</b> — <b>${topGB.goals} goluri</b></p>
+<table class="standings"><thead><tr><th>#</th><th>Jucător</th><th>Țară</th><th>Goluri</th></tr></thead><tbody>${tsRows}</tbody></table>
+</div>`;
+}
+
+// === HISTORY ===
+let compareSelected=[];
+let historyFilter={type:'all',search:'',sort:'newest'};
+
+function applyHistoryFilter(h){
+  let r=h.filter(s=>{
+    if(historyFilter.type==='natural'&&s.forced) return false;
+    if(historyFilter.type==='forced'&&!s.forced) return false;
+    if(historyFilter.search){
+      const q=historyFilter.search.toLowerCase();
+      const hay=(s.champion+' '+(s.forced||'')+' '+(s.label||'')+' '+s.final.loser).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  if(historyFilter.sort==='oldest') r.sort((a,b)=>a.ts-b.ts);
+  else if(historyFilter.sort==='champion') r.sort((a,b)=>(a.champion||'').localeCompare(b.champion||''));
+  else if(historyFilter.sort==='goals'){
+    const tg=s=>{let t=0;[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final].forEach(m=>{if(m)t+=m.hg+m.ag;});return t;};
+    r.sort((a,b)=>tg(b)-tg(a));
+  }
+  else r.sort((a,b)=>b.ts-a.ts);
+  return r;
+}
+
+function rHistory(){
+  const h=loadHistory();
+  if(h.length===0) return `<div class="empty-msg"><h3>Nicio simulare în istoric</h3><p>Apasă <b style="color:var(--green)">🎲 Rulează</b> sus pentru a începe.</p></div>`;
+  const filterBar=`<div class="filter-bar">
+<label>Tip:</label><select id="f-type">
+<option value="all"${historyFilter.type==='all'?' selected':''}>Toate</option>
+<option value="natural"${historyFilter.type==='natural'?' selected':''}>Doar naturale</option>
+<option value="forced"${historyFilter.type==='forced'?' selected':''}>Doar forțate</option>
+</select>
+<label>Sortare:</label><select id="f-sort">
+<option value="newest"${historyFilter.sort==='newest'?' selected':''}>Cele mai noi</option>
+<option value="oldest"${historyFilter.sort==='oldest'?' selected':''}>Cele mai vechi</option>
+<option value="champion"${historyFilter.sort==='champion'?' selected':''}>Campioană (A-Z)</option>
+<option value="goals"${historyFilter.sort==='goals'?' selected':''}>Total goluri (desc)</option>
+</select>
+<label>Caută:</label><input id="f-search" type="text" placeholder="campioană, etichetă..." value="${esc(historyFilter.search)}">
+<span style="color:var(--text-dim);font-size:.74rem;margin-left:auto">${applyHistoryFilter(h).length} / ${h.length}</span>
+</div>`;
+  const filtered=applyHistoryFilter(h);
+  const items=filtered.map(s=>{
+    const isCur=s.id===currentSimId;
+    const champCls=s.forced?'forced':'';
+    const cmpSel=compareSelected.includes(s.id)?'selected':'';
+    return `<div class="history-item ${isCur?'current':''} ${s.forced?'forced':''}" data-id="${esc(s.id)}">
+<span class="hist-id">${esc(s.id.substr(0,9))}</span>
+<span class="hist-time">${fmtTs(s.ts)}${s.forced?` <span style="color:var(--forced);font-weight:700">⚡ ${esc(s.forced)}</span>`:''}</span>
+${s.label?`<span class="hist-label">"${esc(s.label)}"</span>`:''}
+<span class="hist-champ ${champCls}">🏆 ${esc(s.champion)}</span>
+<span class="hist-finals">vs ${esc(s.final.loser)} (${s.final.hg}-${s.final.ag}${s.final.note?' '+esc(s.final.note):''})</span>
+<span class="hist-actions">
+<button class="view" data-id="${esc(s.id)}">👁 Vezi</button>
+<button class="repl" data-id="${esc(s.id)}" title="Re-rulează cu același seed">🔁 Replay</button>
+<button class="cmp ${cmpSel}" data-id="${esc(s.id)}">${cmpSel?'✓':'⚖️'} Compară</button>
+<button class="ren" data-id="${esc(s.id)}">✎ Etichetă</button>
+<button class="shr" data-id="${esc(s.id)}">🔗 Share</button>
+<button class="del" data-id="${esc(s.id)}" aria-label="Șterge simularea" title="Șterge simularea">×</button>
+</span></div>`;
+  }).join('');
+  const cmpInfo=compareSelected.length>0?`<div class="compare-bar"><span>Selectate pt comparare: <b>${compareSelected.length}/4</b></span>${compareSelected.length>=2?'<button id="btn-compare-go">Vezi comparare →</button>':''}<button id="btn-cmp-clear">Anulează</button></div>`:'';
+  return filterBar+cmpInfo+`<div class="history-list">${items||'<div class="empty-msg">Niciun rezultat pentru filtre.</div>'}</div>`;
+}
+
+function rAggregate(){
+  const h=loadHistory();
+  if(h.length===0) return `<div class="empty-msg"><h3>Nu există simulări</h3><p>Rulează cel puțin o simulare pentru statistici.</p></div>`;
+  const nat=h.filter(s=>!s.forced), fcd=h.filter(s=>s.forced);
+  const natChamps={};
+  nat.forEach(s=>{natChamps[s.champion]=(natChamps[s.champion]||0)+1;});
+  const natChampList=Object.entries(natChamps).sort((a,b)=>b[1]-a[1]);
+  const fcdByTeam={};
+  fcd.forEach(s=>{ if(!fcdByTeam[s.forced]) fcdByTeam[s.forced]={total:0,wins:0}; fcdByTeam[s.forced].total++; if(s.champion===s.forced) fcdByTeam[s.forced].wins++; });
+  const fcdList=Object.entries(fcdByTeam).sort((a,b)=>b[1].total-a[1].total);
+  let totGoals=0, totMatches=0;
+  nat.forEach(s=>{const all=[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final];all.forEach(m=>{if(m){totGoals+=(m.hg+m.ag);totMatches++;}});});
+  const avgGPM=totMatches>0?(totGoals/totMatches).toFixed(2):'—';
+  const finalists={};
+  nat.forEach(s=>{finalists[s.final.home]=(finalists[s.final.home]||0)+1;finalists[s.final.away]=(finalists[s.final.away]||0)+1;});
+  const finList=Object.entries(finalists).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const ts={};
+  nat.forEach(s=>{s.topScorers.forEach(t=>{const k=t.player+'|'+t.team;ts[k]=(ts[k]||0)+t.goals;});});
+  const tsList=Object.entries(ts).map(([k,g])=>{const[p,t]=k.split('|');return{p,t,g};}).sort((a,b)=>b.g-a.g).slice(0,10);
+  const maxN=natChampList[0]?natChampList[0][1]:1;
+  const natChampsHTML=natChampList.length===0?'<li style="color:var(--text-dim);font-style:italic">Nicio simulare naturală</li>':natChampList.map(([t,c],i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(t)}<div class="bar-track"><div class="bar-fill" style="width:${c/maxN*100}%"></div></div></span><span class="count">${c}</span><span class="pct">${(c/nat.length*100).toFixed(1)}%</span></li>`).join('');
+  const fcdHTML=fcdList.length===0?'<li style="color:var(--text-dim);font-style:italic">Nicio simulare forțată</li>':fcdList.map(([t,d],i)=>{const r=(d.wins/d.total*100).toFixed(0);return `<li><span class="rank">${i+1}.</span><span class="name">${esc(t)}<div class="bar-track"><div class="bar-fill" style="width:${r}%;background:var(--forced)"></div></div></span><span class="count">${d.wins}/${d.total}</span><span class="pct">${r}%</span></li>`;}).join('');
+  return `<div class="agg-grid">
+<div class="agg-card"><h4>📈 Statistici Generale</h4>
+<div class="agg-stat"><span class="label">Simulări naturale</span><span class="value">${nat.length}</span></div>
+<div class="agg-stat"><span class="label">Simulări forțate</span><span class="value">${fcd.length}</span></div>
+<div class="agg-stat"><span class="label">Total simulări</span><span class="value">${h.length}</span></div>
+<div class="agg-stat"><span class="label">Medie goluri/meci (nat.)</span><span class="value">${avgGPM}</span></div>
+<div class="agg-stat"><span class="label">Total meciuri analizate</span><span class="value">${totMatches}</span></div></div>
+<div class="agg-card"><h4>🏆 Campioane frecvente (simulări aleatorii, fictive)</h4><ul class="champ-list">${natChampsHTML}</ul></div>
+<div class="agg-card forced-card"><h4>⚡ Rata Succes Forțări</h4><ul class="champ-list">${fcdHTML}</ul><p style="font-size:.72rem;color:var(--text-dim);margin-top:.6rem;font-style:italic">Forțarea garantează victoria; sub 100% indică sim. v5 vechi.</p></div>
+<div class="agg-card"><h4>🥇 Top 10 Finaliste Cumulative</h4><ul class="champ-list">${finList.map(([t,c],i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(t)}<div class="bar-track"><div class="bar-fill" style="width:${c/(finList[0]?.[1]||1)*100}%"></div></div></span><span class="count">${c}</span><span class="pct">${(c/nat.length*100).toFixed(0)}%</span></li>`).join('')||'<li style="color:var(--text-dim);font-style:italic">Niciun finalist</li>'}</ul></div>
+<div class="agg-card full"><h4>⚽ Top 10 Marcatori Cumulativ</h4><ul class="champ-list">${tsList.length===0?'<li style="color:var(--text-dim);font-style:italic">Niciun marcator</li>':tsList.map((s,i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(s.p)} (${esc(s.t)})<div class="bar-track"><div class="bar-fill" style="width:${s.g/tsList[0].g*100}%"></div></div></span><span class="count">${s.g}</span><span class="pct">goluri</span></li>`).join('')}</ul></div>
+</div>
+<div style="margin-top:1rem">${rStadiumStats()}</div>`;
+}
+
+function rPerTeam(){
+  const h=loadHistory();
+  if(h.length===0) return `<div class="empty-msg"><h3>Niciun istoric</h3><p>Rulează simulări pentru statistici per echipă.</p></div>`;
+  const sel=document.getElementById('team-select')?.value||'Brazilia';
+  const nat=h.filter(s=>!s.forced);
+  if(nat.length===0) return `<div class="team-select"><label>Echipă:</label><select id="team-select">${TEAMS.map(t=>`<option${t===sel?' selected':''}>${esc(t)}</option>`).join('')}</select></div><div class="empty-msg">Doar simulările naturale contribuie. Niciuna încă.</div>`;
+  
+  const stats=computeTeamStats(sel,nat);
+  const h2h=computeH2H(sel,nat);
+  const h2hSorted=Object.entries(h2h).sort((a,b)=>b[1].n-a[1].n).slice(0,15);
+  
+  const N=stats.sims;
+  const pct=v=>N>0?(v/N*100).toFixed(1)+'%':'—';
+  const progRow=(lbl,v,total)=>{const p=total>0?v/total*100:0;return `<div class="progress-row"><span class="lbl">${lbl}</span><div class="progress-track"><div class="progress-fill" style="width:${p}%"></div></div><span class="val">${v}/${total} (${p.toFixed(0)}%)</span></div>`;};
+  
+  return `<div class="team-select"><label>Echipă:</label><select id="team-select">${TEAMS.map(t=>`<option${t===sel?' selected':''}>${esc(t)}</option>`).join('')}</select><span style="color:var(--text-dim);font-size:.78rem">analiză peste ${nat.length} simulări naturale</span></div>
+<div class="team-stats">
+<div class="agg-card"><h4>🏁 Parcurs ${esc(sel)}</h4>
+${progRow('Calificare grupe',stats.groupQ,N)}
+${progRow('Optimi (R16)',stats.r16,N)}
+${progRow('Sferturi',stats.qf,N)}
+${progRow('Semifinale',stats.sf,N)}
+${progRow('Finală',stats.final,N)}
+${progRow('Campioană 🏆',stats.champion,N)}
+</div>
+<div class="agg-card"><h4>📊 Statistici Cumulate</h4>
+<div class="agg-stat"><span class="label">Total meciuri jucate</span><span class="value">${stats.matches}</span></div>
+<div class="agg-stat"><span class="label">Victorii</span><span class="value" style="color:var(--green)">${stats.wins}</span></div>
+<div class="agg-stat"><span class="label">Egaluri</span><span class="value">${stats.draws}</span></div>
+<div class="agg-stat"><span class="label">Înfrângeri</span><span class="value" style="color:var(--accent-2)">${stats.losses}</span></div>
+<div class="agg-stat"><span class="label">Goluri marcate (total)</span><span class="value" style="color:var(--accent)">${stats.gs}</span></div>
+<div class="agg-stat"><span class="label">Goluri primite (total)</span><span class="value">${stats.ga}</span></div>
+<div class="agg-stat"><span class="label">Medie goluri/meci</span><span class="value">${stats.matches>0?(stats.gs/stats.matches).toFixed(2):'—'}</span></div>
+</div>
+</div>
+<div class="agg-card full" style="margin-top:1rem"><h4>⚔️ Cap în Cap (Head-to-Head)</h4>
+${h2hSorted.length===0?'<p class="empty">Niciun meci jucat.</p>':`<table class="h2h-table"><thead><tr><th>Adversar</th><th>Întâlniri</th><th class="w">V</th><th class="d">E</th><th class="l">Î</th><th>Goluri</th><th>% V</th></tr></thead><tbody>${h2hSorted.map(([opp,d])=>`<tr><td class="team">${esc(opp)}</td><td>${d.n}</td><td class="w">${d.w}</td><td class="d">${d.d}</td><td class="l">${d.l}</td><td>${d.gf}-${d.ga}</td><td><b>${(d.w/d.n*100).toFixed(0)}%</b></td></tr>`).join('')}</tbody></table>`}
+</div>`;
+}
+
+function rCompare(){
+  if(compareSelected.length<2) return `<div class="empty-msg"><h3>Selectează 2-4 simulări</h3><p>În tabul Istoric, apasă "Compară" pe 2-4 simulări, apoi revino aici.</p></div>`;
+  const h=loadHistory();
+  const sims=compareSelected.map(id=>h.find(s=>s.id===id)).filter(Boolean);
+  if(sims.length<2) return '<div class="empty-msg">Una sau mai multe simulări nu mai există.</div>';
+  const totGoals=s=>{let t=0;[...Object.values(s.groups).flatMap(g=>g.matches),...s.r32,...s.r16,...s.qf,...s.sf,s.third,s.final].forEach(m=>{if(m)t+=m.hg+m.ag;});return t;};
+  const col=s=>`<div class="cmp-col${s.forced?' forced':''}">
+<h4>${s.label?'"'+esc(s.label)+'" · ':''}${fmtTs(s.ts)} ${s.forced?'⚡ '+esc(s.forced):'(natural)'}</h4>
+<div class="cmp-row"><span class="lbl">Campioană</span><span class="val" style="color:var(--accent);font-weight:700">🏆 ${esc(s.champion)}</span></div>
+<div class="cmp-row"><span class="lbl">Vice-campioană</span><span class="val">${esc(s.final.loser)}</span></div>
+<div class="cmp-row"><span class="lbl">Locul 3</span><span class="val">${esc(s.third.winner)}</span></div>
+<div class="cmp-row"><span class="lbl">Locul 4</span><span class="val">${esc(s.third.loser)}</span></div>
+<div class="cmp-row"><span class="lbl">Finala</span><span class="val">${esc(s.final.home)} ${s.final.hg}-${s.final.ag} ${esc(s.final.away)} ${esc(s.final.note||'')}</span></div>
+<div class="cmp-row"><span class="lbl">Top marcator</span><span class="val">${esc(s.topScorers[0]?.player||'—')} (${s.topScorers[0]?.goals||0}g)</span></div>
+<div class="cmp-row"><span class="lbl">Total goluri turneu</span><span class="val">${totGoals(s)}</span></div>
+<div class="cmp-row"><span class="lbl">Grupa morții</span><span class="val">${esc(s.deathGroup||'—')}</span></div>
+<div class="cmp-row"><span class="lbl">Seed</span><span class="val" style="font-family:monospace;font-size:.74rem">${s.seed!==undefined?s.seed:'—'}</span></div>
+</div>`;
+  // Custom grid based on count
+  const cols=sims.length;
+  const gridStyle=cols<=2?'1fr 1fr':cols===3?'1fr 1fr 1fr':'1fr 1fr 1fr 1fr';
+  return `<div class="compare-grid" style="grid-template-columns:repeat(${cols},1fr)">${sims.map(col).join('')}</div>`;
+}
+
+function rBatch(){
+  return `<div class="batch-controls">
+<h4>🔬 Mod Batch — rulează multe simulări deodată</h4>
+<p style="font-size:.82rem;color:var(--text-dim)">Rulează 50/200/500/1000 simulări aleatorii ale modelului și vezi cât de des apare fiecare rezultat. Valorile depind de puterile subiective 1–5 (nu sunt probabilități reale ale turneului). Simulările NU se salvează în istoric; doar agregatele se afișează aici.</p>
+<div class="row">
+<button data-n="50" class="batch-btn">▶ 50 simulări</button>
+<button data-n="200" class="batch-btn">▶ 200 simulări</button>
+<button data-n="500" class="batch-btn">▶ 500 simulări</button>
+<button data-n="1000" class="batch-btn">▶ 1000 simulări</button>
+</div>
+<div class="batch-progress" id="batch-progress"><div class="batch-progress-bar" id="batch-progress-bar">0%</div></div>
+</div>
+<div id="batch-results" aria-live="polite"></div>`;
+}
+
+function rAchievements(){
+  const h=loadHistory();
+  const list=computeAchievements(h);
+  const unlocked=list.filter(a=>a.unlocked).length;
+  const pct=Math.round(unlocked/list.length*100);
+  const summary=`<div class="ach-summary"><div>Realizări deblocate</div><div class="pct">${unlocked} / ${list.length}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><div style="font-size:.8rem;color:var(--text-dim)">${pct}% complet</div></div>`;
+  const grid=`<div class="ach-grid">${list.map(a=>`<div class="ach-item ${a.unlocked?'unlocked':''}"><div class="ach-icon">${a.icon}</div><div class="ach-meta"><div class="ach-title">${esc(a.title)}</div><div class="ach-desc">${esc(a.desc)}</div><div class="ach-progress">${a.unlocked?'✅ Deblocat':a.progress(h)}</div></div></div>`).join('')}</div>`;
+  return summary+grid;
+}
+
+function rStadiumStats(){
+  const h=loadHistory().filter(s=>!s.forced);
+  if(h.length===0) return '<div class="empty-msg">Niciun stadion (rulează sim. naturale).</div>';
+  const stats=computeStadiumStats(h);
+  return `<div class="agg-card"><h4>🏟️ Statistici per Stadion (${h.length} sim. naturale)</h4>
+<table class="stadium-table"><thead><tr><th>Stadion</th><th>Meciuri</th><th>Goluri</th><th>Medie</th><th>Cartonașe</th><th>🟥</th></tr></thead><tbody>
+${stats.map(s=>`<tr><td class="venue">${esc(s.venue)}</td><td>${s.n}</td><td>${s.goals}</td><td><b>${s.avg.toFixed(2)}</b></td><td>${s.cards}</td><td>${s.reds}</td></tr>`).join('')}
+</tbody></table></div>`;
+}
+
+function rStrengthEditor(){
+  const ts=activeTS();
+  const teams=Object.keys(TS).sort();
+  const isCustom=loadCustomTS()!==null;
+  const presets=loadPresets();
+  const presetBtns=Object.keys(presets).map(p=>`<button class="preset-load" data-name="${esc(p)}">📁 ${esc(p)}</button>`).join('');
+  return `<h3>🎚️ Editor Strengths (1=foarte slab, 5=elită)</h3>
+<p>Modifică valorile subiective pentru a vedea cum se schimbă rezultatele modelului (nu sunt ratinguri oficiale). Modificările se salvează automat în browser și afectează simulările viitoare.${isCustom?' <em style="color:var(--accent)">Strengths personalizate active.</em>':''}</p>
+<div class="editor-presets">
+<button class="preset-apply" data-preset="default">↺ Default</button>
+<button class="preset-apply" data-preset="equal">⚖️ Toate egale (3)</button>
+<button class="preset-apply" data-preset="favored_europe">🇪🇺 Europa favorită</button>
+<button class="preset-apply" data-preset="favored_southamerica">🌎 America de Sud favorită</button>
+<button class="preset-apply" data-preset="chaos">🌀 Haos (random)</button>
+${presetBtns}
+<button id="preset-save" style="color:var(--green)">💾 Salvează preset curent</button>
+</div>
+<div class="editor-grid" id="editor-grid">
+${teams.map(t=>`<div class="editor-row"><span class="ename" title="${esc(t)}">${esc(t)}</span><input type="range" min="1" max="5" step="0.1" value="${ts[t]||2}" data-team="${esc(t)}" aria-label="Putere ${esc(t)}"><span class="eval">${(ts[t]||2).toFixed(1)}</span></div>`).join('')}
+</div>
+<div class="editor-actions">
+<button id="ed-apply">✓ Aplică și închide</button>
+<button id="ed-reset" class="secondary">↺ Resetează la default</button>
+<button id="ed-cancel" class="secondary">✕ Anulează</button>
+</div>`;
+}
+
+
+
+// === RENDER ===
+let currentSim=null, currentSimId=null, currentPhase='groups';
+
+function renderCurrent(){
+  if(!currentSim){
+    document.querySelectorAll('.phase').forEach(p=>{if(p.dataset.phase!=='history'&&p.dataset.phase!=='aggregate'&&p.dataset.phase!=='compare'&&p.dataset.phase!=='perteam'&&p.dataset.phase!=='batch') p.innerHTML='<div class="empty-msg">Nicio simulare</div>';});
+    return;
+  }
+  const sim=currentSim, forced=sim.forced, death=sim.deathGroup;
+  renderTS=sim.str||activeTS();
+  const seedHTML=sim.seed!==undefined?`<span class="seed-info" title="Seed RNG - permite reproducere exactă">seed: ${sim.seed}</span>`:'';
+  const banner=forced?`<div class="sim-banner forced">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}⚡ <b>SIMULARE FORȚATĂ (fictivă)</b> — câștigător predeterminat: <b>${esc(forced)}</b> · ${fmtTs(sim.ts)} ${seedHTML}</div>`:`<div class="sim-banner">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}🎲 <b>Simulare aleatorie (fictivă)</b> · ${fmtTs(sim.ts)} · ID: <code style="color:var(--text-dim);font-size:.78rem">${esc(sim.id)}</code> ${seedHTML}</div>`;
+  
+  const legacy=sim.fmt===2?'':'<div class="legacy-note">⚠️ Simulare creată cu o versiune anterioară: tabloul eliminatoriu și alocarea locurilor 3 erau aproximate, iar programul/stadioanele pot fi inexacte. Rulează una nouă pentru formatul actual.</div>';
+  const grpHTML=banner+legacy+`<p class="note-line">Grupa <b style="color:#ff7a85">${esc(death)}</b> = Grupa Morții 💀 (suma cea mai mare de strength)</p>`+'<div class="groups-grid">'+'ABCDEFGHIJKL'.split('').map(k=>rGroup(k,sim.groups[k],forced,death)).join('')+'</div>';
+  document.querySelector('.phase[data-phase="groups"]').innerHTML=`<div class="phase-header"><h2>Faza Grupelor</h2><p>72 meciuri · 12 grupe · Grupa Morții marcată · simulare fictivă</p></div>${grpHTML}`;
+  
+  document.querySelector('.phase[data-phase="thirds"]').innerHTML=`<div class="phase-header"><h2>Clasament Locurilor 3</h2><p>Cele mai bune 8 echipe avansează</p></div>${banner}${rThirds(sim.thirdRanking)}<p class="note-line">Ordine: puncte, golaveraj, goluri, fair-play (cartonașe simulate), apoi tragere la sorți cu seed. Adversarii din 1/16 se stabilesc după tabelul cu 495 de combinații (Anexa C a regulamentului), transcris din surse publice și validat automat; nu a fost verificat rând cu rând pe documentul oficial.</p>`;
+  document.querySelector('.phase[data-phase="r32"]').innerHTML=`<div class="phase-header"><h2>16-imile (R32)</h2><p>16 meciuri · 28 iun – 3 iul · probabilități ale modelului (nu pronosticuri)</p></div>${banner}${rKO(sim.r32,forced,'Traseul A','Traseul B')}`;
+  document.querySelector('.phase[data-phase="r16"]').innerHTML=`<div class="phase-header"><h2>Optimi (R16)</h2><p>8 meciuri · 4–7 iulie</p></div>${banner}${rKO(sim.r16,forced,'Traseul A','Traseul B')}`;
+  document.querySelector('.phase[data-phase="qf"]').innerHTML=`<div class="phase-header"><h2>Sferturi</h2><p>4 meciuri · 9–11 iulie · ⚠️ după sferturi, cartonașele se resetează</p></div>${banner}${rKO(sim.qf,forced,'Traseul A','Traseul B')}`;
+  document.querySelector('.phase[data-phase="sf"]').innerHTML=`<div class="phase-header"><h2>Semifinale</h2><p>14 și 15 iulie</p></div>${banner}${sim.sf.map(m=>rMatch(m,forced,true)).join('')}`;
+  document.querySelector('.phase[data-phase="finale"]').innerHTML=`<div class="phase-header"><h2>Finalele & clasamentul simulat</h2></div>${banner}${rFinale(sim)}`;
+}
+
+function renderHistoryView(){ document.querySelector('.phase[data-phase="history"]').innerHTML=`<div class="phase-header"><h2>Istoric Simulări</h2><p>Filtrare · etichetare · partajare · export</p></div>`+rHistory(); }
+function renderAggregateView(){ document.querySelector('.phase[data-phase="aggregate"]').innerHTML=`<div class="phase-header"><h2>Statistici Agregate</h2><p>Naturale vs forțate</p></div>`+rAggregate(); }
+function renderPerTeamView(){ document.querySelector('.phase[data-phase="perteam"]').innerHTML=`<div class="phase-header"><h2>Statistici per Echipă</h2><p>Parcurs · cap-în-cap pe toate simulările naturale</p></div>`+rPerTeam(); }
+function renderCompareView(){ document.querySelector('.phase[data-phase="compare"]').innerHTML=`<div class="phase-header"><h2>Comparare Simulări</h2><p>Diferențe între cele 2 simulări selectate</p></div>`+rCompare(); }
+function renderBatchView(){ document.querySelector('.phase[data-phase="batch"]').innerHTML=`<div class="phase-header"><h2>Mod Batch</h2><p>Rulează multe simulări aleatorii și vezi frecvențele modelului</p></div>`+rBatch(); }
+function renderAchievementsView(){ document.querySelector('.phase[data-phase="achievements"]').innerHTML=`<div class="phase-header"><h2>🏅 Realizări</h2><p>Deblochează pe măsură ce explorezi simulatorul</p></div>`+rAchievements(); }
+
+function updateInfo(){
+  const h=loadHistory();
+  const nat=h.filter(s=>!s.forced).length, fcd=h.filter(s=>s.forced).length;
+  document.getElementById('hist-info').innerHTML=`<b>${h.length}</b> sim. (${nat}+${fcd}⚡)`;
+  document.getElementById('hist-n').textContent=h.length;
+}
+
+function showPhase(p){
+  currentPhase=p;
+  visitedTabs.add(p);
+  lsSet('wc2026_v7_visited',JSON.stringify([...visitedTabs]));
+  document.querySelectorAll('nav.tabs button').forEach(b=>{ const on=b.dataset.phase===p; b.classList.toggle('active',on); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  document.querySelectorAll('.phase').forEach(s=>s.classList.toggle('active',s.dataset.phase===p));
+  if(p==='history') renderHistoryView();
+  if(p==='aggregate') renderAggregateView();
+  if(p==='perteam') renderPerTeamView();
+  if(p==='compare') renderCompareView();
+  if(p==='batch') renderBatchView();
+  if(p==='achievements') renderAchievementsView();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function runNew(){
+  const fw=document.getElementById('select-force').value||null;
+  const btn=document.getElementById('btn-run');
+  btn.disabled=true; btn.textContent='⏳ Simulez...';
+  setTimeout(()=>{
+    try{
+      const sim=simulateTournament(fw,'');
+      saveSim(sim);
+      currentSim=sim; currentSimId=sim.id;
+      renderCurrent(); updateInfo(); showPhase('finale');
+    }catch(e){ alert('Eroare: '+e.message); console.error(e); }
+    finally{ btn.disabled=false; btn.textContent='🎲 Rulează'; }
+  },50);
+}
+
+function viewSim(id){
+  const s=loadHistory().find(x=>x.id===id);
+  if(s){ currentSim=s; currentSimId=s.id; renderCurrent(); updateInfo(); showPhase('finale'); }
+}
+
+function replaySim(id){
+  const s=loadHistory().find(x=>x.id===id);
+  if(!s){ toast('Simulare negăsită','err'); return; }
+  if(s.seed===undefined){ toast('Această sim. nu are seed (v6 sau mai veche)','err'); return; }
+  const newSim=simulateTournament(s.forced,s.label?'replay: '+s.label:'replay',s.seed,s.str||null);
+  saveSim(newSim);
+  currentSim=newSim; currentSimId=newSim.id;
+  lsSet('wc2026_v7_replayed','1');
+  renderCurrent(); updateInfo();
+  if(s.fmt===2) toast('✓ Replay creat (același seed și aceleași puteri)','ok');
+  else toast('Simularea originală e dintr-o versiune anterioară: rezultatul poate diferi (motor/tablou actualizat).','err');
+}
+
+// === STRENGTH EDITOR ===
+function applyPreset(name){
+  const teams=Object.keys(TS);
+  let newTS={};
+  if(name==='default'){ clearCustomTS(); toast('Strengths resetate la default','ok'); reloadEditor(); return; }
+  if(name==='equal') teams.forEach(t=>newTS[t]=3);
+  else if(name==='favored_europe'){
+    const eu=['Anglia','Spania','Franța','Germania','Italia','Olanda','Portugalia','Belgia','Croația','Elveția','Suedia','Norvegia','Cehia','Austria','Scoția','Türkiye'];
+    teams.forEach(t=>newTS[t]=eu.includes(t)?Math.min(5,(TS[t]||2)+1):Math.max(1,(TS[t]||2)-0.5));
+  }
+  else if(name==='favored_southamerica'){
+    const sa=['Argentina','Brazilia','Uruguay','Ecuador','Columbia','Paraguay'];
+    teams.forEach(t=>newTS[t]=sa.includes(t)?Math.min(5,(TS[t]||2)+1):Math.max(1,(TS[t]||2)-0.3));
+  }
+  else if(name==='chaos') teams.forEach(t=>newTS[t]=Math.round((1+Math.random()*4)*10)/10);
+  saveCustomTS(newTS);
+  toast('Preset "'+name+'" aplicat','ok');
+  reloadEditor();
+}
+
+function reloadEditor(){
+  const m=document.getElementById('modal-editor');
+  if(m&&m.classList.contains('active')){
+    const panel=m.querySelector('.modal-panel');
+    panel.innerHTML='<button class="modal-close" data-close="modal-editor" aria-label="Închide">×</button>'+rStrengthEditor();
+    attachEditorListeners();
+  }
+}
+
+function attachEditorListeners(){
+  document.querySelectorAll('#editor-grid input[type=range]').forEach(inp=>{
+    inp.oninput=e=>{
+      const t=e.target.dataset.team, v=parseFloat(e.target.value);
+      e.target.parentNode.querySelector('.eval').textContent=v.toFixed(1);
+      const cur=loadCustomTS()||{...TS};
+      cur[t]=v;
+      saveCustomTS(cur);
+    };
+  });
+  document.querySelectorAll('.preset-apply').forEach(b=>b.onclick=()=>applyPreset(b.dataset.preset));
+  document.querySelectorAll('.preset-load').forEach(b=>b.onclick=()=>{
+    const presets=loadPresets();
+    const p=presets[b.dataset.name];
+    if(p){ saveCustomTS(p); toast('Preset încărcat','ok'); reloadEditor(); }
+  });
+  const ps=document.getElementById('preset-save');
+  if(ps) ps.onclick=()=>{
+    let name=prompt('Nume preset:','custom_'+Date.now().toString(36).substr(-4));
+    if(!name) return;
+    name=name.replace(/[<>\u0000-\u001f]/g,'').trim().slice(0,40);
+    if(!name||name==='__proto__'||name==='constructor'||name==='prototype'){ toast('Nume invalid','err'); return; }
+    const presets=loadPresets();
+    presets[name]=activeTS();
+    savePresets(presets);
+    toast('Preset salvat: '+name,'ok');
+    reloadEditor();
+  };
+  const ea=document.getElementById('ed-apply'); if(ea) ea.onclick=()=>{hideModal('modal-editor');toast('Strengths active vor afecta sim. viitoare','ok');};
+  const er=document.getElementById('ed-reset'); if(er) er.onclick=()=>{clearCustomTS();reloadEditor();toast('Resetate la default','ok');};
+  const ec=document.getElementById('ed-cancel'); if(ec) ec.onclick=()=>hideModal('modal-editor');
+}
+
+function openEditor(){
+  const panel=document.querySelector('#modal-editor .modal-panel');
+  panel.innerHTML='<button class="modal-close" data-close="modal-editor" aria-label="Închide">×</button>'+rStrengthEditor();
+  showModal('modal-editor');
+  attachEditorListeners();
+}
+
+function delSim(id){
+  if(!confirm('Șterge această simulare?')) return;
+  deleteSim(id);
+  if(currentSimId===id){ const h=loadHistory(); if(h.length){ currentSim=h[0]; currentSimId=h[0].id; renderCurrent(); } else { currentSim=null; currentSimId=null; renderCurrent(); } }
+  updateInfo(); renderHistoryView();
+}
+
+function renameSim(id){
+  const h=loadHistory();
+  const s=h.find(x=>x.id===id);
+  if(!s) return;
+  const newLabel=prompt('Etichetă pentru această simulare:',s.label||'');
+  if(newLabel===null) return;
+  updateSim(id,{label:newLabel.slice(0,80)});
+  if(currentSimId===id) currentSim={...currentSim,label:newLabel.slice(0,80)};
+  renderHistoryView();
+  if(currentSimId===id) renderCurrent();
+}
+
+async function shareSim(id){
+  const s=loadHistory().find(x=>x.id===id);
+  if(!s){ alert('Sim. negăsită.'); return; }
+  const json=JSON.stringify(s);
+  const compressed=await compressString(json);
+  if(!compressed){ alert('Compresia nu e suportată în acest browser.'); return; }
+  const url=location.href.split('#')[0]+'#s='+compressed;
+  try{
+    await navigator.clipboard.writeText(url);
+    lsSet('wc2026_v7_shared','1');
+    toast('Link copiat! ('+url.length+' caractere)','ok');
+  }catch(e){
+    prompt('Copiază link-ul:',url);
+    lsSet('wc2026_v7_shared','1');
+  }
+}
+
+function toggleCompare(id){
+  const idx=compareSelected.indexOf(id);
+  if(idx>=0) compareSelected.splice(idx,1);
+  else{ if(compareSelected.length>=4) compareSelected.shift(); compareSelected.push(id); }
+  renderHistoryView();
+}
+
+function exportJSON(){
+  const data={version:7,exported:Date.now(),disclaimer:'Simulare fictivă și neoficială a Cupei Mondiale 2026; nu conține rezultate reale.',history:loadHistory()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='cupa_mondiala_2026_simulari_'+Date.now()+'.json'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function importJSON(file){
+  if(file.size>MAX_JSON_CHARS){ alert('Fișier prea mare (maxim '+Math.round(MAX_JSON_CHARS/1048576)+' MB).'); return; }
+  const r=new FileReader();
+  r.onerror=()=>alert('Fișierul nu a putut fi citit.');
+  r.onload=e=>{
+    try{
+      const d=JSON.parse(e.target.result);
+      const arr=Array.isArray(d)?d:(d&&Array.isArray(d.history)?d.history:null);
+      if(!arr){ alert('Format invalid.'); return; }
+      const good=[]; let bad=0;
+      arr.slice(0,100).forEach(x=>{ const c=sanitizeSim(x); if(c) good.push(c); else bad++; });
+      if(arr.length>100) bad+=arr.length-100;
+      if(!good.length){ alert('Nicio simulare validă în fișier ('+bad+' respinse).'); return; }
+      if(!confirm('Import: '+good.length+' simulări valide'+(bad?' ('+bad+' respinse)':'')+'.\nOK = le combin cu istoricul curent (maxim '+HIST_MAX+').')) return;
+      const map=new Map();
+      [...loadHistory(),...good].forEach(s=>map.set(s.id,s));
+      const combined=[...map.values()].sort((a,b)=>b.ts-a.ts).slice(0,HIST_MAX);
+      const kept=persistHistory(combined);
+      alert('Import reușit. Total: '+kept.length+' simulări.');
+      updateInfo(); renderHistoryView();
+    }catch(err){ alert('Eroare import: fișier JSON invalid.'); }
+  };
+  r.readAsText(file);
+}
+
+let batchRunning=false;
+async function runBatch(n){
+  if(batchRunning) return;
+  batchRunning=true;
+  const btns=document.querySelectorAll('.batch-btn');
+  btns.forEach(b=>b.disabled=true);
+  const pg=document.getElementById('batch-progress');
+  const bar=document.getElementById('batch-progress-bar');
+  if(pg) pg.classList.add('active');
+  
+  const results=[];
+  const championCounts={}, finalCounts={}, scorersTotal={};
+  let totalGoals=0, totalMatches=0, totalGroupOfDeath={};
+  
+  for(let i=0;i<n;i++){
+    if(i%5===0) await new Promise(r=>setTimeout(r,0));
+    const sim=simulateTournament(null,'');
+    championCounts[sim.champion]=(championCounts[sim.champion]||0)+1;
+    finalCounts[sim.final.home]=(finalCounts[sim.final.home]||0)+1;
+    finalCounts[sim.final.away]=(finalCounts[sim.final.away]||0)+1;
+    sim.topScorers.slice(0,5).forEach(t=>{const k=t.player+'|'+t.team;scorersTotal[k]=(scorersTotal[k]||0)+t.goals;});
+    const all=[...Object.values(sim.groups).flatMap(g=>g.matches),...sim.r32,...sim.r16,...sim.qf,...sim.sf,sim.third,sim.final];
+    all.forEach(m=>{if(m){totalGoals+=m.hg+m.ag;totalMatches++;}});
+    totalGroupOfDeath[sim.deathGroup]=(totalGroupOfDeath[sim.deathGroup]||0)+1;
+    
+    if(bar&&bar.isConnected){ const pct=Math.round((i+1)/n*100); bar.style.width=pct+'%'; bar.textContent=pct+'% ('+(i+1)+'/'+n+')'; }
+  }
+  
+  const cList=Object.entries(championCounts).sort((a,b)=>b[1]-a[1]);
+  const fList=Object.entries(finalCounts).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const sList=Object.entries(scorersTotal).map(([k,g])=>{const[p,t]=k.split('|');return{p,t,g};}).sort((a,b)=>b.g-a.g).slice(0,15);
+  const maxC=cList[0][1];
+  
+  const champHTML=cList.map(([t,c],i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(t)}<div class="bar-track"><div class="bar-fill" style="width:${c/maxC*100}%"></div></div></span><span class="count">${c}</span><span class="pct">${(c/n*100).toFixed(1)}%</span></li>`).join('');
+  const finHTML=fList.map(([t,c],i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(t)}<div class="bar-track"><div class="bar-fill" style="width:${c/fList[0][1]*100}%"></div></div></span><span class="count">${c}</span><span class="pct">${(c/(2*n)*100).toFixed(0)}%</span></li>`).join('');
+  const sclHTML=sList.map((s,i)=>`<li><span class="rank">${i+1}.</span><span class="name">${esc(s.p)} (${esc(s.t)})<div class="bar-track"><div class="bar-fill" style="width:${s.g/sList[0].g*100}%"></div></div></span><span class="count">${s.g}</span><span class="pct">goluri</span></li>`).join('');
+  
+  const out=document.getElementById('batch-results');
+  if(!out){ batchRunning=false; return; }
+  out.innerHTML=`
+<div class="agg-grid">
+<div class="agg-card"><h4>📊 Rezultate Batch — ${n} simulări aleatorii (fictive)</h4>
+<div class="agg-stat"><span class="label">Simulări rulate</span><span class="value">${n}</span></div>
+<div class="agg-stat"><span class="label">Meciuri totale</span><span class="value">${totalMatches}</span></div>
+<div class="agg-stat"><span class="label">Goluri totale</span><span class="value">${totalGoals}</span></div>
+<div class="agg-stat"><span class="label">Medie goluri/meci</span><span class="value">${(totalGoals/totalMatches).toFixed(2)}</span></div>
+<div class="agg-stat"><span class="label">Echipe distincte câștigătoare</span><span class="value">${cList.length}</span></div>
+</div>
+<div class="agg-card full"><h4>🏆 Frecvența campioanelor în model (Top ${Math.min(cList.length,25)}) — nu sunt probabilități reale</h4><ul class="champ-list">${champHTML.split('</li>').slice(0,25).join('</li>')}</ul></div>
+<div class="agg-card"><h4>🥈 Top Finaliste</h4><ul class="champ-list">${finHTML}</ul></div>
+<div class="agg-card"><h4>⚽ Top marcatori cumulat (primii 5 din fiecare simulare)</h4><ul class="champ-list">${sclHTML}</ul></div>
+</div>`;
+  
+  document.querySelectorAll('.batch-btn').forEach(b=>b.disabled=false);
+  batchRunning=false;
+  if(n>=100){ lsSet('wc2026_v7_batch_done','1'); }
+}
+
+async function checkURLHash(){
+  if(!location.hash.startsWith('#s=')) return false;
+  const enc=location.hash.substr(3);
+  const json=await decompressString(enc);
+  if(!json){ alert('Link invalid, prea mare sau browser fără suport pentru compresie.'); location.hash=''; return false; }
+  let sim=null;
+  try{ sim=sanitizeSim(JSON.parse(json)); }catch(e){}
+  if(!sim){ alert('Link invalid: conținutul nu este o simulare validă.'); location.hash=''; return false; }
+  if(!confirm('Importi o simulare fictivă din link?\nCâștigătoarea simulării: '+sim.champion)){ location.hash=''; return false; }
+  saveSim(sim);
+  currentSim=sim; currentSimId=sim.id;
+  location.hash='';
+  return true;
+}
+
+// === INIT ===
+document.addEventListener('DOMContentLoaded',async()=>{
+  const sel=document.getElementById('select-force');
+  sel.innerHTML='<option value="">Fără forțare (aleatoriu)</option>'+TEAMS.map(t=>`<option value="${esc(t)}">⚡ ${esc(t)}</option>`).join('');
+  
+  document.querySelectorAll('nav.tabs button').forEach(b=>{b.onclick=()=>showPhase(b.dataset.phase);});
+  document.getElementById('btn-run').onclick=runNew;
+  document.getElementById('btn-clear').onclick=()=>{
+    if(!confirm('Șterge TOT istoricul?')) return;
+    clearHistory(); currentSim=null; currentSimId=null; compareSelected=[];
+    renderCurrent(); updateInfo();
+    if(currentPhase==='history') renderHistoryView();
+    if(currentPhase==='aggregate') renderAggregateView();
+    if(currentPhase==='perteam') renderPerTeamView();
+  };
+  document.getElementById('btn-export').onclick=exportJSON;
+  document.getElementById('btn-import').onclick=()=>document.getElementById('file-import').click();
+  document.getElementById('file-import').onchange=e=>{if(e.target.files[0]) importJSON(e.target.files[0]); e.target.value='';};
+  
+  // History delegated events
+  document.querySelector('.phase[data-phase="history"]').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    const id=b.dataset.id;
+    if(b.classList.contains('view')) viewSim(id);
+    else if(b.classList.contains('del')) delSim(id);
+    else if(b.classList.contains('cmp')) toggleCompare(id);
+    else if(b.classList.contains('ren')) renameSim(id);
+    else if(b.classList.contains('shr')) shareSim(id);
+    else if(b.classList.contains('repl')) replaySim(id);
+    else if(b.id==='btn-compare-go') showPhase('compare');
+    else if(b.id==='btn-cmp-clear'){ compareSelected=[]; renderHistoryView(); }
+  });
+  
+  // Filter changes (delegated)
+  document.querySelector('.phase[data-phase="history"]').addEventListener('change',e=>{
+    if(e.target.id==='f-type'){ historyFilter.type=e.target.value; renderHistoryView(); }
+    else if(e.target.id==='f-sort'){ historyFilter.sort=e.target.value; renderHistoryView(); }
+  });
+  document.querySelector('.phase[data-phase="history"]').addEventListener('input',e=>{
+    if(e.target.id==='f-search'){ historyFilter.search=e.target.value; renderHistoryView(); }
+  });
+  
+  // Per-team select
+  document.querySelector('.phase[data-phase="perteam"]').addEventListener('change',e=>{
+    if(e.target.id==='team-select') renderPerTeamView();
+  });
+  
+  // Batch
+  document.querySelector('.phase[data-phase="batch"]').addEventListener('click',e=>{
+    const b=e.target.closest('.batch-btn'); if(!b) return;
+    runBatch(parseInt(b.dataset.n));
+  });
+  
+  // === V7: Modal close (X buttons + click outside + Esc) ===
+  document.querySelectorAll('.modal-bg').forEach(m=>{
+    m.addEventListener('click',e=>{
+      if(e.target===m) hideModal(m.id);
+      const b=e.target.closest('button');
+      if(b&&b.dataset.close) hideModal(b.dataset.close);
+    });
+  });
+  
+  // === V7: Compact mode toggle ===
+  const cm=document.getElementById('btn-compact');
+  if(cm){
+    if(lsGet('wc2026_v7_compact')==='1') document.body.classList.add('compact');
+    cm.onclick=()=>{
+      document.body.classList.toggle('compact');
+      const on=document.body.classList.contains('compact');
+      lsSet('wc2026_v7_compact',on?'1':'0');
+      toast(on?'Mod compact activat':'Mod compact dezactivat','ok');
+    };
+  }
+  
+  // === V7: Help & Editor buttons ===
+  const bh=document.getElementById('btn-help'); if(bh) bh.onclick=()=>showModal('modal-help');
+  const be=document.getElementById('btn-editor'); if(be) be.onclick=openEditor;
+  
+  // === V7: Keyboard shortcuts (pot fi dezactivate din ghid; Esc funcționează mereu) ===
+  const kt=document.getElementById('kbd-toggle');
+  let kbdOn=lsGet('wc2026_v7_kbd')!=='0';
+  if(kt){ kt.checked=kbdOn; kt.onchange=()=>{ kbdOn=kt.checked; lsSet('wc2026_v7_kbd',kbdOn?'1':'0'); }; }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ hideAllModals(); return; }
+    const open=document.querySelector('.modal-bg.active');
+    if(e.key==='Tab'&&open){   // focusul rămâne în fereastra deschisă
+      const f=[...open.querySelectorAll('button,input,select,[href]')].filter(x=>!x.disabled&&x.offsetParent!==null);
+      if(f.length){ const first=f[0], last=f[f.length-1];
+        if(e.shiftKey&&document.activeElement===first){ last.focus(); e.preventDefault(); }
+        else if(!e.shiftKey&&document.activeElement===last){ first.focus(); e.preventDefault(); } }
+      return;
+    }
+    if(!kbdOn||open) return;
+    const tg=e.target&&e.target.tagName;
+    if(tg==='INPUT'||tg==='TEXTAREA'||tg==='SELECT') return;
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    const k=e.key.toLowerCase();
+    if(k==='?'){ showModal('modal-help'); e.preventDefault(); return; }
+    if(k==='r'){ runNew(); e.preventDefault(); return; }
+    if(k==='c'){ if(cm) cm.click(); e.preventDefault(); return; }
+    if(k==='e'){ openEditor(); e.preventDefault(); return; }
+    if(k==='h'){ showPhase('history'); e.preventDefault(); return; }
+    if(k==='s'){ showPhase('aggregate'); e.preventDefault(); return; }
+    if(k==='b'){ showPhase('batch'); e.preventDefault(); return; }
+    if(k==='a'){ showPhase('achievements'); e.preventDefault(); return; }
+    if(k==='p'){ window.print(); e.preventDefault(); return; }
+    if(k==='arrowright'||k==='arrowleft'){
+      const tabs=Array.from(document.querySelectorAll('nav.tabs button'));
+      const cur=tabs.findIndex(t=>t.classList.contains('active'));
+      const nxt=k==='arrowright'?(cur+1)%tabs.length:(cur-1+tabs.length)%tabs.length;
+      showPhase(tabs[nxt].dataset.phase);
+      e.preventDefault();
+    }
+  });
+  window.addEventListener('hashchange',async()=>{ if(await checkURLHash()){ renderCurrent(); updateInfo(); showPhase('finale'); } });
+
+  // Check URL hash for shared sim
+  const fromURL=await checkURLHash();
+  
+  // Initial: load last sim or generate
+  const h=loadHistory();
+  if(h.length>0&&!fromURL){ currentSim=h[0]; currentSimId=h[0].id; renderCurrent(); }
+  else if(!fromURL){ const sim=simulateTournament(null,''); saveSim(sim); currentSim=sim; currentSimId=sim.id; renderCurrent(); }
+  else { renderCurrent(); }
+  updateInfo(); showPhase('groups');
+});
+</script>
+</body>
+</html>
