@@ -1,6 +1,6 @@
 # Simulator Cupa Mondială 2026 (neoficial)
 
-**Ultima actualizare:** 11 octombrie 2026 · versiune 7.2
+**Ultima actualizare:** 11 octombrie 2026 · versiune 7.3
 
 Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML, fără server și fără cont. **Nu este afiliat FIFA, nu conține rezultate reale și nu este un pronostic.**
 
@@ -17,6 +17,7 @@ Un joc/experiment de simulare: aplicația generează aleatoriu un turneu complet
 Verificate în cod și în browser (Chromium headless):
 - Simulare completă într-un click (buton „Rulează” sau tasta R), cu seed afișat; „Replay” din istoric reface aceeași simulare (același seed și aceleași puteri).
 - „Forțează”: alegi o echipă care câștigă obligatoriu turneul simulat (primește un bonus de putere, iar rezultatele eliminatorii îi sunt aranjate). Este un scenariu „ce-ar fi dacă”, fără valoare statistică.
+- Rezumat al simulării curente (campioană, finalistă, locul 3, golgheter) în bannerul din „Grupe” și „Finale”, cu butonul „📋 Copiază rezumatul”: copiază un text simplu care precizează că simularea este fictivă (adresa paginii se adaugă doar când pagina e servită prin http/https).
 - Grupe cu clasamente și departajare (puncte, meciuri directe, golaveraj, goluri, fair-play din cartonașele simulate, apoi tragere la sorți cu seed), clasamentul locurilor 3, tablou eliminatoriu cu numerotarea oficială a meciurilor (M73–M104) și diagramă SVG.
 - Alocarea locurilor 3 în 1/16 după tabelul cu 495 de combinații (Anexa C a regulamentului), transcris din surse publice (vezi „Limite”).
 - Marcatori cu minut (inclusiv prelungiri, penalty, lovitură liberă, autogol), cartonașe galbene/roșii, suspendări (2 galbene = 1 meci; roșu = 1 meci; galbenele se șterg după grupe și după sferturi), clasament golgheteri.
@@ -76,6 +77,10 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 An unofficial, fictional simulator of the 2026 FIFA World Cup format (48 teams, 104 matches) in one offline HTML file. All scores, scorers, cards and statistics are random output of a simple Poisson model with subjective team strengths; they are not real results or predictions, and player names are mere labels. Group tiebreakers, the official knockout bracket and the third-place allocation (Annex C table, transcribed from public sources) are implemented; imports and shared links are strictly validated. No network requests, no telemetry; data stays in localStorage. Not affiliated with FIFA.
 
 ## Istoric / Changelog
+
+### 11 octombrie 2026 (v7.3)
+- Rezumat copiabil al simulării (campioană, finalistă, locul 3, golgheter) în bannerele „Grupe” și „Finale”.
+- CSP: `script-src` pe hash SHA-256, fără `'unsafe-inline'`.
 
 ### 11 octombrie 2026 (v7.2)
 - Bara de avertisment și panoul de comenzi sunt acum repere (`section` cu nume): axe 0 încălcări, inclusiv `region`.

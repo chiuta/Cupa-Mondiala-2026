@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Simulator Cupa Mondială 2026 (neoficial, neafiliat FIFA)">
 <meta property="og:description" content="Simulare fictivă, offline, fără telemetrie. Rezultatele sunt inventate de un model simplu și nu reflectă turneul real.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-d+0H6X8VptFPfz1s3pm66pVP/WxxW+TqcIDl4miQy24='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <style>
 :root{--bg:#0a0e1a;--bg-card:#131826;--bg-card-2:#1a2030;--text:#e8eaed;--text-dim:#a0a8b8;--accent:#ffd700;--accent-2:#ff3057;--green:#2ed573;--blue:#3742fa;--purple:#a55eea;--yellow-card:#f5c518;--red-card:#e63946;--border:#252b3d;--ro-color:#ffd66e;--forced:#ff7eb6;--death:#9b1b30}
@@ -332,6 +332,10 @@ body.compact .susp-note{font-size:.65rem;padding:.2rem .4rem}
 .stadium-table td{padding:.4rem .35rem;border-top:1px solid var(--border);font-variant-numeric:tabular-nums}
 .stadium-table td.venue{font-weight:600}
 /* Seed display */
+.sim-sum{margin-top:.55rem;color:var(--text-dim);font-size:.8rem;display:flex;flex-wrap:wrap;gap:.3rem .8rem;justify-content:center;align-items:center}
+.sum-copy{background:var(--bg-card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.3rem .65rem;font-size:.75rem;cursor:pointer;font-family:inherit}
+.sum-copy:hover,.sum-copy:focus-visible{border-color:var(--accent)}
+@media print{.sum-copy{display:none!important}}
 .seed-info{font-family:'SF Mono',Menlo,monospace;font-size:.72rem;color:var(--text-dim);background:var(--bg);padding:.15rem .4rem;border-radius:4px;border:1px solid var(--border)}
 .seed-input{font-family:'SF Mono',Menlo,monospace;font-size:.74rem;width:140px;background:var(--bg-card-2);border:1px solid var(--border);color:var(--text);padding:.35rem .5rem;border-radius:6px}
 /* PWA install button */
@@ -474,7 +478,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 <p>🏅 <em>Realizări</em> deblochezi pe măsură ce explorezi simulatorul.</p>
 <p>🖨️ <em>Print</em> (P) — format print-friendly, ideal pentru rapoarte tipărite.</p>
 <h4>Despre</h4>
-<p>v7.2 · fișier HTML unic · fără cereri de rețea (CSP le blochează) · zero telemetrie · date salvate doar în browser (localStorage). Proiect personal în spiritul mișcării TROM trade-free; neafiliat FIFA.</p>
+<p>v7.3 · fișier HTML unic · fără cereri de rețea (CSP le blochează) · zero telemetrie · date salvate doar în browser (localStorage). Proiect personal în spiritul mișcării TROM trade-free; neafiliat FIFA.</p>
 </div>
 </div>
 
@@ -483,7 +487,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
 <footer>
-<p><b>Simulator Cupa Mondială 2026 v7.2</b> · simulare fictivă, neoficială · fișier unic · fără rețea · zero telemetrie</p>
+<p><b>Simulator Cupa Mondială 2026 v7.3</b> · simulare fictivă, neoficială · fișier unic · fără rețea · zero telemetrie</p>
 <p>Nu reprezintă rezultate reale și nu constituie pronosticuri. Proiect personal, neafiliat FIFA; denumirile competiției, echipelor, stadioanelor și numele jucătorilor aparțin proprietarilor lor și sunt folosite doar descriptiv.</p>
 </footer>
 
@@ -1709,6 +1713,32 @@ ${teams.map(t=>`<div class="editor-row"><span class="ename" title="${esc(t)}">${
 // === RENDER ===
 let currentSim=null, currentSimId=null, currentPhase='groups';
 
+// Rezumat scurt al simulării curente, afișat în banner și copiabil (text simplu, cu mențiunea „fictiv”)
+function sumParts(sim){
+  const f=sim.final||{}, ts=(sim.topScorers&&sim.topScorers[0])||null;
+  return {champ:sim.champion, runner:f.loser, third:sim.third&&sim.third.winner, scorer:ts};
+}
+function sumLine(sim){
+  if(!sim||!sim.champion) return '';
+  const p=sumParts(sim);
+  return '<div class="sim-sum"><span>🏆 <b>'+esc(p.champ)+'</b></span>'+(p.runner?'<span>🥈 '+esc(p.runner)+'</span>':'')+(p.third?'<span>🥉 '+esc(p.third)+'</span>':'')+(p.scorer?'<span>👟 '+esc(p.scorer.player)+' ('+esc(p.scorer.team)+', '+p.scorer.goals+')</span>':'')+'<button type="button" class="sum-copy" aria-label="Copiază rezumatul simulării curente ca text">📋 Copiază rezumatul</button></div>';
+}
+function sumText(sim){
+  const p=sumParts(sim);
+  return 'Simulare FICTIVĂ Cupa Mondială 2026 (neoficială, nu sunt rezultate reale):\n'
+    +'Campioană: '+p.champ+(sim.forced?' (câștigător forțat)':'')+'\n'
+    +(p.runner?'Finalistă: '+p.runner+'\n':'')+(p.third?'Locul 3: '+p.third+'\n':'')
+    +(p.scorer?'Golgheter: '+p.scorer.player+' ('+p.scorer.team+'), '+p.scorer.goals+' goluri\n':'')
+    +(sim.seed!==undefined?'Seed: '+sim.seed+'\n':'')+(/^https?:/.test(location.protocol+'//')?location.href.split('#')[0]:'');
+}
+async function copySummary(){
+  if(!currentSim) return;
+  const txt=sumText(currentSim);
+  try{ await navigator.clipboard.writeText(txt); toast('Rezumat copiat','ok'); }
+  catch(e){ prompt('Copiază rezumatul:',txt); }
+}
+document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('.sum-copy')) copySummary(); });
+
 function renderCurrent(){
   if(!currentSim){
     document.querySelectorAll('.phase').forEach(p=>{if(p.dataset.phase!=='history'&&p.dataset.phase!=='aggregate'&&p.dataset.phase!=='compare'&&p.dataset.phase!=='perteam'&&p.dataset.phase!=='batch') p.innerHTML='<div class="empty-msg">Nicio simulare</div>';});
@@ -1719,8 +1749,9 @@ function renderCurrent(){
   const seedHTML=sim.seed!==undefined?`<span class="seed-info" title="Seed RNG - permite reproducere exactă">seed: ${sim.seed}</span>`:'';
   const banner=forced?`<div class="sim-banner forced">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}⚡ <b>SIMULARE FORȚATĂ (fictivă)</b> — câștigător predeterminat: <b>${esc(forced)}</b> · ${fmtTs(sim.ts)} ${seedHTML}</div>`:`<div class="sim-banner">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}🎲 <b>Simulare aleatorie (fictivă)</b> · ${fmtTs(sim.ts)} · ID: <code style="color:var(--text-dim);font-size:.78rem">${esc(sim.id)}</code> ${seedHTML}</div>`;
   
+  const bannerSum=banner.slice(0,-6)+sumLine(sim)+'</div>';
   const legacy=sim.fmt===2?'':'<div class="legacy-note">⚠️ Simulare creată cu o versiune anterioară: tabloul eliminatoriu și alocarea locurilor 3 erau aproximate, iar programul/stadioanele pot fi inexacte. Rulează una nouă pentru formatul actual.</div>';
-  const grpHTML=banner+legacy+`<p class="note-line">Grupa <b style="color:#ff7a85">${esc(death)}</b> = Grupa Morții 💀 (suma cea mai mare de strength)</p>`+'<div class="groups-grid">'+'ABCDEFGHIJKL'.split('').map(k=>rGroup(k,sim.groups[k],forced,death)).join('')+'</div>';
+  const grpHTML=bannerSum+legacy+`<p class="note-line">Grupa <b style="color:#ff7a85">${esc(death)}</b> = Grupa Morții 💀 (suma cea mai mare de strength)</p>`+'<div class="groups-grid">'+'ABCDEFGHIJKL'.split('').map(k=>rGroup(k,sim.groups[k],forced,death)).join('')+'</div>';
   document.querySelector('.phase[data-phase="groups"]').innerHTML=`<div class="phase-header"><h2>Faza Grupelor</h2><p>72 meciuri · 12 grupe · Grupa Morții marcată · simulare fictivă</p></div>${grpHTML}`;
   
   document.querySelector('.phase[data-phase="thirds"]').innerHTML=`<div class="phase-header"><h2>Clasament Locurilor 3</h2><p>Cele mai bune 8 echipe avansează</p></div>${banner}${rThirds(sim.thirdRanking)}<p class="note-line">Ordine: puncte, golaveraj, goluri, fair-play (cartonașe simulate), apoi tragere la sorți cu seed. Adversarii din 1/16 se stabilesc după tabelul cu 495 de combinații (Anexa C a regulamentului), transcris din surse publice și validat automat; nu a fost verificat rând cu rând pe documentul oficial.</p>`;
@@ -1728,7 +1759,7 @@ function renderCurrent(){
   document.querySelector('.phase[data-phase="r16"]').innerHTML=`<div class="phase-header"><h2>Optimi (R16)</h2><p>8 meciuri · 4–7 iulie</p></div>${banner}${rKO(sim.r16,forced,'Traseul A','Traseul B')}`;
   document.querySelector('.phase[data-phase="qf"]').innerHTML=`<div class="phase-header"><h2>Sferturi</h2><p>4 meciuri · 9–11 iulie · ⚠️ după sferturi, cartonașele se resetează</p></div>${banner}${rKO(sim.qf,forced,'Traseul A','Traseul B')}`;
   document.querySelector('.phase[data-phase="sf"]').innerHTML=`<div class="phase-header"><h2>Semifinale</h2><p>14 și 15 iulie</p></div>${banner}${sim.sf.map(m=>rMatch(m,forced,true)).join('')}`;
-  document.querySelector('.phase[data-phase="finale"]').innerHTML=`<div class="phase-header"><h2>Finalele & clasamentul simulat</h2></div>${banner}${rFinale(sim)}`;
+  document.querySelector('.phase[data-phase="finale"]').innerHTML=`<div class="phase-header"><h2>Finalele & clasamentul simulat</h2></div>${bannerSum}${rFinale(sim)}`;
 }
 
 function renderHistoryView(){ document.querySelector('.phase[data-phase="history"]').innerHTML=`<div class="phase-header"><h2>Istoric Simulări</h2><p>Filtrare · etichetare · partajare · export</p></div>`+rHistory(); }
