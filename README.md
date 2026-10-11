@@ -1,5 +1,7 @@
 # Simulator Cupa Mondială 2026 (neoficial)
 
+**Ultima actualizare:** 11 octombrie 2026 · versiune 7.2
+
 Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML, fără server și fără cont. **Nu este afiliat FIFA, nu conține rezultate reale și nu este un pronostic.**
 
 **Live:** https://chiuta.github.io/Cupa-Mondiala-2026/
@@ -72,3 +74,11 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 ## English summary
 
 An unofficial, fictional simulator of the 2026 FIFA World Cup format (48 teams, 104 matches) in one offline HTML file. All scores, scorers, cards and statistics are random output of a simple Poisson model with subjective team strengths; they are not real results or predictions, and player names are mere labels. Group tiebreakers, the official knockout bracket and the third-place allocation (Annex C table, transcribed from public sources) are implemented; imports and shared links are strictly validated. No network requests, no telemetry; data stays in localStorage. Not affiliated with FIFA.
+
+## Istoric / Changelog
+
+### 11 octombrie 2026 (v7.2)
+- Bara de avertisment și panoul de comenzi sunt acum repere (`section` cu nume): axe 0 încălcări, inclusiv `region`.
+- Lista „Forțează” este grupată pe grupe (A–L) în loc de un bloc plat de 48 de intrări; fără prefixul „⚡” repetat.
+- Pe ecrane ≤520 px antetul și avertismentul sunt mai compacte, iar panoul de comenzi este un singur rând derulabil orizontal (ocupă mult mai puțin din ecran).
+- Diagrama tabloului eliminatoriu este focalizabilă de la tastatură; versiune v7.2.
