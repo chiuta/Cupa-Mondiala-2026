@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Simulator Cupa Mondială 2026 (neoficial, neafiliat FIFA)">
 <meta property="og:description" content="Simulare fictivă, offline, fără telemetrie. Rezultatele sunt inventate de un model simplu și nu reflectă turneul real.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-d+0H6X8VptFPfz1s3pm66pVP/WxxW+TqcIDl4miQy24='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-3ikwGMp5PAiScZbaPcs39O6pfvf/LuuOFaeAbQCj/fQ='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <style>
 :root{--bg:#0a0e1a;--bg-card:#131826;--bg-card-2:#1a2030;--text:#e8eaed;--text-dim:#a0a8b8;--accent:#ffd700;--accent-2:#ff3057;--green:#2ed573;--blue:#3742fa;--purple:#a55eea;--yellow-card:#f5c518;--red-card:#e63946;--border:#252b3d;--ro-color:#ffd66e;--forced:#ff7eb6;--death:#9b1b30}
@@ -394,7 +394,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 <li>Departajare în grupă: puncte, apoi meciuri directe (puncte, golaveraj, goluri; reaplicate între echipele rămase la egalitate), apoi golaveraj și goluri generale, fair-play (din cartonașele simulate); la egalitate totală se trage la sorți cu seed-ul simulării (nu se folosește clasamentul FIFA). Locurile 3 se ordonează după puncte, golaveraj, goluri, fair-play, sorți.</li>
 <li>Locurile 3 în tablou: se folosește tabelul cu 495 de combinații (Anexa C) al regulamentului, transcris din surse publice și validat automat (completitudine și grupele eligibile pentru fiecare meci), dar nu verificat rând cu rând pe documentul oficial. Simulările create cu versiuni anterioare ale aplicației (marcate în ecranul „Finale”) foloseau un tablou aproximat.</li>
 <li>Puterile echipelor (1–5) sunt valori subiective, nu ratinguri oficiale; nu există accidentări, formă sau loturi reale. Penalty-urile, loviturile libere, autogolurile și prelungirile au procente fixe. Valorile din „Batch” sunt frecvențe ale acestui model, nu probabilități reale.</li>
-<li>Calibrare: media de goluri a modelului este ≈3,7 pe meci, peste cele ≈2,7 din turneele mondiale reale; scorurile mari sunt un efect al modelului, nu o estimare realistă.</li>
+<li>Calibrare: de la v7.4 media de goluri a modelului este ≈2,7 pe meci (ca în turneele mondiale recente, ≈2,6–2,8), nu ≈3,7 ca înainte. Simulările create cu modelul vechi rămân marcate și, la „Replay”, se reproduc exact cu modelul lor. Modelul rămâne simplu: puterile 1–5 sunt subiective.</li>
 <li>Cartonașe: 2 galbene = 1 meci suspendare, roșu = 1 meci; galbenele se șterg după grupe și după sferturi.</li>
 <li>Aleatoriu: PRNG mulberry32 cu seed pe 32 de biți (reproductibil, nu criptografic). Replay-ul reproduce rezultatul doar dacă motorul nu s-a schimbat.</li>
 </ul></details>
@@ -478,7 +478,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 <p>🏅 <em>Realizări</em> deblochezi pe măsură ce explorezi simulatorul.</p>
 <p>🖨️ <em>Print</em> (P) — format print-friendly, ideal pentru rapoarte tipărite.</p>
 <h4>Despre</h4>
-<p>v7.3 · fișier HTML unic · fără cereri de rețea (CSP le blochează) · zero telemetrie · date salvate doar în browser (localStorage). Proiect personal în spiritul mișcării TROM trade-free; neafiliat FIFA.</p>
+<p>v7.4 · fișier HTML unic · fără cereri de rețea (CSP le blochează) · zero telemetrie · date salvate doar în browser (localStorage). Proiect personal în spiritul mișcării TROM trade-free; neafiliat FIFA.</p>
 </div>
 </div>
 
@@ -487,7 +487,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
 <footer>
-<p><b>Simulator Cupa Mondială 2026 v7.3</b> · simulare fictivă, neoficială · fișier unic · fără rețea · zero telemetrie</p>
+<p><b>Simulator Cupa Mondială 2026 v7.4</b> · simulare fictivă, neoficială · fișier unic · fără rețea · zero telemetrie</p>
 <p>Nu reprezintă rezultate reale și nu constituie pronosticuri. Proiect personal, neafiliat FIFA; denumirile competiției, echipelor, stadioanelor și numele jucătorilor aparțin proprietarilor lor și sunt folosite doar descriptiv.</p>
 </footer>
 
@@ -641,9 +641,13 @@ function processCards(state,team,cards){
 }
 
 // Intensitățile Poisson (aceleași pentru simulare și pentru probabilitățile afișate)
+// Modelul de goluri: gm=1 (v7.3 și mai vechi, ≈3,7 goluri/meci) și gm=2 (v7.4, scalat la ≈2,7 goluri/meci ca în turneele mondiale reale).
+// CUR_GM = modelul sim. în curs (la simulare) sau al celei afișate (la randare). Replay-ul unei sim. vechi păstrează gm=1.
+const GOAL_SCALE_V2=0.72;
+let CUR_GM=2;
 function lambdasFor(bh,ba,fatigue){
-  const diff=bh-ba;
-  return [Math.min(4.2,(0.85+0.32*bh+Math.max(0,diff*0.32))*fatigue), Math.min(4.2,(0.85+0.32*ba+Math.max(0,-diff*0.32))*fatigue)];
+  const diff=bh-ba, k=CUR_GM>=2?GOAL_SCALE_V2:1;
+  return [Math.min(4.2,(0.85+0.32*bh+Math.max(0,diff*0.32))*fatigue*k), Math.min(4.2,(0.85+0.32*ba+Math.max(0,-diff*0.32))*fatigue*k)];
 }
 
 function simMatch(home,away,knockout,forced,date,et,venue,matchIdx,state,phase){
@@ -777,9 +781,10 @@ function findGroupOfDeath(){
 }
 
 // strOverride: undefined = puterile curente din editor; null = puterile implicite; obiect = puteri date (replay)
-function simulateTournament(forced,label,seed,strOverride){
+function simulateTournament(forced,label,seed,strOverride,gm){
   const useSeed = (seed===undefined||seed===null)?randSeed():(seed>>>0);
-  const prevR=rnd, prevTS=SIM_TS;
+  const prevR=rnd, prevTS=SIM_TS, prevGM=CUR_GM;
+  CUR_GM=(gm===1)?1:2;
   let ts=null;
   if(strOverride===undefined) ts=loadCustomTS(); else if(strOverride) ts=cleanTS(strOverride);
   rnd=mulberry32(useSeed);
@@ -790,13 +795,13 @@ function simulateTournament(forced,label,seed,strOverride){
     sim.seed=useSeed;
     sim.str=ts?Object.assign({},ts):null;
   } finally {
-    rnd=prevR; SIM_TS=prevTS;
+    rnd=prevR; SIM_TS=prevTS; CUR_GM=prevGM;
   }
   return sim;
 }
 
 function _doSimulateTournament(forced,label){
-  const sim={id:'s'+Date.now()+Math.floor(Math.random()*1000),ts:Date.now(),forced,label:label||'',version:7,fmt:2,groups:{},thirdRanking:[],r32:[],r16:[],qf:[],sf:[],third:null,final:null,champion:null,deathGroup:findGroupOfDeath()};
+  const sim={id:'s'+Date.now()+Math.floor(Math.random()*1000),ts:Date.now(),forced,label:label||'',version:7,fmt:2,gm:CUR_GM,groups:{},thirdRanking:[],r32:[],r16:[],qf:[],sf:[],third:null,final:null,champion:null,deathGroup:findGroupOfDeath()};
   let mIdx=0;
   const state={ylw:{},bans:{}};
 
@@ -1158,6 +1163,7 @@ function sanitizeSim(raw){
     sim.forced=(typeof raw.forced==='string'&&TEAMSET.has(raw.forced))?raw.forced:null;
     sim.label=vStr(raw.label,80)||'';
     sim.version=7;
+    sim.gm=raw.gm===2?2:1;   // 2 = model de goluri calibrat (≈2,7/meci); 1 = modelul vechi (≈3,7/meci)
     sim.fmt=raw.fmt===2?2:0;      // 2 = tablou oficial (Anexa C); 0 = versiuni anterioare (aproximat)
     const sd=vInt(raw.seed,0,4294967295); if(sd!==null) sim.seed=sd;
     sim.str=raw.str?cleanTS(raw.str):null;
@@ -1745,12 +1751,13 @@ function renderCurrent(){
     return;
   }
   const sim=currentSim, forced=sim.forced, death=sim.deathGroup;
-  renderTS=sim.str||activeTS();
+  renderTS=sim.str||activeTS(); CUR_GM=sim.gm===2?2:1;
   const seedHTML=sim.seed!==undefined?`<span class="seed-info" title="Seed RNG - permite reproducere exactă">seed: ${sim.seed}</span>`:'';
   const banner=forced?`<div class="sim-banner forced">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}⚡ <b>SIMULARE FORȚATĂ (fictivă)</b> — câștigător predeterminat: <b>${esc(forced)}</b> · ${fmtTs(sim.ts)} ${seedHTML}</div>`:`<div class="sim-banner">${sim.label?'<span class="label">"'+esc(sim.label)+'"</span> · ':''}🎲 <b>Simulare aleatorie (fictivă)</b> · ${fmtTs(sim.ts)} · ID: <code style="color:var(--text-dim);font-size:.78rem">${esc(sim.id)}</code> ${seedHTML}</div>`;
   
   const bannerSum=banner.slice(0,-6)+sumLine(sim)+'</div>';
-  const legacy=sim.fmt===2?'':'<div class="legacy-note">⚠️ Simulare creată cu o versiune anterioară: tabloul eliminatoriu și alocarea locurilor 3 erau aproximate, iar programul/stadioanele pot fi inexacte. Rulează una nouă pentru formatul actual.</div>';
+  const gmNote=sim.gm===2?'':'<div class="legacy-note">ℹ️ Simulare cu modelul vechi de goluri (≈3,7 goluri/meci); simulările noi folosesc modelul calibrat (≈2,7 goluri/meci).</div>';
+  const legacy=gmNote+(sim.fmt===2?'':'<div class="legacy-note">⚠️ Simulare creată cu o versiune anterioară: tabloul eliminatoriu și alocarea locurilor 3 erau aproximate, iar programul/stadioanele pot fi inexacte. Rulează una nouă pentru formatul actual.</div>');
   const grpHTML=bannerSum+legacy+`<p class="note-line">Grupa <b style="color:#ff7a85">${esc(death)}</b> = Grupa Morții 💀 (suma cea mai mare de strength)</p>`+'<div class="groups-grid">'+'ABCDEFGHIJKL'.split('').map(k=>rGroup(k,sim.groups[k],forced,death)).join('')+'</div>';
   document.querySelector('.phase[data-phase="groups"]').innerHTML=`<div class="phase-header"><h2>Faza Grupelor</h2><p>72 meciuri · 12 grupe · Grupa Morții marcată · simulare fictivă</p></div>${grpHTML}`;
   
@@ -1815,7 +1822,7 @@ function replaySim(id){
   const s=loadHistory().find(x=>x.id===id);
   if(!s){ toast('Simulare negăsită','err'); return; }
   if(s.seed===undefined){ toast('Această sim. nu are seed (v6 sau mai veche)','err'); return; }
-  const newSim=simulateTournament(s.forced,s.label?'replay: '+s.label:'replay',s.seed,s.str||null);
+  const newSim=simulateTournament(s.forced,s.label?'replay: '+s.label:'replay',s.seed,s.str||null,s.gm===2?2:1);
   saveSim(newSim);
   currentSim=newSim; currentSimId=newSim.id;
   lsSet('wc2026_v7_replayed','1');
