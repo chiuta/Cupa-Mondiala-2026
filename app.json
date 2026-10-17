@@ -15,8 +15,8 @@
   "storageKeys": [
     "wc2026_probe"
   ],
-  "sizeBytes": 255907,
-  "sha256": "96941302ccda2addc75d2aa37faf7b1e0182ea73464b8d564010caba185f718c",
+  "sizeBytes": 257508,
+  "sha256": "30cfe4b255e8e2177e2e564486a522c7dfc2e92dec36768d2751344384824c48",
   "csp": {
     "present": true,
     "directives": {
