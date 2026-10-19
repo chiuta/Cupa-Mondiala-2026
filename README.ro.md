@@ -76,9 +76,9 @@ MIT — vezi fișierul `LICENSE`.
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
-## English summary
+## Rezumat
 
-An unofficial, fictional simulator of the 2026 FIFA World Cup format (48 teams, 104 matches) in one offline HTML file. All scores, scorers, cards and statistics are random output of a simple Poisson model with subjective team strengths; they are not real results or predictions, and player names are mere labels. Group tiebreakers, the official knockout bracket and the third-place allocation (Annex C table, transcribed from public sources) are implemented; imports and shared links are strictly validated. No network requests, no telemetry; data stays in localStorage. Not affiliated with FIFA.
+Un simulator neoficial și fictiv al formatului Cupei Mondiale FIFA 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML offline. Toate scorurile, marcatorii, cartonașele și statisticile sunt rezultatul aleatoriu al unui model Poisson simplu cu forțe subiective ale echipelor; nu sunt rezultate reale sau predicții, iar numele jucătorilor sunt simple etichete. Sunt implementate departajările din grupe, tabloul oficial al fazei eliminatorii și alocarea locurilor trei (tabelul din Anexa C, transcris din surse publice); importurile și linkurile partajate sunt validate strict. Fără cereri de rețea, fără telemetrie; datele rămân în localStorage. Fără legătură cu FIFA.
 
 ## Istoric / Changelog
 
