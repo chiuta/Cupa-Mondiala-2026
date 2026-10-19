@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 7.5.0 · **Utolsó frissítés:** 2026-10-14
+**Verzió:** 7.6.0 · **Utolsó frissítés:** 2026-10-19
+
+A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 A 2026-os labdarúgó-világbajnokság fiktív szimulátora (48 csapat, 104 mérkőzés) egyetlen HTML-fájlban, szerver és fiók nélkül. **Nem áll kapcsolatban a FIFA-val, nem tartalmaz valódi eredményeket, és nem jóslat.**
 

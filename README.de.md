@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 7.5.0 · **Zuletzt aktualisiert:** 2026-10-14
+**Version:** 7.6.0 · **Zuletzt aktualisiert:** 2026-10-19
+
+Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Fiktiver Simulator der Weltmeisterschaft 2026 (48 Mannschaften, 104 Spiele) in einer einzigen HTML-Datei, ohne Server und ohne Konto. **Er ist nicht mit der FIFA verbunden, enthält keine echten Ergebnisse und ist keine Prognose.**
 

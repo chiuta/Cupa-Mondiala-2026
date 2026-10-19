@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 7.5.0 · **Last updated:** 2026-10-14
+**Version:** 7.6.0 · **Last updated:** 2026-10-19
+
+Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 A fictional simulator of the 2026 World Cup (48 teams, 104 matches) in a single HTML file, with no server and no account. **It is not affiliated with FIFA, contains no real results and is not a prediction.**
 

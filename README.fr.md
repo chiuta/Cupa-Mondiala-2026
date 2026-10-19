@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 7.5.0 · **Dernière mise à jour :** 2026-10-14
+**Version :** 7.6.0 · **Dernière mise à jour :** 2026-10-19
+
+Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Simulateur fictif de la Coupe du monde 2026 (48 équipes, 104 matchs) dans un seul fichier HTML, sans serveur et sans compte. **Il n'est pas affilié à la FIFA, ne contient aucun résultat réel et n'est pas un pronostic.**
 
