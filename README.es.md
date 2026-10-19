@@ -10,7 +10,7 @@ Simulador ficticio del Mundial 2026 (48 selecciones, 104 partidos) en un único 
 
 **Aplicación en línea:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

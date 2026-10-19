@@ -10,7 +10,7 @@ Fiktiver Simulator der Weltmeisterschaft 2026 (48 Mannschaften, 104 Spiele) in e
 
 **Online-Anwendung:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 

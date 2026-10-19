@@ -10,7 +10,7 @@ Simulatore fittizio della Coppa del Mondo 2026 (48 squadre, 104 partite) in un u
 
 **Applicazione online:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

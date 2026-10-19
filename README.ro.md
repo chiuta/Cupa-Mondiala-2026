@@ -10,7 +10,7 @@ Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un sin
 
 **Live:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 

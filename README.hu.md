@@ -10,7 +10,7 @@ A 2026-os labdarúgó-világbajnokság fiktív szimulátora (48 csapat, 104 mér
 
 **Online alkalmazás:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 

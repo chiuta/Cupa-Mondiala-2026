@@ -10,7 +10,7 @@ A fictional simulator of the 2026 World Cup (48 teams, 104 matches) in a single 
 
 **Live app:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 
