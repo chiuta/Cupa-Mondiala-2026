@@ -13,10 +13,13 @@
     "Web Crypto"
   ],
   "storageKeys": [
-    "wc2026_probe"
+    "wc2026_probe",
+    "wc2026_v5_history",
+    "wc2026_v7_presets",
+    "wc2026_v7_strengths"
   ],
-  "sizeBytes": 257508,
-  "sha256": "30cfe4b255e8e2177e2e564486a522c7dfc2e92dec36768d2751344384824c48",
+  "sizeBytes": 258206,
+  "sha256": "b45bfa25ab1ebdbc90681cc5f77e578ba2acd3608e3af684db4ced0c405e9cc8",
   "csp": {
     "present": true,
     "directives": {
@@ -52,7 +55,7 @@
     ]
   },
   "kit": {
-    "version": "1.0.0",
+    "version": "1.1.1",
     "modules": [
       "core",
       "label",
