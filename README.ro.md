@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 7.6.2 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 7.6.3 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,9 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 Un simulator neoficial și fictiv al formatului Cupei Mondiale FIFA 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML offline. Toate scorurile, marcatorii, cartonașele și statisticile sunt rezultatul aleatoriu al unui model Poisson simplu cu forțe subiective ale echipelor; nu sunt rezultate reale sau predicții, iar numele jucătorilor sunt simple etichete. Sunt implementate departajările din grupe, tabloul oficial al fazei eliminatorii și alocarea locurilor trei (tabelul din Anexa C, transcris din surse publice); importurile și linkurile partajate sunt validate strict. Fără cereri de rețea, fără telemetrie; datele rămân în localStorage. Fără legătură cu FIFA.
 
 ## Istoric / Changelog
+
+### 7.6.3 — 2026-10-22
+- fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
 
 ### 7.6.2 — 2026-10-22
 - fff-kit 1.1.2: PBKDF2 600 000 iterații, protecție anti-clickjacking

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 7.6.2 · **Zuletzt aktualisiert:** 2026-10-22
+**Version:** 7.6.3 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,9 @@ Alexio — Alexandru-Ionuț Chiuță, Kontakt: alexio@trom.tf
 Ein inoffizieller, fiktiver Simulator des Formats der FIFA-Weltmeisterschaft 2026 (48 Mannschaften, 104 Spiele) in einer Offline-HTML-Datei. Alle Ergebnisse, Torschützen, Karten und Statistiken sind zufällige Ausgaben eines einfachen Poisson-Modells mit subjektiven Mannschaftsstärken; es sind keine echten Ergebnisse oder Prognosen, und Spielernamen sind bloße Etiketten. Umgesetzt sind die Gruppen-Tiebreaker, der offizielle K.-o.-Baum und die Zuordnung der Gruppendritten (Tabelle aus Anhang C, aus öffentlichen Quellen übernommen); Importe und geteilte Links werden streng validiert. Keine Netzwerkanfragen, keine Telemetrie; die Daten bleiben in localStorage. Nicht mit der FIFA verbunden.
 
 ## Verlauf / Changelog
+
+### 7.6.3 — 2026-10-22
+- fff-kit 1.1.4: Touch-Ziele und Mindestschriftgröße; Touch-Ziele/Text korrigiert
 
 ### 7.6.2 — 2026-10-22
 - fff-kit 1.1.2: PBKDF2 mit 600.000 Iterationen, Schutz vor Clickjacking
