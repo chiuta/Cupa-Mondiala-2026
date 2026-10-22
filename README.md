@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 7.6.4 · **Last updated:** 2026-10-23
+**Version:** 7.6.5 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -47,7 +47,7 @@ Verified in the code and in the browser (headless Chromium):
 
 - There are no network requests: I found no external `fetch`, XHR, WebSocket, scripts, fonts, images or iframes in the code. The page contains a CSP policy (`connect-src 'none'`, `default-src 'none'`) that blocks them; the only URL in the file is the SVG namespace, which is not accessed.
 - External hosts contacted: **none**. There is no telemetry, account or cookies.
-- Local storage (`localStorage`, keys with the prefix `wc2026_`): the simulation history, the custom strengths and presets, the tabs visited, the compact mode, the shortcuts setting and a few achievement markers. If `localStorage` is blocked (for example in private mode), the app works, and the history stays only in the session. If the space fills up, the oldest simulations are removed and you are notified.
+- Local storage (`localStorage`, keys with the prefix `cupa-mondiala-2026.`): the simulation history, the custom strengths and presets, the tabs visited, the compact mode, the shortcuts setting and a few achievement markers. If `localStorage` is blocked (for example in private mode), the app works, and the history stays only in the session. If the space fills up, the oldest simulations are removed and you are notified.
 - Note: on GitHub Pages all `chiuta.github.io/...` pages share the same `localStorage` (same origin); this app's keys are prefixed, but other pages on the same domain could read or modify them.
 - `#s=…` links and imported JSON files are treated as untrusted data: limited sizes (including after decompression), strictly validated JSON, fields rebuilt from allowed values and displayed as text (protection against XSS, "zip bombs" and prototype pollution). A received link asks for your confirmation before import.
 - It asks for no browser permissions (camera, location, notifications, etc.). Link sharing uses the clipboard only on your action.
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 An unofficial, fictional simulator of the 2026 FIFA World Cup format (48 teams, 104 matches) in one offline HTML file. All scores, scorers, cards and statistics are random output of a simple Poisson model with subjective team strengths; they are not real results or predictions, and player names are mere labels. Group tiebreakers, the official knockout bracket and the third-place allocation (Annex C table, transcribed from public sources) are implemented; imports and shared links are strictly validated. No network requests, no telemetry; data stays in localStorage. Not affiliated with FIFA.
 
 ## History / Changelog
+
+### 7.6.5 — 2026-10-23
+- Storage keys now carry the app prefix (`cupa-mondiala-2026.*`); existing data (history, strengths, presets, language, settings) is migrated automatically at startup, and old `.fff.json` copies can still be imported.
+- fff-kit 1.2.0: unprefixed-storage fixed
+- Native alert/confirm/prompt replaced with accessible, translated FFF.dialog dialogs (fff-kit 1.2.0).
 
 ### 7.6.3 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size; touch targets/text fixed

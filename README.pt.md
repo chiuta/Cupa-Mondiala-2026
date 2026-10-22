@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 7.6.4 · **Última atualização:** 2026-10-23
+**Versão:** 7.6.5 · **Última atualização:** 2026-10-23
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -47,7 +47,7 @@ Verificadas no código e no navegador (Chromium sem interface):
 
 - Não há pedidos de rede: não encontrei no código nenhum `fetch`, XHR, WebSocket, script, tipo de letra, imagem ou iframe externo. A página contém uma política CSP (`connect-src 'none'`, `default-src 'none'`) que os bloqueia; o único URL no ficheiro é o espaço de nomes SVG, que não é acedido.
 - Anfitriões externos contactados: **nenhum**. Não há telemetria, conta nem cookies.
-- Armazenamento local (`localStorage`, chaves com o prefixo `wc2026_`): o histórico de simulações, as forças personalizadas e as predefinições, os separadores visitados, o modo compacto, a definição dos atalhos e algumas marcas de conquistas. Se o `localStorage` estiver bloqueado (por exemplo, em modo privado), a aplicação funciona e o histórico fica apenas na sessão. Se o espaço se esgotar, as simulações mais antigas são eliminadas e é avisado.
+- Armazenamento local (`localStorage`, chaves com o prefixo `cupa-mondiala-2026.`): o histórico de simulações, as forças personalizadas e as predefinições, os separadores visitados, o modo compacto, a definição dos atalhos e algumas marcas de conquistas. Se o `localStorage` estiver bloqueado (por exemplo, em modo privado), a aplicação funciona e o histórico fica apenas na sessão. Se o espaço se esgotar, as simulações mais antigas são eliminadas e é avisado.
 - Atenção: no GitHub Pages todas as páginas `chiuta.github.io/...` partilham o mesmo `localStorage` (mesma origem); as chaves desta aplicação têm prefixo, mas outras páginas do mesmo domínio poderiam lê-las ou modificá-las.
 - As ligações `#s=…` e os ficheiros JSON importados são tratados como dados não fiáveis: tamanhos limitados (também após a descompressão), JSON validado rigorosamente, campos reconstruídos a partir de valores permitidos e apresentados como texto (proteção contra XSS, «bombas zip» e poluição de protótipos). Uma ligação recebida pede a sua confirmação antes da importação.
 - Não pede permissões do navegador (câmara, localização, notificações, etc.). A partilha por ligação utiliza a área de transferência apenas por ação sua.
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contacto: alexio@trom.tf
 Um simulador fictício e não oficial do formato do Campeonato do Mundo FIFA 2026 (48 seleções, 104 jogos) num único ficheiro HTML offline. Todos os resultados, marcadores, cartões e estatísticas são saída aleatória de um modelo de Poisson simples com forças subjetivas das seleções; não são resultados reais nem prognósticos, e os nomes dos jogadores são meras etiquetas. Estão implementados os desempates dos grupos, o quadro oficial a eliminar e a atribuição dos terceiros (tabela do Anexo C, transcrita de fontes públicas); as importações e as ligações partilhadas são validadas rigorosamente. Sem pedidos de rede, sem telemetria; os dados ficam no localStorage. Não afiliado à FIFA.
 
 ## Histórico / Changelog
+
+### 7.6.5 — 2026-10-23
+- As chaves de armazenamento têm agora o prefixo da aplicação (`cupa-mondiala-2026.*`); os dados existentes (histórico, forças, predefinições, idioma, definições) são migrados automaticamente no arranque e as cópias antigas `.fff.json` continuam a poder ser importadas.
+- fff-kit 1.2.0: armazenamento sem prefixo corrigido
+- As caixas nativas alert/confirm/prompt foram substituídas por diálogos FFF.dialog acessíveis e traduzidos (fff-kit 1.2.0).
 
 ### 7.6.3 — 2026-10-22
 - fff-kit 1.1.4: alvos de toque e tamanho mínimo do texto; alvos de toque/texto corrigidos

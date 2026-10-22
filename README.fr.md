@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 7.6.4 · **Dernière mise à jour :** 2026-10-23
+**Version :** 7.6.5 · **Dernière mise à jour :** 2026-10-23
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -47,7 +47,7 @@ Vérifiées dans le code et dans le navigateur (Chromium sans interface) :
 
 - Il n'y a aucune requête réseau : je n'ai trouvé dans le code aucun `fetch`, XHR, WebSocket, script, police, image ou iframe externe. La page contient une politique CSP (`connect-src 'none'`, `default-src 'none'`) qui les bloque ; la seule URL du fichier est l'espace de noms SVG, qui n'est pas consulté.
 - Hôtes externes contactés : **aucun**. Il n'y a ni télémétrie, ni compte, ni cookies.
-- Stockage local (`localStorage`, clés avec le préfixe `wc2026_`) : l'historique des simulations, les forces personnalisées et les préréglages, les onglets visités, le mode compact, le réglage des raccourcis et quelques marqueurs de succès. Si `localStorage` est bloqué (par exemple en navigation privée), l'application fonctionne et l'historique ne reste que pour la session. Si l'espace se remplit, les plus anciennes simulations sont supprimées et vous en êtes informé.
+- Stockage local (`localStorage`, clés avec le préfixe `cupa-mondiala-2026.`) : l'historique des simulations, les forces personnalisées et les préréglages, les onglets visités, le mode compact, le réglage des raccourcis et quelques marqueurs de succès. Si `localStorage` est bloqué (par exemple en navigation privée), l'application fonctionne et l'historique ne reste que pour la session. Si l'espace se remplit, les plus anciennes simulations sont supprimées et vous en êtes informé.
 - Attention : sur GitHub Pages, toutes les pages `chiuta.github.io/...` partagent le même `localStorage` (même origine) ; les clés de cette application sont préfixées, mais d'autres pages du même domaine pourraient les lire ou les modifier.
 - Les liens `#s=…` et les fichiers JSON importés sont traités comme des données non fiables : tailles limitées (y compris après décompression), JSON validé strictement, champs reconstruits à partir de valeurs autorisées et affichés comme texte (protection contre le XSS, les « bombes zip » et la pollution de prototype). Un lien reçu demande votre confirmation avant l'import.
 - Elle ne demande aucune autorisation au navigateur (caméra, localisation, notifications, etc.). Le partage par lien n'utilise le presse-papiers que sur votre action.
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contact : alexio@trom.tf
 Un simulateur fictif et non officiel du format de la Coupe du monde 2026 de la FIFA (48 équipes, 104 matchs) dans un seul fichier HTML hors ligne. Tous les scores, buteurs, cartons et statistiques sont le résultat aléatoire d'un simple modèle de Poisson avec des forces d'équipe subjectives ; ce ne sont ni des résultats réels ni des pronostics, et les noms des joueurs ne sont que des étiquettes. Les critères de départage des groupes, le tableau officiel à élimination directe et l'attribution des troisièmes (tableau de l'annexe C, transcrit de sources publiques) sont implémentés ; les imports et les liens partagés sont strictement validés. Aucune requête réseau, aucune télémétrie ; les données restent dans localStorage. Non affilié à la FIFA.
 
 ## Historique / Changelog
+
+### 7.6.5 — 2026-10-23
+- Les clés de stockage portent désormais le préfixe de l'application (`cupa-mondiala-2026.*`) ; les données existantes (historique, forces, préréglages, langue, réglages) sont migrées automatiquement au démarrage, et les anciennes copies `.fff.json` restent importables.
+- fff-kit 1.2.0 : stockage sans préfixe corrigé
+- Les boîtes natives alert/confirm/prompt sont remplacées par des dialogues FFF.dialog accessibles et traduits (fff-kit 1.2.0).
 
 ### 7.6.3 — 2026-10-22
 - fff-kit 1.1.4 : cibles tactiles et taille de texte minimale ; cibles tactiles/texte corrigés

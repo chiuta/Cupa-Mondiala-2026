@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 7.6.4 · **Utolsó frissítés:** 2026-10-23
+**Verzió:** 7.6.5 · **Utolsó frissítés:** 2026-10-23
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -47,7 +47,7 @@ Ellenőrizve a kódban és a böngészőben (fej nélküli Chromium):
 
 - Nincsenek hálózati kérések: a kódban nem találtam külső `fetch`-et, XHR-t, WebSocketet, szkriptet, betűtípust, képet vagy iframe-et. Az oldal CSP-szabályzatot tartalmaz (`connect-src 'none'`, `default-src 'none'`), amely ezeket blokkolja; a fájlban az egyetlen URL az SVG névtere, amelyet nem érnek el.
 - Felvett kapcsolatú külső gazdagépek: **nincs**. Nincs telemetria, fiók vagy süti.
-- Helyi tárolás (`localStorage`, `wc2026_` előtagú kulcsok): a szimulációk előzményei, az egyéni erősségek és előbeállítások, a meglátogatott fülek, a kompakt mód, a billentyűparancsok beállítása és néhány teljesítményjelölő. Ha a `localStorage` le van tiltva (például privát módban), az alkalmazás működik, az előzmények pedig csak a munkamenetben maradnak. Ha betelik a hely, a legrégebbi szimulációk törlődnek, és értesítést kapsz.
+- Helyi tárolás (`localStorage`, `cupa-mondiala-2026.` előtagú kulcsok): a szimulációk előzményei, az egyéni erősségek és előbeállítások, a meglátogatott fülek, a kompakt mód, a billentyűparancsok beállítása és néhány teljesítményjelölő. Ha a `localStorage` le van tiltva (például privát módban), az alkalmazás működik, az előzmények pedig csak a munkamenetben maradnak. Ha betelik a hely, a legrégebbi szimulációk törlődnek, és értesítést kapsz.
 - Figyelem: a GitHub Pagesen az összes `chiuta.github.io/...` oldal ugyanazt a `localStorage`-et használja (azonos eredet); ennek az alkalmazásnak a kulcsai előtaggal rendelkeznek, de ugyanazon domain más oldalai elolvashatják vagy módosíthatják őket.
 - A `#s=…` hivatkozásokat és az importált JSON-fájlokat megbízhatatlan adatként kezeli: korlátozott méretek (kicsomagolás után is), szigorúan ellenőrzött JSON, megengedett értékekből újraépített és szövegként megjelenített mezők (védelem az XSS, a „zip bombák” és a prototípus-szennyezés ellen). A kapott hivatkozás import előtt megerősítést kér tőled.
 - Nem kér böngészőengedélyeket (kamera, helymeghatározás, értesítések stb.). A hivatkozással való megosztás a vágólapot csak a te műveletedre használja.
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, kapcsolat: alexio@trom.tf
 A 2026-os FIFA-világbajnokság formátumának nem hivatalos, fiktív szimulátora (48 csapat, 104 mérkőzés) egyetlen offline HTML-fájlban. Minden eredmény, gólszerző, lap és statisztika egy egyszerű Poisson-modell véletlenszerű kimenete szubjektív csapaterősségekkel; nem valódi eredmények vagy jóslatok, a játékosnevek pedig puszta címkék. Megvalósítottak a csoportok holtverseny-szabályai, a hivatalos kieséses ág és a harmadik helyezettek beosztása (a C melléklet táblázata, nyilvános forrásokból átírva); az importokat és a megosztott hivatkozásokat szigorúan ellenőrzi. Nincsenek hálózati kérések, nincs telemetria; az adatok a localStorage-ben maradnak. Nem áll kapcsolatban a FIFA-val.
 
 ## Előzmények / Changelog
+
+### 7.6.5 — 2026-10-23
+- A tárolókulcsok mostantól az alkalmazás előtagját viselik (`cupa-mondiala-2026.*`); a meglévő adatok (előzmények, erősségek, előbeállítások, nyelv, beállítások) indításkor automatikusan átkerülnek, a régi `.fff.json` másolatok továbbra is importálhatók.
+- fff-kit 1.2.0: előtag nélküli tárolás javítva
+- A natív alert/confirm/prompt ablakokat akadálymentes, lefordított FFF.dialog párbeszédablakok váltották fel (fff-kit 1.2.0).
 
 ### 7.6.3 — 2026-10-22
 - fff-kit 1.1.4: érintési célpontok és minimális szövegméret; érintési célpontok/szöveg javítva

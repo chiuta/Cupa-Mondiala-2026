@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 7.6.4 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 7.6.5 · **Ultima actualizare:** 2026-10-23
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -47,7 +47,7 @@ Verificate în cod și în browser (Chromium headless):
 
 - Nu există cereri de rețea: nu am găsit `fetch`, XHR, WebSocket, scripturi, fonturi, imagini sau iframe-uri externe în cod. Pagina conține o politică CSP (`connect-src 'none'`, `default-src 'none'`) care le blochează; singurul URL din fișier este spațiul de nume SVG, care nu este accesat.
 - Gazde externe contactate: **niciuna**. Nu există telemetrie, cont sau cookie-uri.
-- Stocare locală (`localStorage`, chei cu prefixul `wc2026_`): istoricul simulărilor, puterile personalizate și presetările, taburile vizitate, modul compact, setarea scurtăturilor și câteva marcaje pentru realizări. Dacă `localStorage` este blocat (de exemplu mod privat), aplicația funcționează, iar istoricul rămâne doar în sesiune. Dacă spațiul se umple, cele mai vechi simulări sunt eliminate și ești anunțat.
+- Stocare locală (`localStorage`, chei cu prefixul `cupa-mondiala-2026.`): istoricul simulărilor, puterile personalizate și presetările, taburile vizitate, modul compact, setarea scurtăturilor și câteva marcaje pentru realizări. Dacă `localStorage` este blocat (de exemplu mod privat), aplicația funcționează, iar istoricul rămâne doar în sesiune. Dacă spațiul se umple, cele mai vechi simulări sunt eliminate și ești anunțat.
 - Atenție: pe GitHub Pages toate paginile `chiuta.github.io/...` împart același `localStorage` (aceeași origine); cheile acestei aplicații sunt prefixate, dar alte pagini de pe același domeniu le-ar putea citi sau modifica.
 - Link-urile `#s=…` și fișierele JSON importate sunt tratate ca date nesigure: dimensiuni limitate (inclusiv după decompresie), JSON validat strict, câmpuri reconstruite din valori permise și afișate ca text (protecție împotriva XSS, a „zip bomb” și a poluării prototipului). Un link primit îți cere confirmarea înainte de import.
 - Nu cere permisiuni ale browserului (cameră, locație, notificări etc.). Partajarea prin link folosește clipboardul doar la acțiunea ta.
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 Un simulator neoficial și fictiv al formatului Cupei Mondiale FIFA 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML offline. Toate scorurile, marcatorii, cartonașele și statisticile sunt rezultatul aleatoriu al unui model Poisson simplu cu forțe subiective ale echipelor; nu sunt rezultate reale sau predicții, iar numele jucătorilor sunt simple etichete. Sunt implementate departajările din grupe, tabloul oficial al fazei eliminatorii și alocarea locurilor trei (tabelul din Anexa C, transcris din surse publice); importurile și linkurile partajate sunt validate strict. Fără cereri de rețea, fără telemetrie; datele rămân în localStorage. Fără legătură cu FIFA.
 
 ## Istoric / Changelog
+
+### 7.6.5 — 2026-10-23
+- Cheile de stocare au acum prefixul aplicației (`cupa-mondiala-2026.*`); datele existente (istoricul, puterile, presetările, limba, setările) se migrează automat la pornire, iar copiile vechi `.fff.json` se pot importa în continuare.
+- fff-kit 1.2.0: stocare fără prefix remediată
+- Dialogurile native alert/confirm/prompt au fost înlocuite cu dialoguri FFF.dialog accesibile și traduse (fff-kit 1.2.0).
 
 ### 7.6.3 — 2026-10-22
 - fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
