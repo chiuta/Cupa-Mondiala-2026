@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 7.6.1 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 7.6.2 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,9 @@ Alexio — Alexandru-Ionuț Chiuță, kapcsolat: alexio@trom.tf
 A 2026-os FIFA-világbajnokság formátumának nem hivatalos, fiktív szimulátora (48 csapat, 104 mérkőzés) egyetlen offline HTML-fájlban. Minden eredmény, gólszerző, lap és statisztika egy egyszerű Poisson-modell véletlenszerű kimenete szubjektív csapaterősségekkel; nem valódi eredmények vagy jóslatok, a játékosnevek pedig puszta címkék. Megvalósítottak a csoportok holtverseny-szabályai, a hivatalos kieséses ág és a harmadik helyezettek beosztása (a C melléklet táblázata, nyilvános forrásokból átírva); az importokat és a megosztott hivatkozásokat szigorúan ellenőrzi. Nincsenek hálózati kérések, nincs telemetria; az adatok a localStorage-ben maradnak. Nem áll kapcsolatban a FIFA-val.
 
 ## Előzmények / Changelog
+
+### 7.6.2 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600 000 iteráció, clickjacking elleni védelem
 
 ### 7.6.1 — 2026-10-22
 - Akadálymentesség és mobil: a böngésző blokkoló párbeszédablakait (figyelmeztetés, megerősítés, szövegbekérés) nem blokkoló értesítések és lefordított modális ablakok (8 nyelv) váltják fel, beleértve az összefoglaló és a megosztási hivatkozás vágólapos tartalékmegoldását.
