@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 7.6.0 · **Ultima actualizare:** 2026-10-19
+**Versiune:** 7.6.1 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 Un simulator neoficial și fictiv al formatului Cupei Mondiale FIFA 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML offline. Toate scorurile, marcatorii, cartonașele și statisticile sunt rezultatul aleatoriu al unui model Poisson simplu cu forțe subiective ale echipelor; nu sunt rezultate reale sau predicții, iar numele jucătorilor sunt simple etichete. Sunt implementate departajările din grupe, tabloul oficial al fazei eliminatorii și alocarea locurilor trei (tabelul din Anexa C, transcris din surse publice); importurile și linkurile partajate sunt validate strict. Fără cereri de rețea, fără telemetrie; datele rămân în localStorage. Fără legătură cu FIFA.
 
 ## Istoric / Changelog
+
+### 7.6.1 — 2026-10-22
+- Accesibilitate și mobil: dialogurile blocante ale browserului (alert, confirmare, cerere de text) sunt înlocuite cu notificări neblocante și dialoguri modale traduse (8 limbi), inclusiv rezerva de copiere pentru rezumat și linkul de partajare.
+- Mobil: textul are cel puțin 12 px pe ecrane înguste, iar rezumatul notei de ficțiune are o țintă tactilă mai mare.
+- Eticheta tehnică listează acum cele 8 limbi ale interfeței (opțiuni statice în selectorul de limbă).
 
 ### 7.5.0 — 2026-10-14
 - Copie de rezervă și etichetare date (fff-kit).

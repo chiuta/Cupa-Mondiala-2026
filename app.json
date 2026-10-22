@@ -2,8 +2,8 @@
   "schema": 1,
   "slug": "cupa-mondiala-2026",
   "name": "Simulator Cupa Mondială 2026 (neoficial)",
-  "version": "7.6.0",
-  "updated": "2026-10-19",
+  "version": "7.6.1",
+  "updated": "2026-10-22",
   "description": "Simulator fictiv și neoficial al Cupei Mondiale 2026: 48 de echipe, 104 meciuri, rezultate generate aleatoriu. Nu sunt rezultate reale, nu sunt pronosticuri. Neafiliat FIFA.",
   "egress": [],
   "permissions": [
@@ -18,13 +18,13 @@
     "wc2026_v7_presets",
     "wc2026_v7_strengths"
   ],
-  "sizeBytes": 412820,
-  "sha256": "c6e088281f2887615e9aa47cefe8f12fd68dd1982715287497d973f5cb84c159",
+  "sizeBytes": 419061,
+  "sha256": "35f4a2a0176f9688ad91060d9fa9c8829fb6ddd139c20581d2633b8867b1bd47",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×3",
+      "script-src": "sha256×4",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data:",
       "connect-src": "'none'",
@@ -43,7 +43,16 @@
   "features": {
     "export": true,
     "import": true,
-    "i18n": [],
+    "i18n": [
+      "ro",
+      "en",
+      "fr",
+      "it",
+      "es",
+      "pt",
+      "hu",
+      "de"
+    ],
     "pwa": {
       "manifest": true,
       "serviceWorker": true

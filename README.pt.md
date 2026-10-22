@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 7.6.0 · **Última atualização:** 2026-10-19
+**Versão:** 7.6.1 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, contacto: alexio@trom.tf
 Um simulador fictício e não oficial do formato do Campeonato do Mundo FIFA 2026 (48 seleções, 104 jogos) num único ficheiro HTML offline. Todos os resultados, marcadores, cartões e estatísticas são saída aleatória de um modelo de Poisson simples com forças subjetivas das seleções; não são resultados reais nem prognósticos, e os nomes dos jogadores são meras etiquetas. Estão implementados os desempates dos grupos, o quadro oficial a eliminar e a atribuição dos terceiros (tabela do Anexo C, transcrita de fontes públicas); as importações e as ligações partilhadas são validadas rigorosamente. Sem pedidos de rede, sem telemetria; os dados ficam no localStorage. Não afiliado à FIFA.
 
 ## Histórico / Changelog
+
+### 7.6.1 — 2026-10-22
+- Acessibilidade e móvel: as caixas de diálogo bloqueantes do navegador (alertas, confirmações, pedidos de texto) são substituídas por notificações não bloqueantes e diálogos modais traduzidos (8 idiomas), incluindo a alternativa de cópia do resumo e da ligação de partilha.
+- Móvel: o texto tem pelo menos 12 px em ecrãs estreitos e o resumo do aviso de ficção tem uma área tátil maior.
+- A etiqueta técnica lista agora os 8 idiomas da interface (opções estáticas no seletor de idioma).
 
 ### 7.5.0 — 2026-10-14
 - Cópia de segurança e etiquetagem de dados (fff-kit).

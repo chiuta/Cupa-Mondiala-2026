@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 7.6.0 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 7.6.1 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,11 @@ Alexio — Alexandru-Ionuț Chiuță, Kontakt: alexio@trom.tf
 Ein inoffizieller, fiktiver Simulator des Formats der FIFA-Weltmeisterschaft 2026 (48 Mannschaften, 104 Spiele) in einer Offline-HTML-Datei. Alle Ergebnisse, Torschützen, Karten und Statistiken sind zufällige Ausgaben eines einfachen Poisson-Modells mit subjektiven Mannschaftsstärken; es sind keine echten Ergebnisse oder Prognosen, und Spielernamen sind bloße Etiketten. Umgesetzt sind die Gruppen-Tiebreaker, der offizielle K.-o.-Baum und die Zuordnung der Gruppendritten (Tabelle aus Anhang C, aus öffentlichen Quellen übernommen); Importe und geteilte Links werden streng validiert. Keine Netzwerkanfragen, keine Telemetrie; die Daten bleiben in localStorage. Nicht mit der FIFA verbunden.
 
 ## Verlauf / Changelog
+
+### 7.6.1 — 2026-10-22
+- Barrierefreiheit und Mobil: Die blockierenden Browser-Dialoge (Hinweise, Bestätigungen, Texteingaben) werden durch nicht blockierende Benachrichtigungen und übersetzte modale Dialoge (8 Sprachen) ersetzt, einschließlich der Kopier-Ausweichlösung für die Zusammenfassung und den Teilen-Link.
+- Mobil: Der Text ist auf schmalen Bildschirmen mindestens 12 px groß, und die Zusammenfassung des Fiktionshinweises hat eine größere Touch-Fläche.
+- Das technische Etikett listet jetzt die 8 Oberflächensprachen auf (statische Optionen in der Sprachauswahl).
 
 ### 7.5.0 — 2026-10-14
 - Sicherungskopie und Datenkennzeichnung (fff-kit).
