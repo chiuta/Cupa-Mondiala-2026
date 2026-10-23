@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 7.6.5 · **Last updated:** 2026-10-23
+**Version:** 7.6.6 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,10 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 An unofficial, fictional simulator of the 2026 FIFA World Cup format (48 teams, 104 matches) in one offline HTML file. All scores, scorers, cards and statistics are random output of a simple Poisson model with subjective team strengths; they are not real results or predictions, and player names are mere labels. Group tiebreakers, the official knockout bracket and the third-place allocation (Annex C table, transcribed from public sources) are implemented; imports and shared links are strictly validated. No network requests, no telemetry; data stays in localStorage. Not affiliated with FIFA.
 
 ## History / Changelog
+
+### 7.6.6 — 2026-10-23
+
+- Accessibility: the “Copy summary” button no longer has an aria-label that differs from its visible text (WCAG 2.5.3 label in name) in non-Romanian languages; the explanation stays as a title; CSP hash recalculated.
 
 ### 7.6.5 — 2026-10-23
 - Storage keys now carry the app prefix (`cupa-mondiala-2026.*`); existing data (history, strengths, presets, language, settings) is migrated automatically at startup, and old `.fff.json` copies can still be imported.

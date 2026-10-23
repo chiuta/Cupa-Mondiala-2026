@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 7.6.5 · **Dernière mise à jour :** 2026-10-23
+**Version :** 7.6.6 · **Dernière mise à jour :** 2026-10-23
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -81,6 +81,10 @@ Alexio — Alexandru-Ionuț Chiuță, contact : alexio@trom.tf
 Un simulateur fictif et non officiel du format de la Coupe du monde 2026 de la FIFA (48 équipes, 104 matchs) dans un seul fichier HTML hors ligne. Tous les scores, buteurs, cartons et statistiques sont le résultat aléatoire d'un simple modèle de Poisson avec des forces d'équipe subjectives ; ce ne sont ni des résultats réels ni des pronostics, et les noms des joueurs ne sont que des étiquettes. Les critères de départage des groupes, le tableau officiel à élimination directe et l'attribution des troisièmes (tableau de l'annexe C, transcrit de sources publiques) sont implémentés ; les imports et les liens partagés sont strictement validés. Aucune requête réseau, aucune télémétrie ; les données restent dans localStorage. Non affilié à la FIFA.
 
 ## Historique / Changelog
+
+### 7.6.6 — 2026-10-23
+
+- Accessibility: the “Copy summary” button no longer has an aria-label that differs from its visible text (WCAG 2.5.3 label in name) in non-Romanian languages; the explanation stays as a title; CSP hash recalculated.
 
 ### 7.6.5 — 2026-10-23
 - Les clés de stockage portent désormais le préfixe de l'application (`cupa-mondiala-2026.*`) ; les données existantes (historique, forces, préréglages, langue, réglages) sont migrées automatiquement au démarrage, et les anciennes copies `.fff.json` restent importables.
