@@ -1,4 +1,4 @@
-// Teste 7.6.6: „Copiază rezumatul” — numele accesibil conține textul vizibil în cele 8 limbi (WCAG 2.5.3).
+// Teste 7.6.7: „Copiază rezumatul” — numele accesibil conține textul vizibil în cele 8 limbi (WCAG 2.5.3).
 // Rulare: node tests/a11y-label.test.mjs  (Playwright din /opt/node-tools, Chromium local; rețea blocată)
 import fs from 'node:fs';
 import path from 'node:path';
