@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 7.6.7 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 8.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -18,6 +18,7 @@ Un joc/experiment de simulare: aplicația generează aleatoriu un turneu complet
 
 ## Funcții
 
+- **Turneu multiplu (v8.0.0):** în Modul Batch, rulează 10–5000 de turnee (opțional cu seed, reproductibil) și arată, pentru fiecare echipă, procentul de turnee în care atinge 1/16, optimi, sferturi, semifinale, finală și titlul, cu marja de eșantionare 95%. Folosește puterile implicite sau cele din Editor strengths. Explicit FICTIV — nu e pronostic; export CSV și copiere top 10.
 Verificate în cod și în browser (Chromium headless):
 - Simulare completă într-un click (buton „Rulează” sau tasta R), cu seed afișat; „Replay” din istoric reface aceeași simulare (același seed și aceleași puteri).
 - „Forțează”: alegi o echipă care câștigă obligatoriu turneul simulat (primește un bonus de putere, iar rezultatele eliminatorii îi sunt aranjate). Este un scenariu „ce-ar fi dacă”, fără valoare statistică.

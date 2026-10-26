@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 7.6.7 · **Last updated:** 2026-10-26
+**Version:** 8.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -18,6 +18,7 @@ A simulation game/experiment: the app randomly generates a complete tournament (
 
 ## Features
 
+- **Multi-tournament (v8.0.0):** in Batch mode, run 10–5000 tournaments (optional reproducible seed) and see, per team, the percentage of tournaments reaching the round of 32, round of 16, quarter-finals, semi-finals, final and the title, with the 95% sampling margin. Uses default or Strengths-editor values. Explicitly FICTIONAL — not a forecast; CSV export and top-10 copy.
 Verified in the code and in the browser (headless Chromium):
 - Complete simulation in one click ("Run" button or the R key), with the seed displayed; "Replay" from the history redoes the same simulation (same seed and same strengths).
 - "Force": you choose a team that must win the simulated tournament (it receives a strength bonus, and its knockout results are arranged). It is a "what-if" scenario, with no statistical value.
