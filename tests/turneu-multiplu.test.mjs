@@ -76,7 +76,7 @@ t('oprire: rezultate parțiale (n < 3000), marcate ca oprite', st.stopped && st.
 await p.click('.batch-btn[data-n="50"]'); await p.waitForSelector('#batch-results .agg-grid', {timeout: 60000}); t('Batch clasic: neschimbat, rezultate afișate', /50/.test(await p.textContent('#batch-results h4')));
 // a11y
 await run(p, 20, 3);
-const runAxe = async pg => { const src = fs.readFileSync(AXE, 'utf8'); if (!(await pg.evaluate(() => !!window.axe))) await pg.evaluate(src + '\n;0'); return pg.evaluate(async () => (await axe.run(document, {resultTypes: ['violations']})).violations.map(v => v.id + ':' + v.nodes.map(n => n.target.join(' ')).join(',').slice(0, 100))); };
+const runAxe = async pg => { /* așteaptă animațiile finite: altfel axe măsoară opacitate parțială sub încărcare */ await pg.waitForFunction(() => document.getAnimations().every(a => a.playState !== 'running' || a.effect.getComputedTiming().iterations === Infinity), null, {timeout: 20000}); const src = fs.readFileSync(AXE, 'utf8'); if (!(await pg.evaluate(() => !!window.axe))) await pg.evaluate(src + '\n;0'); return pg.evaluate(async () => (await axe.run(document, {resultTypes: ['violations']})).violations.map(v => v.id + ':' + v.nodes.map(n => n.target.join(' ')).join(',').slice(0, 100))); };
 t('axe: 0 violări (panou + tabel)', (await runAxe(p)).length === 0, await runAxe(p));
 // limbi
 for (const [l, w] of [['en', /FICTIONAL — not a forecast/], ['fr', /FICTIF — ce n’est pas un pronostic/], ['it', /FITTIZIO — non è un pronostico/], ['es', /FICTICIO — no es un pronóstico/], ['pt', /FICTÍCIO — não é um prognóstico/], ['de', /FIKTIV — keine Prognose/], ['hu', /KITALÁLT — nem előrejelzés/], ['ro', /FICTIV — nu e pronostic/]]) {
