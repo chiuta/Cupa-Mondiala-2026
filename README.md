@@ -2,11 +2,13 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 8.0.0 · **Last updated:** 2026-10-26
+**Version:** 8.1.0 (previous: v8.0.0) · **Last updated:** 2026-10-27
+
+**Status:** stable · **Offline:** complete (no network needed; all data, including the real-results archive, is inside the single file)
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
-A fictional simulator of the 2026 World Cup (48 teams, 104 matches) in a single HTML file, with no server and no account. **It is not affiliated with FIFA, contains no real results and is not a prediction.**
+A fictional simulator of the 2026 World Cup (48 teams, 104 matches) in a single HTML file, with no server and no account. **It is not affiliated with FIFA and is not a prediction. The simulator's results are invented; the separate “Real archive” tab (v8.1.0) holds the verified real results of the tournament, clearly labelled ✅ REAL.**
 
 **Live app:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
@@ -15,6 +17,10 @@ A fictional simulator of the 2026 World Cup (48 teams, 104 matches) in a single 
 ## What it is
 
 A simulation game/experiment: the app randomly generates a complete tournament (groups, third places, round of 32, round of 16, quarter-finals, semi-finals, third-place match and final), with scores, scorers with the minute, cards, suspensions and match statistics. The format (12 groups of 4, the top two plus the best 8 third-placed teams, 32 teams in the knockout stage) and the groups follow the real tournament of 11 June – 19 July 2026; **the results are invented by a simple model** (subjective strengths 1–5 for each team, goals following the Poisson distribution, a seed). The real tournament has ended; nothing in the app reflects what actually happened on the pitch.
+
+## Real archive (v8.1.0)
+
+The real tournament ended on 19 July 2026 (Spain beat Argentina 1–0 after extra time at MetLife Stadium; Ferran Torres, 106'; England beat France 6–4 in the third-place match). The tab **📖 Real archive** shows the real group tables (computed from the 72 group scores), the real round of 32 to the final, the date and sources, labelled ✅ REAL; every other tab stays a FICTIONAL “what-if” simulation, and the archive compares the real champion with your current simulation. Verified on the web on 2026-10-27: group scores and tables from the Wikipedia pages “2026 FIFA World Cup Group A–L” and CBS Sports; knockout results from worldcupmatchtime.com cross-checked with Wikipedia and press reports. **Group F rests on a single source (CBS Sports) and is marked “to be verified”.** Scorers, cards and match statistics of the real tournament are not included. Interface texts of the archive exist in Romanian and English; the other 6 languages show the English text (not natively verified).
 
 ## Features
 

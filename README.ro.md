@@ -2,11 +2,13 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 8.0.0 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 8.1.0 (anterior: v8.0.0) · **Ultima actualizare:** 2026-10-27
+
+**Stare:** stabil · **Offline:** complet (nu cere internet; toate datele, inclusiv arhiva rezultatelor reale, sunt în fișierul unic)
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
-Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML, fără server și fără cont. **Nu este afiliat FIFA, nu conține rezultate reale și nu este un pronostic.**
+Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un singur fișier HTML, fără server și fără cont. **Nu este afiliat FIFA și nu este un pronostic. Rezultatele simulatorului sunt inventate; tabul separat „Arhivă reală” (v8.1.0) conține rezultatele reale verificate ale turneului, etichetate clar ✅ REAL.**
 
 **Live:** https://chiuta.github.io/Cupa-Mondiala-2026/
 
@@ -15,6 +17,10 @@ Simulator fictiv al Cupei Mondiale 2026 (48 de echipe, 104 meciuri) într-un sin
 ## Ce este
 
 Un joc/experiment de simulare: aplicația generează aleatoriu un turneu complet (grupe, locuri 3, 1/16, optimi, sferturi, semifinale, finala mică și finala), cu scoruri, marcatori cu minut, cartonașe, suspendări și statistici de meci. Formatul (12 grupe de 4, primele două plus cele mai bune 8 locuri 3, 32 de echipe în faza eliminatorie) și grupele urmează turneul real din 11 iunie – 19 iulie 2026; **rezultatele sunt inventate de un model simplu** (puteri subiective 1–5 pentru fiecare echipă, goluri după distribuția Poisson, seed). Turneul real s-a încheiat; nimic din aplicație nu reflectă ce s-a petrecut efectiv pe teren.
+
+## Arhivă reală (v8.1.0)
+
+Turneul real s-a încheiat pe 19 iulie 2026 (Spania – Argentina 1–0 după prelungiri pe MetLife Stadium; gol Ferran Torres, min. 106; Anglia – Franța 6–4 în meciul pentru locul 3). Tabul **📖 Arhivă reală** arată clasamentele reale ale grupelor (calculate din cele 72 de scoruri), de la 1/16 până la finală, data și sursele, etichetat ✅ REAL; toate celelalte taburi rămân simulare FICTIVĂ „ce-ar fi fost dacă”, iar arhiva compară campioana reală cu simularea ta curentă. Verificat pe web la 2026-10-27: scorurile și clasamentele de grupă din paginile Wikipedia „2026 FIFA World Cup Group A–L” și CBS Sports; eliminatoriile din worldcupmatchtime.com, confruntate cu Wikipedia și presa. **Grupa F se sprijină pe o singură sursă (CBS Sports) și este marcată „de verificat”.** Marcatorii, cartonașele și statisticile meciurilor reale nu sunt incluse. Textele arhivei există în română și engleză; în celelalte 6 limbi se afișează engleza (neverificat nativ).
 
 ## Funcții
 
