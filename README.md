@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 8.1.0 (previous: v8.0.0) · **Last updated:** 2026-10-27
+**Version:** 8.2.0 (previous: v8.1.0) · **Last updated:** 2026-10-27
 
 **Status:** stable · **Offline:** complete (no network needed; all data, including the real-results archive, is inside the single file)
 
@@ -21,6 +21,8 @@ A simulation game/experiment: the app randomly generates a complete tournament (
 ## Real archive (v8.1.0)
 
 The real tournament ended on 19 July 2026 (Spain beat Argentina 1–0 after extra time at MetLife Stadium; Ferran Torres, 106'; England beat France 6–4 in the third-place match). The tab **📖 Real archive** shows the real group tables (computed from the 72 group scores), the real round of 32 to the final, the date and sources, labelled ✅ REAL; every other tab stays a FICTIONAL “what-if” simulation, and the archive compares the real champion with your current simulation. Verified on the web on 2026-10-27: group scores and tables from the Wikipedia pages “2026 FIFA World Cup Group A–L” and CBS Sports; knockout results from worldcupmatchtime.com cross-checked with Wikipedia and press reports. **Group F rests on a single source (CBS Sports) and is marked “to be verified”.** Scorers, cards and match statistics of the real tournament are not included. Interface texts of the archive exist in Romanian and English; the other 6 languages show the English text (not natively verified).
+
+Update 8.2.0: group F is now confirmed by several sources (scores and final table by four; match dates and stadiums by 2–3), and its six matches show date and stadium. Dates/stadiums, scorers and cards of the other groups are still not shown (not confirmed by 2+ sources).
 
 ## Features
 

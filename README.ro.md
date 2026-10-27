@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 8.1.0 (anterior: v8.0.0) · **Ultima actualizare:** 2026-10-27
+**Versiune:** 8.2.0 (anterior: v8.1.0) · **Ultima actualizare:** 2026-10-27
 
 **Stare:** stabil · **Offline:** complet (nu cere internet; toate datele, inclusiv arhiva rezultatelor reale, sunt în fișierul unic)
 
@@ -21,6 +21,8 @@ Un joc/experiment de simulare: aplicația generează aleatoriu un turneu complet
 ## Arhivă reală (v8.1.0)
 
 Turneul real s-a încheiat pe 19 iulie 2026 (Spania – Argentina 1–0 după prelungiri pe MetLife Stadium; gol Ferran Torres, min. 106; Anglia – Franța 6–4 în meciul pentru locul 3). Tabul **📖 Arhivă reală** arată clasamentele reale ale grupelor (calculate din cele 72 de scoruri), de la 1/16 până la finală, data și sursele, etichetat ✅ REAL; toate celelalte taburi rămân simulare FICTIVĂ „ce-ar fi fost dacă”, iar arhiva compară campioana reală cu simularea ta curentă. Verificat pe web la 2026-10-27: scorurile și clasamentele de grupă din paginile Wikipedia „2026 FIFA World Cup Group A–L” și CBS Sports; eliminatoriile din worldcupmatchtime.com, confruntate cu Wikipedia și presa. **Grupa F se sprijină pe o singură sursă (CBS Sports) și este marcată „de verificat”.** Marcatorii, cartonașele și statisticile meciurilor reale nu sunt incluse. Textele arhivei există în română și engleză; în celelalte 6 limbi se afișează engleza (neverificat nativ).
+
+Actualizare 8.2.0: grupa F este acum confirmată din mai multe surse (scorurile și clasamentul din patru; datele și stadioanele meciurilor din 2–3), iar cele șase meciuri ale ei arată data și stadionul. Datele/stadioanele, marcatorii și cartonașele celorlalte grupe nu sunt afișate (neconfirmate din ≥2 surse).
 
 ## Funcții
 

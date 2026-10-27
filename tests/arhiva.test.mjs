@@ -51,7 +51,8 @@ t('32 de echipe în 1/16', res.teams === 32, res.teams);
 t('toate numele echipelor au traducere', res.unmapped.length === 0 && res.ko.length === 0, res);
 const txt = await p.textContent('.phase[data-phase="arhiva"]');
 t('etichetă REAL + data verificării + campioana', /REAL/.test(txt) && /2026-10-27/.test(txt) && /Spania/.test(txt) && /Ferran Torres/.test(txt));
-t('grupa F marcată „de verificat”', /de verificat: o singură sursă/.test(txt));
+t('grupa F confirmată din mai multe surse (nu mai e „de verificat”), cu date și stadioane', !/de verificat: o singură sursă/.test(txt) && /Dallas \(AT&T Stadium\)/.test(txt) && /Kansas City \(Arrowhead Stadium\)/.test(txt) && /patru surse/.test(txt));
+t('grupa F: 6 meciuri cu dată și stadion; celelalte grupe fără date', await p.evaluate(() => REAL_GROUPS.F.d.split(';').length === 6 && REAL_GROUPS.F.v.split(';').length === 6 && !REAL_GROUPS.A.d));
 t('finala: Spania 1–0 Argentina după prelungiri', /Spania 1–0 Argentina · după prelungiri/.test(txt) || /Spania\s*1–0\s*Argentina/.test(txt));
 t('Anglia 6–4 Franța (locul 3), pen. Elveția–Columbia 4–3', /Franța 4–6 Anglia/.test(txt) && /Elveția 0–0 Columbia · pen\. 4–3/.test(txt));
 // compararea cu simularea curentă

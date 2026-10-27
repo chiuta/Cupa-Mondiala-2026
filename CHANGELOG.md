@@ -1,5 +1,18 @@
 # Jurnal de modificări — Simulator Cupa Mondială 2026
 
+## 8.2.0 — 2026-10-27
+
+Anterior: v8.1.0. Recenzie 2 (2026-10-27).
+
+- Grupa F din tabul „Arhivă reală” nu mai este „de verificat”: cele 6 scoruri (Țările de Jos 2–2 Japonia, Suedia 5–1 Tunisia, Țările de Jos 5–1 Suedia, Tunisia 0–4 Japonia, Japonia 1–1 Suedia, Tunisia 1–3 Țările de Jos) și clasamentul final sunt confirmate de patru surse (Wikipedia, CBS Sports, foot-africa.com, martincid.com).
+- Grupa F: se afișează data (14, 14, 20, 21, 25, 25 iunie) și stadionul fiecărui meci (Dallas – AT&T Stadium; Monterrey – Estadio BBVA; Houston – NRG Stadium; Kansas City – Arrowhead Stadium), confirmate din ≥2 surse (date: Wikipedia, martincid.com, wego.com; stadioane: martincid.com, wego.com).
+- Textul „Surse și verificare” (RO/EN) actualizat; testul `arhiva` actualizat (grupa F confirmată + date/stadioane).
+
+Rămâne de verificat / nu s-a implementat:
+- Datele și stadioanele meciurilor din grupele A–E și G–L: neconfirmate din ≥2 surse accesibile, deci nu sunt afișate.
+- Marcatori, cartonașe, statistici: neconfirmate de ≥2 surse pentru cele 72 de meciuri, deci omise.
+- Eliminatoriile 1/16–semifinale: aceeași stare ca în 8.1.0 (agregator confruntat parțial cu Wikipedia).
+
 ## 8.1.0 — 2026-10-27
 
 Anterior: v8.0.0. Recenzie 2026-10-27.
