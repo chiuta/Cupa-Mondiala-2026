@@ -18,8 +18,8 @@
     "cupa-mondiala-2026.v7_presets",
     "cupa-mondiala-2026.v7_strengths"
   ],
-  "sizeBytes": 508929,
-  "sha256": "320fe82d6f448f8ef0bcd937b733550750872a48358bc13c34e2e555bfb079a5",
+  "sizeBytes": 649363,
+  "sha256": "362dfb2258c38f94942503063c4eeb975356a17ee207e12893724490fed7365d",
   "csp": {
     "present": true,
     "directives": {
@@ -62,7 +62,11 @@
       "store",
       "dialog",
       "label",
-      "bundle"
+      "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history"
     ]
   },
   "kit": {
@@ -72,7 +76,11 @@
       "store",
       "dialog",
       "label",
-      "bundle"
+      "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history"
     ]
   },
   "selfSerializing": false
