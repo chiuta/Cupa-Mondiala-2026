@@ -1,5 +1,9 @@
 # Jurnal de modificări — Simulator Cupa Mondială 2026
 
+## 8.3.1 — 2026-11-03
+
+- Corectat (accesibilitate): bannerul arhivei era în afara oricărui reper (axe: `region`, 4 scenarii); acum are rolul `region` și etichetă. axe: 0 violări.
+
 ## 8.3.0 — 2026-11-03 (mod arhivă)
 
 Anterior: v8.2.0. Etapa 6 a planului „fără frontiere” (arhivarea Cupei Mondiale după eveniment).
