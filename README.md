@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 8.3.4 (previous: v8.2.0) · **Last updated:** 2026-11-10
+**Version:** 8.3.5 (previous: v8.2.0) · **Last updated:** 2026-11-10
 
 **Status:** stable · **Offline:** complete (no network needed; all data, including the real-results archive, is inside the single file)
 
