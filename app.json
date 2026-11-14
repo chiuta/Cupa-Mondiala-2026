@@ -10,7 +10,8 @@
     "clipboard",
     "serviceWorker",
     "localStorage",
-    "Web Crypto"
+    "Web Crypto",
+    "WebGL"
   ],
   "storageKeys": [
     "cupa-mondiala-2026.probe",
@@ -18,13 +19,13 @@
     "cupa-mondiala-2026.v7_presets",
     "cupa-mondiala-2026.v7_strengths"
   ],
-  "sizeBytes": 706514,
-  "sha256": "5469c7350d9d12b5ffecb72c182b487d96c0c89be0d9928ebac7bfdc40ad8c39",
+  "sizeBytes": 758172,
+  "sha256": "981cb1b7e1d863c6bc486fc928d207f13711270a578117120b24cbdddf42ab2c",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×4",
+      "script-src": "sha256×5",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data:",
       "connect-src": "'none'",
