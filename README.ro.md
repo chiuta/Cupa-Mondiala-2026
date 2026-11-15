@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 8.3.7 (anterior: v8.2.0) · **Ultima actualizare:** 2026-11-13
+**Versiune:** 8.3.8 (anterior: v8.3.7) · **Ultima actualizare:** 2026-11-15
 
 **Stare:** stabil · **Offline:** complet (nu cere internet; toate datele, inclusiv arhiva rezultatelor reale, sunt în fișierul unic)
 
